@@ -6,9 +6,8 @@ import { CustomNodeData } from '../types';
 export const ActionNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected }) => {
   return (
     <div
-      className={`px-4 py-3 rounded-lg bg-white border-2 shadow-md min-w-[180px] transition-all ${
-        selected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
-      }`}
+      className={`px-4 py-3 rounded-lg bg-white border-2 shadow-md min-w-[180px] transition-all ${selected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+        }`}
       style={{ borderColor: data.color || '#3b82f6' }}
     >
       <Handle

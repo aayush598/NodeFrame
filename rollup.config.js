@@ -24,7 +24,7 @@ export default {
     peerDepsExternal(),
     resolve(),
     commonjs(),
-    typescript({ 
+    typescript({
       tsconfig: './tsconfig.json',
       declaration: true,
       declarationDir: 'dist'
@@ -35,5 +35,11 @@ export default {
       inject: true
     })
   ],
-  external: ['react', 'react-dom']
+  external: ['react', 'react-dom'],
+  onwarn(warning, warn) {
+    if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.message.includes('node_modules')) {
+      return;
+    }
+    warn(warning);
+  }
 };
