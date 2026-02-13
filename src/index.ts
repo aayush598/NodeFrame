@@ -1,6 +1,7 @@
 export { FlowCanvas } from './components/FlowCanvas';
 export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
+export { NodeSidebar } from './components/NodeSidebar';
 
 export { StartNode } from './nodes/StartNode';
 export { EndNode } from './nodes/EndNode';

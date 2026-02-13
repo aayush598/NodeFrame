@@ -45,6 +45,7 @@ export interface FlowcraftProps {
   theme?: FlowcraftTheme;
   showMinimap?: boolean;
   showControls?: boolean;
+  showSidebar?: boolean;
   className?: string;
   nodeTypes?: Record<string, React.ComponentType<NodeProps>>;
   edgeTypes?: Record<string, any>;

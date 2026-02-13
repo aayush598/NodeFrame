@@ -1,19 +1,19 @@
 import React from 'react';
-import { Handle, Position, NodeProps } from 'reactflow';
+import { Handle, NodeProps } from 'reactflow';
 import { CheckCircle } from 'lucide-react';
 import { CustomNodeData } from '../types';
 
-export const EndNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected }) => {
+export const EndNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected, isConnectable }) => {
   return (
     <div
-      className={`px-4 py-3 rounded-lg bg-white border-2 shadow-md min-w-[180px] transition-all ${
-        selected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
-      }`}
+      className={`relative px-4 py-3 rounded-lg bg-white border-2 shadow-md min-w-[180px] transition-all ${selected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+        }`}
       style={{ borderColor: data.color || '#ef4444' }}
     >
       <Handle
         type="target"
-        position={Position.Left}
+        position="left"
+        isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />
       <div className="flex items-center gap-2">

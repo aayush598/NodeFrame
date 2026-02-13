@@ -10,6 +10,10 @@ import ReactFlow, {
   Panel
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { NodeSidebar } from './NodeSidebar';
+import { registerDefaultNodes } from '../utils/registerDefaultNodes';
+import { nodeRegistry } from '../utils/nodeRegistry';
+import { generateId } from '../utils/helpers';
 import { FlowcraftProps } from '../types';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
@@ -43,6 +47,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
 
   showMinimap = true,
   showControls = true,
+  showSidebar = true,
   className = '',
   nodeTypes: customNodeTypes,
   edgeTypes,
@@ -51,8 +56,14 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
   snapGrid = [15, 15],
   defaultViewport = { x: 0, y: 0, zoom: 1 }
 }) => {
+  const reactFlowWrapper = React.useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChangeInternal] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChangeInternal] = useEdgesState(initialEdges);
+  const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
+
+  useEffect(() => {
+    registerDefaultNodes();
+  }, []);
 
   const nodeTypes = useMemo(() => {
     return { ...defaultNodeTypes, ...customNodeTypes };
@@ -158,33 +169,84 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
     [nodes, edges, setNodes, setEdges]
   );
 
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      if (!reactFlowWrapper.current || !reactFlowInstance) return;
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const type = event.dataTransfer.getData('application/reactflow');
+
+      // check if the dropped element is valid
+      if (typeof type === 'undefined' || !type) {
+        return;
+      }
+
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+
+      const registryItem = nodeRegistry.get(type);
+      const newNode = {
+        id: generateId(),
+        type,
+        position,
+        data: {
+          label: registryItem?.config.label || `${type} node`,
+          ...registryItem?.config.defaultData
+        },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [reactFlowInstance, setNodes]
+  );
+
   return (
-    <div className={`w-full h-full ${className}`} onKeyDown={handleKeyDown} tabIndex={0}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={handleNodesChange}
-        onEdgesChange={handleEdgesChange}
-        onConnect={handleConnect}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        fitView={fitView}
-        snapToGrid={snapToGrid}
-        snapGrid={snapGrid}
-        defaultViewport={defaultViewport}
-        attributionPosition="bottom-right"
-        proOptions={{ hideAttribution: true }}
+    <div className={`flex w-full h-full overflow-hidden ${className}`}>
+      {showSidebar && <NodeSidebar />}
+      <div
+        className="flex-1 h-full relative"
+        ref={reactFlowWrapper}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
       >
-        <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
-        {showControls && <Controls />}
-        {showMinimap && <Minimap />}
-        <Panel position="top-left" className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-500"></div>
-            <span className="text-sm font-medium text-gray-700">NodeFrame</span>
-          </div>
-        </Panel>
-      </ReactFlow>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={handleNodesChange}
+          onEdgesChange={handleEdgesChange}
+          onConnect={handleConnect}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          onInit={setReactFlowInstance}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          fitView={fitView}
+          snapToGrid={snapToGrid}
+          snapGrid={snapGrid}
+          defaultViewport={defaultViewport}
+          attributionPosition="bottom-right"
+          proOptions={{ hideAttribution: true }}
+        >
+          <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
+          {showControls && <Controls />}
+          {showMinimap && <Minimap />}
+          <Panel position="top-left" className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500"></div>
+              <span className="text-sm font-medium text-gray-700">NodeFrame</span>
+            </div>
+          </Panel>
+        </ReactFlow>
+      </div>
     </div>
   );
 };

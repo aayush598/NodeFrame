@@ -8,7 +8,6 @@
   background: transparent !important;
   padding: 0 !important;
   box-shadow: none !important;
-  width: auto !important;
 }
 
 .react-flow__node.selected,
