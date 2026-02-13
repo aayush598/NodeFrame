@@ -49,3 +49,46 @@
 .react-flow__panel {
   margin: 10px;
 }
+/* Execution Status Styles */
+@keyframes pulse-blue {
+  0%, 100% { border-color: #3b82f6; box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.4); }
+  50% { border-color: #60a5fa; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.2); }
+}
+
+.node-executing {
+  animation: pulse-blue 2s infinite !important;
+  border-width: 2px !important;
+}
+
+.node-success {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2) !important;
+  border-width: 2px !important;
+}
+
+.node-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2) !important;
+  border-width: 2px !important;
+}
+
+.status-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(0);
+}
+
+.status-badge.visible {
+  transform: scale(1);
+}

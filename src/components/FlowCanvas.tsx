@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import ReactFlow, {
   Background,
   BackgroundVariant,
-  useNodesState,
-  useEdgesState,
   addEdge,
   Connection,
   NodeTypes,
@@ -15,6 +13,8 @@ import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 import { FlowcraftProps } from '../types';
+import { FlowProvider, useFlow } from '../context/FlowProvider';
+import { Play, RotateCcw } from 'lucide-react';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
 import { StartNode } from '../nodes/StartNode';
@@ -38,12 +38,53 @@ const defaultNodeTypes: NodeTypes = {
   transform: TransformNode
 };
 
-export const FlowCanvas: React.FC<FlowcraftProps> = ({
-  nodes: initialNodes = [],
-  edges: initialEdges = [],
-  onNodesChange,
-  onEdgesChange,
-  onConnect,
+const WorkflowPanel = () => {
+  const { executeWorkflow, setNodes } = useFlow();
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2 flex items-center gap-3">
+      <div className="flex items-center gap-2 pr-3 border-r border-gray-100">
+        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+        <span className="text-sm font-bold text-gray-800 tracking-tight">NodeFrame</span>
+      </div>
+
+      <div className="flex items-center gap-1.5">
+        <button
+          onClick={() => executeWorkflow()}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-bold transition-all shadow-sm active:scale-95"
+        >
+          <Play size={14} fill="currentColor" />
+          RUN WORKFLOW
+        </button>
+        <button
+          onClick={() => {
+            setNodes((nds: any) => nds.map((n: any) => ({
+              ...n,
+              data: { ...n.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
+            })));
+          }}
+          title="Reset execution state"
+          className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+        >
+          <RotateCcw size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export const FlowCanvas: React.FC<FlowcraftProps> = (props) => {
+  return (
+    <FlowProvider initialNodes={props.nodes} initialEdges={props.edges}>
+      <FlowCanvasInternal {...props} />
+    </FlowProvider>
+  );
+};
+
+const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
+  onNodesChange: onNodesChangeProp,
+  onEdgesChange: onEdgesChangeProp,
+  onConnect: onConnectProp,
 
   showMinimap = true,
   showControls = true,
@@ -57,8 +98,15 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
   defaultViewport = { x: 0, y: 0, zoom: 1 }
 }) => {
   const reactFlowWrapper = React.useRef<HTMLDivElement>(null);
-  const [nodes, setNodes, onNodesChangeInternal] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChangeInternal] = useEdgesState(initialEdges);
+  const {
+    nodes,
+    edges,
+    setNodes,
+    setEdges,
+    onNodesChange,
+    onEdgesChange
+  } = useFlow();
+
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
 
   useEffect(() => {
@@ -69,59 +117,47 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
     return { ...defaultNodeTypes, ...customNodeTypes };
   }, [customNodeTypes]);
 
-  useEffect(() => {
-    if (initialNodes.length > 0) {
-      setNodes(initialNodes);
-    }
-  }, [initialNodes, setNodes]);
-
-  useEffect(() => {
-    if (initialEdges.length > 0) {
-      setEdges(initialEdges);
-    }
-  }, [initialEdges, setEdges]);
-
   const handleNodesChange = useCallback(
     (changes: any) => {
-      onNodesChangeInternal(changes);
-      if (onNodesChange) {
-        onNodesChange(nodes);
+      onNodesChange(changes);
+      if (onNodesChangeProp) {
+        onNodesChangeProp(nodes);
       }
     },
-    [onNodesChangeInternal, onNodesChange, nodes]
+    [onNodesChange, onNodesChangeProp, nodes]
   );
 
   const handleEdgesChange = useCallback(
     (changes: any) => {
-      onEdgesChangeInternal(changes);
-      if (onEdgesChange) {
-        onEdgesChange(edges);
+      onEdgesChange(changes);
+      if (onEdgesChangeProp) {
+        onEdgesChangeProp(edges);
       }
     },
-    [onEdgesChangeInternal, onEdgesChange, edges]
+    [onEdgesChange, onEdgesChangeProp, edges]
   );
 
   const handleConnect = useCallback(
     (connection: Connection) => {
       setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
-      if (onConnect) {
-        onConnect(connection);
+      if (onConnectProp) {
+        onConnectProp(connection);
       }
     },
-    [setEdges, onConnect]
+    [setEdges, onConnectProp]
   );
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key === 'Delete' || event.key === 'Backspace') {
-        const selectedNodes = nodes.filter((node) => node.selected);
-        const selectedEdges = edges.filter((edge) => edge.selected);
+        const selectedNodesIDs = nodes.filter((node) => node.selected).map(n => n.id);
+        const selectedEdgesIDs = edges.filter((edge) => edge.selected).map(e => e.id);
 
-        if (selectedNodes.length > 0) {
-          setNodes((nds) => nds.filter((node) => !node.selected));
+        if (selectedNodesIDs.length > 0) {
+          setNodes((nds: any) => nds.filter((node: any) => !node.selected));
         }
-        if (selectedEdges.length > 0) {
-          setEdges((eds) => eds.filter((edge) => !edge.selected));
+        if (selectedEdgesIDs.length > 0) {
+          setEdges((eds: any) => eds.filter((edge: any) => !edge.selected));
         }
       }
 
@@ -145,24 +181,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
             },
             selected: false
           }));
-          setNodes((nds) => [...nds, ...newNodes]);
-        }
-      }
-
-      if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
-        event.preventDefault();
-        const selectedNodes = nodes.filter((node) => node.selected);
-        if (selectedNodes.length > 0) {
-          const duplicatedNodes = selectedNodes.map((node) => ({
-            ...node,
-            id: `${node.id}-duplicate-${Date.now()}`,
-            position: {
-              x: node.position.x + 50,
-              y: node.position.y + 50
-            },
-            selected: false
-          }));
-          setNodes((nds) => [...nds, ...duplicatedNodes]);
+          setNodes((nds: any) => [...nds, ...newNodes]);
         }
       }
     },
@@ -183,7 +202,6 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData('application/reactflow');
 
-      // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
         return;
       }
@@ -204,7 +222,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
         },
       };
 
-      setNodes((nds) => nds.concat(newNode));
+      setNodes((nds: any) => nds.concat(newNode));
     },
     [reactFlowInstance, setNodes]
   );
@@ -239,11 +257,8 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
           <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
           {showControls && <Controls />}
           {showMinimap && <Minimap />}
-          <Panel position="top-left" className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-              <span className="text-sm font-medium text-gray-700">NodeFrame</span>
-            </div>
+          <Panel position="top-left" className="flex flex-col gap-2 pointer-events-auto">
+            <WorkflowPanel />
           </Panel>
         </ReactFlow>
       </div>

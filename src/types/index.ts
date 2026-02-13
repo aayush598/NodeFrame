@@ -29,8 +29,12 @@ export interface CustomNodeData {
   inputs?: number;
   outputs?: number;
   config?: Record<string, any>;
-  onExecute?: (data: any) => Promise<any> | any;
+  onExecute?: (inputs: any) => Promise<any> | any;
   onChange?: (data: any) => void;
+  executionStatus?: 'idle' | 'executing' | 'success' | 'error';
+  executionOutput?: any;
+  executionError?: string;
+  code?: string;
 }
 
 export type FlowcraftNode = Node<CustomNodeData>;
@@ -64,8 +68,10 @@ export interface NodeRegistryItem {
 export interface FlowContextValue {
   nodes: FlowcraftNode[];
   edges: FlowcraftEdge[];
-  setNodes: (nodes: FlowcraftNode[]) => void;
-  setEdges: (edges: FlowcraftEdge[]) => void;
+  setNodes: (nodes: any) => void;
+  setEdges: (edges: any) => void;
+  onNodesChange: (changes: any) => void;
+  onEdgesChange: (changes: any) => void;
   addNode: (node: FlowcraftNode) => void;
   removeNode: (id: string) => void;
   updateNode: (id: string, data: Partial<CustomNodeData>) => void;
@@ -74,4 +80,6 @@ export interface FlowContextValue {
   theme: FlowcraftTheme;
   nodeRegistry: Map<string, NodeRegistryItem>;
   registerNode: (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => void;
+  executeNode: (id: string) => Promise<void>;
+  executeWorkflow: () => Promise<void>;
 }
