@@ -293,12 +293,12 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           defaultViewport={defaultViewport}
           attributionPosition="bottom-right"
           proOptions={{ hideAttribution: true }}
-          selectionMode={'partial' as any}
+          selectionMode={'lasso' as any}
           selectionKeyCode="Shift"
           multiSelectionKeyCode="Control"
           deleteKeyCode="Delete"
-          panOnDrag={[1, 2]} // Allow panning with middle/right click
-          selectionOnDrag={true} // Enable selection on drag
+          panOnDrag={true}
+          selectionOnDrag={false}
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
           {showControls && <Controls />}
