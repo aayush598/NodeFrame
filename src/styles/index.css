@@ -4,6 +4,19 @@
 
 .react-flow__node {
   transition: all 0.2s ease;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  width: auto !important;
+}
+
+.react-flow__node.selected,
+.react-flow__node:focus,
+.react-flow__node:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .react-flow__node:hover {
