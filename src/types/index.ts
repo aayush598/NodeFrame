@@ -34,7 +34,9 @@ export interface CustomNodeData {
   executionStatus?: 'idle' | 'executing' | 'success' | 'error';
   executionOutput?: any;
   executionError?: string;
+  executionLogs?: string[];
   code?: string;
+  properties?: Record<string, any>;
 }
 
 export type FlowcraftNode = Node<CustomNodeData>;
@@ -82,4 +84,14 @@ export interface FlowContextValue {
   registerNode: (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => void;
   executeNode: (id: string) => Promise<void>;
   executeWorkflow: () => Promise<void>;
+  executionHistory: ExecutionRecord[];
+  clearHistory: () => void;
+}
+
+export interface ExecutionRecord {
+  id: string;
+  timestamp: string;
+  status: 'success' | 'error';
+  totalNodes: number;
+  details: Record<string, { status: string; output?: any; error?: string }>;
 }

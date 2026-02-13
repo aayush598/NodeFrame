@@ -1,6 +1,6 @@
-import React, { createContext, useContext, ReactNode, useCallback } from 'react';
+import React, { createContext, useContext, ReactNode, useCallback, useState } from 'react';
 import { useNodesState, useEdgesState, NodeProps } from 'reactflow';
-import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig } from '../types';
+import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 
@@ -13,6 +13,7 @@ export const FlowProvider: React.FC<{
 }> = ({ children, initialNodes = [], initialEdges = [] }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
 
   const addNode = useCallback((node: FlowcraftNode) => {
     setNodes(prev => [...prev, node]);
@@ -23,7 +24,7 @@ export const FlowProvider: React.FC<{
     setEdges(prev => prev.filter(e => e.source !== id && e.target !== id));
   }, [setNodes, setEdges]);
 
-  const updateNode = useCallback((id: string, data: Partial<any>) => {
+  const updateNode = useCallback((id: string, data: Partial<CustomNodeData>) => {
     setNodes(prev =>
       prev.map(node =>
         node.id === id ? { ...node, data: { ...node.data, ...data } } : node
@@ -59,7 +60,7 @@ export const FlowProvider: React.FC<{
     []
   );
 
-  const updateNodeData = useCallback((id: string, updates: Partial<any>) => {
+  const updateNodeData = useCallback((id: string, updates: Partial<CustomNodeData>) => {
     setNodes(prev =>
       prev.map(node =>
         node.id === id ? { ...node, data: { ...node.data, ...updates } } : node
@@ -113,7 +114,18 @@ export const FlowProvider: React.FC<{
     }
   }, [nodes, updateNodeData, getSourceNodeResults]);
 
+  const clearHistory = useCallback(() => setExecutionHistory([]), []);
+
   const executeWorkflow = useCallback(async () => {
+    const startTimeLocal = new Date().toLocaleString();
+    const historyEntry: ExecutionRecord = {
+      id: generateId(),
+      timestamp: startTimeLocal,
+      status: 'success',
+      totalNodes: nodes.length,
+      details: {}
+    };
+
     setNodes(prev => prev.map(n => ({
       ...n,
       data: { ...n.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
@@ -122,6 +134,7 @@ export const FlowProvider: React.FC<{
     const startNodes = nodes.filter(node => !edges.some(e => e.target === node.id));
     const queue = [...startNodes];
     const executed = new Set<string>();
+    let overallStatus: 'success' | 'error' = 'success';
 
     while (queue.length > 0) {
       const node = queue.shift();
@@ -136,19 +149,25 @@ export const FlowProvider: React.FC<{
       }
 
       try {
-        await executeNode(node.id);
+        const result = await executeNode(node.id);
         executed.add(node.id);
+        historyEntry.details[node.id] = { status: 'success', output: result };
 
         const children = edges.filter(e => e.source === node.id).map(e => e.target);
         children.forEach(childId => {
           const childNode = nodes.find(n => n.id === childId);
           if (childNode) queue.push(childNode);
         });
-      } catch (e) {
+      } catch (e: any) {
         console.error(`Workflow execution stopped at node ${node.id}:`, e);
+        historyEntry.details[node.id] = { status: 'error', error: e.message || 'Unknown error' };
+        overallStatus = 'error';
         break;
       }
     }
+
+    historyEntry.status = overallStatus;
+    setExecutionHistory(prev => [historyEntry, ...prev]);
   }, [nodes, edges, executeNode, setNodes]);
 
   return (
@@ -169,7 +188,9 @@ export const FlowProvider: React.FC<{
         nodeRegistry: (nodeRegistry as any).registry,
         registerNode,
         executeNode,
-        executeWorkflow
+        executeWorkflow,
+        executionHistory,
+        clearHistory
       }}
     >
       {children}

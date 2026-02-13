@@ -9,6 +9,7 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { NodeSidebar } from './NodeSidebar';
+import { RightSidebar } from './RightSidebar';
 import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
@@ -228,7 +229,7 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   );
 
   return (
-    <div className={`flex w-full h-full overflow-hidden ${className}`}>
+    <div className={`flex w-full h-full overflow-hidden bg-gray-50 ${className}`}>
       {showSidebar && <NodeSidebar />}
       <div
         className="flex-1 h-full relative"
@@ -262,6 +263,7 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           </Panel>
         </ReactFlow>
       </div>
+      <RightSidebar />
     </div>
   );
 };
