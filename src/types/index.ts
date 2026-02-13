@@ -37,6 +37,11 @@ export interface CustomNodeData {
   executionLogs?: string[];
   code?: string;
   properties?: Record<string, any>;
+  // Grouping support
+  isGroup?: boolean;
+  subNodes?: FlowcraftNode[];
+  subEdges?: FlowcraftEdge[];
+  groupName?: string;
 }
 
 export type FlowcraftNode = Node<CustomNodeData>;
@@ -78,12 +83,16 @@ export interface FlowContextValue {
   removeNode: (id: string) => void;
   updateNode: (id: string, data: Partial<CustomNodeData>) => void;
   duplicateNode: (id: string) => void;
-  groupNodes: (nodeIds: string[]) => void;
   theme: FlowcraftTheme;
   nodeRegistry: Map<string, NodeRegistryItem>;
   registerNode: (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => void;
   executeNode: (id: string) => Promise<void>;
   executeWorkflow: () => Promise<void>;
+  groupNodes: (nodeIds: string[], name: string) => void;
+  ungroupNode: (groupId: string) => void;
+  copyNodes: (nodeIds: string[]) => void;
+  pasteNodes: (position?: { x: number; y: number }) => void;
+  deleteNodes: (nodeIds: string[]) => void;
   executionHistory: ExecutionRecord[];
   clearHistory: () => void;
 }

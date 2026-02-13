@@ -8,6 +8,7 @@ import { InputNode } from '../nodes/InputNode';
 import { OutputNode } from '../nodes/OutputNode';
 import { ApiCallNode } from '../nodes/ApiCallNode';
 import { TransformNode } from '../nodes/TransformNode';
+import { GroupNode } from '../nodes/GroupNode';
 import {
     Play,
     Square,
@@ -16,7 +17,8 @@ import {
     Download,
     Upload,
     Globe,
-    RefreshCw
+    RefreshCw,
+    Box
 } from 'lucide-react';
 
 export const registerDefaultNodes = () => {
@@ -144,6 +146,20 @@ export const registerDefaultNodes = () => {
                 return { ...inputs, transformed: true, timestamp: Date.now() };
             },
             code: `// Transform Node Logic\nreturn { ...inputs, transformed: true, timestamp: Date.now() };`
+        }
+    });
+
+    nodeRegistry.register('group', GroupNode, {
+        id: 'group',
+        type: 'group',
+        label: 'Logic Group',
+        category: 'Engine',
+        color: '#9333ea',
+        icon: React.createElement(Box, { size: 16 }),
+        defaultData: {
+            isGroup: true,
+            subNodes: [],
+            subEdges: []
         }
     });
 };

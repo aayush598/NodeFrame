@@ -10,12 +10,18 @@
   box-shadow: none !important;
 }
 
-.react-flow__node.selected,
-.react-flow__node:focus,
-.react-flow__node:active {
+.react-flow__node.selected {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+}
+
+.react-flow__node.selected>div:first-child {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 0 20px rgba(59, 130, 246, 0.2) !important;
+  transform: scale(1.04) translateY(-4px);
+  background-color: rgba(239, 246, 255, 0.95) !important;
+  z-index: 1000;
 }
 
 .react-flow__node:hover {
@@ -27,7 +33,14 @@
 }
 
 .react-flow__edge-path {
-  stroke-width: 2;
+  stroke-width: 2.5;
+  stroke: #94a3b8;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #3b82f6;
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.4));
 }
 
 .react-flow__handle {
@@ -49,10 +62,20 @@
 .react-flow__panel {
   margin: 10px;
 }
+
 /* Execution Status Styles */
 @keyframes pulse-blue {
-  0%, 100% { border-color: #3b82f6; box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.4); }
-  50% { border-color: #60a5fa; box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.2); }
+
+  0%,
+  100% {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.4);
+  }
+
+  50% {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.2);
+  }
 }
 
 .node-executing {
@@ -84,11 +107,49 @@
   align-items: center;
   justify-content: center;
   z-index: 50;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform: scale(0);
 }
 
 .status-badge.visible {
   transform: scale(1);
+}
+
+/* Lasso & Selection Styles */
+.react-flow__selection {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 2px solid #3b82f6 !important;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+  z-index: 1000;
+}
+
+.react-flow__selection-path {
+  stroke: #3b82f6;
+  stroke-width: 2;
+  stroke-dasharray: 4;
+}
+
+/* Panel Animations */
+.animate-in {
+  animation-duration: 0.2s;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-from-bottom-2 {
+  animation-name: slide-in-bottom;
 }

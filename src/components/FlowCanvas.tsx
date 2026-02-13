@@ -10,12 +10,13 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { NodeSidebar } from './NodeSidebar';
 import { RightSidebar } from './RightSidebar';
+import { ShortcutsHelp } from './ShortcutsHelp';
 import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 import { FlowcraftProps } from '../types';
 import { FlowProvider, useFlow } from '../context/FlowProvider';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw, Copy, Clipboard, Trash2, Box } from 'lucide-react';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
 import { StartNode } from '../nodes/StartNode';
@@ -26,6 +27,7 @@ import { InputNode } from '../nodes/InputNode';
 import { OutputNode } from '../nodes/OutputNode';
 import { ApiCallNode } from '../nodes/ApiCallNode';
 import { TransformNode } from '../nodes/TransformNode';
+import { GroupNode } from '../nodes/GroupNode';
 import '../styles/index.css';
 
 const defaultNodeTypes: NodeTypes = {
@@ -36,7 +38,59 @@ const defaultNodeTypes: NodeTypes = {
   input: InputNode,
   output: OutputNode,
   apiCall: ApiCallNode,
-  transform: TransformNode
+  transform: TransformNode,
+  group: GroupNode
+};
+
+const SelectionToolbar = () => {
+  const { nodes, groupNodes, deleteNodes, copyNodes, pasteNodes } = useFlow();
+  const selectedNodes = nodes.filter(n => n.selected);
+  const selectedNodeIds = selectedNodes.map(n => n.id);
+
+  if (selectedNodes.length === 0) return null;
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg shadow-xl px-2 py-1.5 flex items-center gap-1 animate-in fade-in slide-in-from-bottom-2 duration-200">
+      <button
+        onClick={() => copyNodes(selectedNodeIds)}
+        className="p-2 hover:bg-gray-100 rounded-md text-gray-600 transition-colors flex items-center gap-2 text-xs font-bold"
+        title="Copy (Ctrl+C)"
+      >
+        <Copy size={16} />
+      </button>
+      <button
+        onClick={() => pasteNodes()}
+        className="p-2 hover:bg-gray-100 rounded-md text-gray-600 transition-colors flex items-center gap-2 text-xs font-bold"
+        title="Paste (Ctrl+V)"
+      >
+        <Clipboard size={16} />
+      </button>
+      <div className="w-px h-4 bg-gray-200 mx-1" />
+      <button
+        onClick={() => {
+          const name = window.prompt('Enter Group Name:', 'Selected Logic');
+          if (name) groupNodes(selectedNodeIds, name);
+        }}
+        disabled={selectedNodeIds.length < 2}
+        className="px-3 py-1.5 hover:bg-purple-50 rounded-md text-purple-600 transition-colors flex items-center gap-2 text-xs font-bold disabled:opacity-30 disabled:hover:bg-transparent"
+        title="Merge/Group Selection"
+      >
+        <Box size={16} />
+        GROUP
+      </button>
+      <div className="w-px h-4 bg-gray-200 mx-1" />
+      <button
+        onClick={() => deleteNodes(selectedNodeIds)}
+        className="p-2 hover:bg-red-50 rounded-md text-red-500 transition-colors flex items-center gap-2 text-xs font-bold"
+        title="Delete Selection (Del)"
+      >
+        <Trash2 size={16} />
+      </button>
+      <div className="ml-2 px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold text-gray-500">
+        {selectedNodeIds.length} SELECTED
+      </div>
+    </div>
+  );
 };
 
 const WorkflowPanel = () => {
@@ -105,7 +159,10 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     setNodes,
     setEdges,
     onNodesChange,
-    onEdgesChange
+    onEdgesChange,
+    deleteNodes,
+    copyNodes,
+    pasteNodes
   } = useFlow();
 
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
@@ -140,7 +197,7 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
 
   const handleConnect = useCallback(
     (connection: Connection) => {
-      setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
+      setEdges((eds: any) => addEdge({ ...connection, animated: true, style: { strokeWidth: 2 } }, eds));
       if (onConnectProp) {
         onConnectProp(connection);
       }
@@ -152,41 +209,23 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     (event: React.KeyboardEvent) => {
       if (event.key === 'Delete' || event.key === 'Backspace') {
         const selectedNodesIDs = nodes.filter((node) => node.selected).map(n => n.id);
-        const selectedEdgesIDs = edges.filter((edge) => edge.selected).map(e => e.id);
-
         if (selectedNodesIDs.length > 0) {
-          setNodes((nds: any) => nds.filter((node: any) => !node.selected));
-        }
-        if (selectedEdgesIDs.length > 0) {
-          setEdges((eds: any) => eds.filter((edge: any) => !edge.selected));
+          deleteNodes(selectedNodesIDs);
         }
       }
 
       if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
-        const selectedNodes = nodes.filter((node) => node.selected);
-        if (selectedNodes.length > 0) {
-          localStorage.setItem('flowcraft-clipboard', JSON.stringify(selectedNodes));
+        const selectedNodesIDs = nodes.filter((node) => node.selected).map(n => n.id);
+        if (selectedNodesIDs.length > 0) {
+          copyNodes(selectedNodesIDs);
         }
       }
 
       if ((event.ctrlKey || event.metaKey) && event.key === 'v') {
-        const clipboard = localStorage.getItem('flowcraft-clipboard');
-        if (clipboard) {
-          const copiedNodes = JSON.parse(clipboard);
-          const newNodes = copiedNodes.map((node: any) => ({
-            ...node,
-            id: `${node.id}-copy-${Date.now()}`,
-            position: {
-              x: node.position.x + 50,
-              y: node.position.y + 50
-            },
-            selected: false
-          }));
-          setNodes((nds: any) => [...nds, ...newNodes]);
-        }
+        pasteNodes();
       }
     },
-    [nodes, edges, setNodes, setEdges]
+    [nodes, deleteNodes, copyNodes, pasteNodes]
   );
 
   const onDragOver = useCallback((event: React.DragEvent) => {
@@ -254,12 +293,27 @@ const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           defaultViewport={defaultViewport}
           attributionPosition="bottom-right"
           proOptions={{ hideAttribution: true }}
+          selectionMode={'partial' as any}
+          selectionKeyCode="Shift"
+          multiSelectionKeyCode="Control"
+          deleteKeyCode="Delete"
+          panOnDrag={[1, 2]} // Allow panning with middle/right click
+          selectionOnDrag={true} // Enable selection on drag
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
           {showControls && <Controls />}
           {showMinimap && <Minimap />}
+
           <Panel position="top-left" className="flex flex-col gap-2 pointer-events-auto">
             <WorkflowPanel />
+          </Panel>
+
+          <Panel position="bottom-center" className="pointer-events-auto">
+            <SelectionToolbar />
+          </Panel>
+
+          <Panel position="top-right" className="pointer-events-auto mt-4 mr-4">
+            <ShortcutsHelp />
           </Panel>
         </ReactFlow>
       </div>
