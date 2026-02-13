@@ -1,6 +1,7 @@
 {
   "name": "@flowcraft/canvas",
   "version": "1.0.0",
+  "type": "module",
   "description": "A professional React workflow canvas library with drag-drop, zoom, pan, minimap and customizable nodes - built on reactflow",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -12,7 +13,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "prepare": "npm run build"
+    "prepare": "bun run build"
   },
   "keywords": [
     "workflow",

@@ -40,7 +40,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = ({
   onNodesChange,
   onEdgesChange,
   onConnect,
-  theme,
+
   showMinimap = true,
   showControls = true,
   className = '',

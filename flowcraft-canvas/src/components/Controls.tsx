@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controls as RFControls } from 'reactflow';
-import { ZoomIn, ZoomOut, Maximize, Lock, Unlock } from 'lucide-react';
+import { ZoomIn, ZoomOut, Maximize, Lock } from 'lucide-react';
 
 interface ControlsProps {
   showZoom?: boolean;

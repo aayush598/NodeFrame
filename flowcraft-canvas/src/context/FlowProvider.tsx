@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
-import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeRegistryItem, NodeConfig } from '../types';
+import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
-import { generateId, copyNodes } from '../utils/helpers';
+import { generateId } from '../utils/helpers';
 import { NodeProps } from 'reactflow';
 
 const FlowContext = createContext<FlowContextValue | undefined>(undefined);
