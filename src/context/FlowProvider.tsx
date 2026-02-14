@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode, useCallback, useState } from 'react';
-import { useNodesState, useEdgesState, NodeProps } from 'reactflow';
+import { NodeProps, Connection, addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow';
 import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData, CodeExporter } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
@@ -11,10 +11,79 @@ export const FlowProvider: React.FC<{
   initialNodes?: FlowcraftNode[];
   initialEdges?: FlowcraftEdge[];
 }> = ({ children, initialNodes = [], initialEdges = [] }) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes] = useState<FlowcraftNode[]>(initialNodes);
+  const [edges, setEdges] = useState<FlowcraftEdge[]>(initialEdges);
   const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
   const [exporters, setExporters] = useState<CodeExporter[]>([]);
+
+  // Undo/Redo State
+  const [past, setPast] = useState<Array<{ nodes: FlowcraftNode[], edges: FlowcraftEdge[] }>>([]);
+  const [future, setFuture] = useState<Array<{ nodes: FlowcraftNode[], edges: FlowcraftEdge[] }>>([]);
+
+  const takeSnapshot = useCallback(() => {
+    const currentState = {
+      nodes: JSON.parse(JSON.stringify(nodes)),
+      edges: JSON.parse(JSON.stringify(edges))
+    };
+
+    setPast(prev => {
+      // Don't add if it's identical to the last state
+      if (prev.length > 0) {
+        const last = prev[prev.length - 1];
+        if (JSON.stringify(last.nodes) === JSON.stringify(currentState.nodes) &&
+          JSON.stringify(last.edges) === JSON.stringify(currentState.edges)) {
+          return prev;
+        }
+      }
+      return [...prev, currentState].slice(-50);
+    });
+    setFuture([]);
+  }, [nodes, edges]);
+
+  const onNodeDragStart = useCallback(() => {
+    takeSnapshot();
+  }, [takeSnapshot]);
+
+  const undo = useCallback(() => {
+    if (past.length === 0) return;
+
+    const previous = past[past.length - 1];
+    const newPast = past.slice(0, past.length - 1);
+
+    setFuture(prev => [{ nodes: JSON.parse(JSON.stringify(nodes)), edges: JSON.parse(JSON.stringify(edges)) }, ...prev]);
+    setPast(newPast);
+    setNodes(previous.nodes);
+    setEdges(previous.edges);
+  }, [past, nodes, edges]);
+
+  const redo = useCallback(() => {
+    if (future.length === 0) return;
+
+    const next = future[0];
+    const newFuture = future.slice(1);
+
+    setPast(prev => [...prev, { nodes: JSON.parse(JSON.stringify(nodes)), edges: JSON.parse(JSON.stringify(edges)) }]);
+    setFuture(newFuture);
+    setNodes(next.nodes);
+    setEdges(next.edges);
+  }, [future, nodes, edges]);
+
+  const onNodesChange = useCallback((changes: any) => {
+    const hasRemoval = changes.some((c: any) => c.type === 'remove');
+    if (hasRemoval) takeSnapshot();
+    setNodes((nds) => applyNodeChanges(changes, nds));
+  }, [takeSnapshot]);
+
+  const onEdgesChange = useCallback((changes: any) => {
+    const hasRemoval = changes.some((c: any) => c.type === 'remove');
+    if (hasRemoval) takeSnapshot();
+    setEdges((eds) => applyEdgeChanges(changes, eds));
+  }, [takeSnapshot]);
+
+  const onConnect = useCallback((connection: Connection) => {
+    takeSnapshot();
+    setEdges((eds) => addEdge(connection, eds));
+  }, [takeSnapshot]);
 
   const registerExporter = useCallback((exporter: CodeExporter) => {
     setExporters(prev => {
@@ -25,26 +94,30 @@ export const FlowProvider: React.FC<{
   }, []);
 
   const addNode = useCallback((node: FlowcraftNode) => {
+    takeSnapshot();
     setNodes(prev => [...prev, node]);
-  }, [setNodes]);
+  }, [setNodes, takeSnapshot]);
 
   const removeNode = useCallback((id: string) => {
+    takeSnapshot();
     setNodes(prev => prev.filter(n => n.id !== id));
     setEdges(prev => prev.filter(e => e.source !== id && e.target !== id));
-  }, [setNodes, setEdges]);
+  }, [setNodes, setEdges, takeSnapshot]);
 
   const deleteNodes = useCallback((nodeIds: string[]) => {
+    takeSnapshot();
     setNodes(prev => prev.filter(n => !nodeIds.includes(n.id)));
     setEdges(prev => prev.filter(e => !nodeIds.includes(e.source) && !nodeIds.includes(e.target)));
-  }, [setNodes, setEdges]);
+  }, [setNodes, setEdges, takeSnapshot]);
 
   const updateNode = useCallback((id: string, data: Partial<CustomNodeData>) => {
+    takeSnapshot();
     setNodes(prev =>
       prev.map(node =>
         node.id === id ? { ...node, data: { ...node.data, ...data } } : node
       )
     );
-  }, [setNodes]);
+  }, [setNodes, takeSnapshot]);
 
   const duplicateNode = useCallback((id: string) => {
     const nodeToDuplicate = nodes.find(n => n.id === id);
@@ -100,11 +173,13 @@ export const FlowProvider: React.FC<{
       target: idMap[edge.target]
     }));
 
+    takeSnapshot();
     setNodes(prev => [...prev.map(n => ({ ...n, selected: false })), ...newNodes]);
     setEdges(prev => [...prev, ...newEdges]);
-  }, [setNodes, setEdges]);
+  }, [setNodes, setEdges, takeSnapshot]);
 
   const groupNodes = useCallback((nodeIds: string[], name: string) => {
+    takeSnapshot();
     const nodesToGroup = nodes.filter(n => nodeIds.includes(n.id));
     if (nodesToGroup.length < 2) return;
 
@@ -144,9 +219,10 @@ export const FlowProvider: React.FC<{
       ...prev.filter(n => !nodeIds.includes(n.id)),
       groupNode
     ]);
-  }, [nodes, edges, setNodes, setEdges]);
+  }, [nodes, edges, setNodes, setEdges, takeSnapshot]);
 
   const ungroupNode = useCallback((groupId: string) => {
+    takeSnapshot();
     const groupNode = nodes.find(n => n.id === groupId);
     if (!groupNode || !groupNode.data.isGroup) return;
 
@@ -173,7 +249,7 @@ export const FlowProvider: React.FC<{
       ...prev.filter(n => n.id !== groupId),
       ...subNodes.map((n: FlowcraftNode) => ({ ...n, selected: true }))
     ]);
-  }, [nodes, setNodes, setEdges]);
+  }, [nodes, setNodes, setEdges, takeSnapshot]);
 
   const registerNode = useCallback(
     (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => {
@@ -237,6 +313,14 @@ export const FlowProvider: React.FC<{
       throw error;
     }
   }, [updateNodeData, getSourceNodeResults]);
+
+  const resetExecutionState = useCallback(() => {
+    takeSnapshot();
+    setNodes(prev => prev.map(n => ({
+      ...n,
+      data: { ...n.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
+    })));
+  }, [takeSnapshot]);
 
   const clearHistory = useCallback(() => setExecutionHistory([]), []);
 
@@ -348,8 +432,15 @@ export const FlowProvider: React.FC<{
         executeWorkflow,
         executionHistory,
         clearHistory,
+        resetExecutionState,
         registerExporter,
-        exporters
+        exporters,
+        undo,
+        redo,
+        canUndo: past.length > 0,
+        canRedo: future.length > 0,
+        onConnect,
+        onNodeDragStart
       }}
     >
       {children}

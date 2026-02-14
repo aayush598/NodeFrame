@@ -95,8 +95,15 @@ export interface FlowContextValue {
   deleteNodes: (nodeIds: string[]) => void;
   executionHistory: ExecutionRecord[];
   clearHistory: () => void;
+  resetExecutionState: () => void;
   registerExporter: (exporter: CodeExporter) => void;
   exporters: CodeExporter[];
+  undo: () => void;
+  redo: () => void;
+  canUndo: boolean;
+  canRedo: boolean;
+  onConnect: (connection: any) => void;
+  onNodeDragStart: () => void;
 }
 
 export interface ExecutionRecord {

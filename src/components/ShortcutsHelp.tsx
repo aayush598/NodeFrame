@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Keyboard, ChevronDown, Copy, Clipboard, Trash2, MousePointer2, Move, ZoomIn, Box } from 'lucide-react';
+import { Keyboard, ChevronDown, Copy, Clipboard, Trash2, MousePointer2, Move, ZoomIn, Box, Undo2, Redo2 } from 'lucide-react';
 
 export const ShortcutsHelp: React.FC = () => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const shortcuts = [
+        { label: 'Undo Action', keys: ['Ctrl', 'Z'], icon: <Undo2 size={12} /> },
+        { label: 'Redo Action', keys: ['Ctrl', 'Y'], icon: <Redo2 size={12} /> },
         { label: 'Copy Nodes', keys: ['Ctrl', 'C'], icon: <Copy size={12} /> },
         { label: 'Paste Nodes', keys: ['Ctrl', 'V'], icon: <Clipboard size={12} /> },
         { label: 'Delete Selection', keys: ['Del'], icon: <Trash2 size={12} /> },

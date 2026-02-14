@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactFlow, {
   Background,
   BackgroundVariant,
-  addEdge,
-  Connection,
   NodeTypes,
   Panel
 } from 'reactflow';
@@ -18,7 +16,7 @@ import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 import { FlowcraftProps } from '../types';
 import { FlowProvider, useFlow } from '../context/FlowProvider';
-import { FileCode, Play, RotateCcw, Copy, Clipboard, Trash2, Box } from 'lucide-react';
+import { FileCode, Play, RotateCcw, Copy, Clipboard, Trash2, Box, Undo2, Redo2 } from 'lucide-react';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
 import { StartNode } from '../nodes/StartNode';
@@ -96,7 +94,7 @@ const SelectionToolbar = () => {
 };
 
 const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: number, exporters: any[], onOpenExport: () => void }) => {
-  const { executeWorkflow, setNodes } = useFlow();
+  const { executeWorkflow, resetExecutionState, undo, redo, canUndo, canRedo } = useFlow();
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2 flex items-center gap-3">
@@ -104,6 +102,27 @@ const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: nu
         <div className="w-2 h-2 rounded-full bg-green-500"></div>
         <span className="text-sm font-bold text-gray-800 tracking-tight">NodeFrame</span>
       </div>
+
+      <div className="flex items-center gap-1">
+        <button
+          onClick={undo}
+          disabled={!canUndo}
+          title="Undo (Ctrl+Z)"
+          className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-md transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+        >
+          <Undo2 size={16} />
+        </button>
+        <button
+          onClick={redo}
+          disabled={!canRedo}
+          title="Redo (Ctrl+Y)"
+          className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-md transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+        >
+          <Redo2 size={16} />
+        </button>
+      </div>
+
+      <div className="w-px h-6 bg-gray-100 mx-1" />
 
       <div className="flex items-center gap-1.5">
         <button
@@ -125,12 +144,7 @@ const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: nu
         )}
 
         <button
-          onClick={() => {
-            setNodes((nds: any) => nds.map((n: any) => ({
-              ...n,
-              data: { ...n.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
-            })));
-          }}
+          onClick={resetExecutionState}
           title="Reset execution state"
           className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
         >
@@ -152,7 +166,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = (props) => {
 export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   onNodesChange: onNodesChangeProp,
   onEdgesChange: onEdgesChangeProp,
-  onConnect: onConnectProp,
+  onConnect: _onConnectProp,
 
   showMinimap = true,
   showControls = true,
@@ -170,13 +184,17 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     nodes,
     edges,
     setNodes,
-    setEdges,
+    addNode,
     onNodesChange,
     onEdgesChange,
     deleteNodes,
     copyNodes,
     pasteNodes,
-    exporters
+    exporters,
+    undo,
+    redo,
+    onConnect,
+    onNodeDragStart
   } = useFlow();
 
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
@@ -216,15 +234,6 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     [onEdgesChange, onEdgesChangeProp, edges]
   );
 
-  const handleConnect = useCallback(
-    (connection: Connection) => {
-      setEdges((eds: any) => addEdge({ ...connection, animated: true, style: { strokeWidth: 2 } }, eds));
-      if (onConnectProp) {
-        onConnectProp(connection);
-      }
-    },
-    [setEdges, onConnectProp]
-  );
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -245,8 +254,18 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
       if ((event.ctrlKey || event.metaKey) && event.key === 'v') {
         pasteNodes();
       }
+
+      if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
+        event.preventDefault();
+        undo();
+      }
+
+      if ((event.ctrlKey || event.metaKey) && (event.key === 'y' || (event.shiftKey && event.key === 'Z'))) {
+        event.preventDefault();
+        redo();
+      }
     },
-    [nodes, deleteNodes, copyNodes, pasteNodes]
+    [nodes, deleteNodes, copyNodes, pasteNodes, undo, redo]
   );
 
   const onDragOver = useCallback((event: React.DragEvent) => {
@@ -283,9 +302,9 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
         },
       };
 
-      setNodes((nds: any) => nds.concat(newNode));
+      addNode(newNode);
     },
-    [reactFlowInstance, setNodes]
+    [reactFlowInstance, addNode]
   );
 
   return (
@@ -302,7 +321,8 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           edges={edges}
           onNodesChange={handleNodesChange}
           onEdgesChange={handleEdgesChange}
-          onConnect={handleConnect}
+          onConnect={onConnect}
+          onNodeDragStart={onNodeDragStart}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           onInit={setReactFlowInstance}
