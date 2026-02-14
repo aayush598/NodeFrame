@@ -31,3 +31,42 @@ export const SlackNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         />
     );
 };
+
+export const config = {
+    id: 'slackNotify',
+    type: 'slackNotify',
+    label: 'Slack Notify',
+    category: 'Notifications',
+    color: '#6366f1',
+    icon: <MessageSquare size={16} />,
+    defaultData: {
+        description: 'Sends notifications to a Slack channel about pipeline status',
+        properties: {
+            webhookUrl: '',
+            channel: '#general',
+            message: 'Pipeline completed!',
+            onlyOnFailure: false,
+        },
+        onExecute: () => ({ notified: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'channel',
+            label: 'Channel',
+            type: 'string',
+            defaultValue: '#general',
+        },
+        {
+            name: 'message',
+            label: 'Message',
+            type: 'textarea',
+            defaultValue: 'Pipeline completed!',
+        },
+        {
+            name: 'onlyOnFailure',
+            label: 'Only on Failure',
+            type: 'boolean',
+            defaultValue: false,
+        },
+    ]
+};

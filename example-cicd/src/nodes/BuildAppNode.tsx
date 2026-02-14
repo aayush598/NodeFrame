@@ -29,3 +29,46 @@ export const BuildAppNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         />
     );
 };
+
+export const config = {
+    id: 'buildApp',
+    type: 'buildApp',
+    label: 'Build App',
+    category: 'Build',
+    color: '#8b5cf6',
+    icon: <Code size={16} />,
+    defaultData: {
+        description: 'Compiles and builds the application code for production',
+        properties: {
+            buildTool: 'vite',
+            outputDir: 'dist',
+            buildCommand: 'npm run build',
+        },
+        onExecute: () => ({ built: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'buildTool',
+            label: 'Build Tool',
+            type: 'select',
+            options: [
+                { label: 'Vite', value: 'vite' },
+                { label: 'Webpack', value: 'webpack' },
+                { label: 'Rollup', value: 'rollup' },
+                { label: 'esbuild', value: 'esbuild' },
+            ],
+        },
+        {
+            name: 'outputDir',
+            label: 'Output Directory',
+            type: 'string',
+            defaultValue: 'dist',
+        },
+        {
+            name: 'buildCommand',
+            label: 'Build Command',
+            type: 'string',
+            defaultValue: 'npm run build',
+        },
+    ]
+};

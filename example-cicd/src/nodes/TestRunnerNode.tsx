@@ -41,3 +41,57 @@ export const TestRunnerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         />
     );
 };
+
+export const config = {
+    id: 'testRunner',
+    type: 'testRunner',
+    label: 'Run Tests',
+    category: 'Test',
+    color: '#a855f7',
+    icon: <FlaskConical size={16} />,
+    defaultData: {
+        description: 'Runs automated tests (unit, integration, e2e) using a specified framework',
+        properties: {
+            testType: 'unit',
+            framework: 'jest',
+            command: 'npm test',
+            coverageEnabled: false,
+        },
+        onExecute: () => ({ passed: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'testType',
+            label: 'Test Type',
+            type: 'select',
+            options: [
+                { label: 'Unit Tests', value: 'unit' },
+                { label: 'Integration Tests', value: 'integration' },
+                { label: 'E2E Tests', value: 'e2e' },
+            ],
+        },
+        {
+            name: 'framework',
+            label: 'Test Framework',
+            type: 'select',
+            options: [
+                { label: 'Jest', value: 'jest' },
+                { label: 'Vitest', value: 'vitest' },
+                { label: 'Playwright', value: 'playwright' },
+                { label: 'Cypress', value: 'cypress' },
+            ],
+        },
+        {
+            name: 'command',
+            label: 'Test Command',
+            type: 'string',
+            defaultValue: 'npm test',
+        },
+        {
+            name: 'coverageEnabled',
+            label: 'Enable Coverage',
+            type: 'boolean',
+            defaultValue: false,
+        },
+    ]
+};

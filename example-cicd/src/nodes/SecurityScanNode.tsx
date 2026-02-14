@@ -45,3 +45,50 @@ export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
         </BaseNode>
     );
 };
+
+export const config = {
+    id: 'securityScan',
+    type: 'securityScan',
+    label: 'Security Scan',
+    category: 'Security',
+    color: '#f59e0b',
+    icon: <Shield size={16} />,
+    defaultData: {
+        description: 'Scans the codebase for security vulnerabilities and compliance issues',
+        properties: {
+            scanner: 'snyk',
+            severity: 'high',
+            failOnIssues: true,
+        },
+        onExecute: () => ({ scanned: true, vulnerabilities: 0 }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'scanner',
+            label: 'Scanner',
+            type: 'select',
+            options: [
+                { label: 'Snyk', value: 'snyk' },
+                { label: 'Trivy', value: 'trivy' },
+                { label: 'SonarQube', value: 'sonarqube' },
+            ],
+        },
+        {
+            name: 'severity',
+            label: 'Minimum Severity',
+            type: 'select',
+            options: [
+                { label: 'Low', value: 'low' },
+                { label: 'Medium', value: 'medium' },
+                { label: 'High', value: 'high' },
+                { label: 'Critical', value: 'critical' },
+            ],
+        },
+        {
+            name: 'failOnIssues',
+            label: 'Fail on Issues',
+            type: 'boolean',
+            defaultValue: true,
+        },
+    ]
+};

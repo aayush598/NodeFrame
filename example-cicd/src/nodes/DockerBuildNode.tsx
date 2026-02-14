@@ -38,3 +38,48 @@ export const DockerBuildNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         </BaseNode>
     );
 };
+
+export const config = {
+    id: 'dockerBuild',
+    type: 'dockerBuild',
+    label: 'Docker Build',
+    category: 'Build',
+    color: '#0ea5e9',
+    icon: <Container size={16} />,
+    defaultData: {
+        description: 'Builds a Docker image from a Dockerfile and optionally pushes it to a registry',
+        properties: {
+            imageName: 'my-app',
+            tags: ['latest'],
+            dockerfile: 'Dockerfile',
+            push: true,
+        },
+        onExecute: () => ({ built: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'imageName',
+            label: 'Image Name',
+            type: 'string',
+            defaultValue: 'my-app',
+        },
+        {
+            name: 'tags',
+            label: 'Tags (comma-separated)',
+            type: 'string',
+            defaultValue: 'latest',
+        },
+        {
+            name: 'dockerfile',
+            label: 'Dockerfile Path',
+            type: 'string',
+            defaultValue: 'Dockerfile',
+        },
+        {
+            name: 'push',
+            label: 'Push to Registry',
+            type: 'boolean',
+            defaultValue: true,
+        },
+    ]
+};

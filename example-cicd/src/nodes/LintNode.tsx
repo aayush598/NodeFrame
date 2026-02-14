@@ -31,3 +31,38 @@ export const LintNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         />
     );
 };
+
+export const config = {
+    id: 'lint',
+    type: 'lint',
+    label: 'Lint Code',
+    category: 'Quality',
+    color: '#14b8a6',
+    icon: <Gauge size={16} />,
+    defaultData: {
+        description: 'Analyzes code for styling and syntax errors using a linter',
+        properties: {
+            linter: 'eslint',
+            autoFix: false,
+        },
+        onExecute: () => ({ linted: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'linter',
+            label: 'Linter',
+            type: 'select',
+            options: [
+                { label: 'ESLint', value: 'eslint' },
+                { label: 'Prettier', value: 'prettier' },
+                { label: 'Biome', value: 'biome' },
+            ],
+        },
+        {
+            name: 'autoFix',
+            label: 'Auto-fix Issues',
+            type: 'boolean',
+            defaultValue: false,
+        },
+    ]
+};

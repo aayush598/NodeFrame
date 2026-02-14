@@ -21,6 +21,7 @@ export { useFlowcraft } from './hooks/useFlowcraft';
 export { useNodeRegistry } from './hooks/useNodeRegistry';
 
 export { nodeRegistry } from './utils/nodeRegistry';
+export { registerNodesFromGlob } from './utils/registerNodesFromGlob';
 export * from './utils/helpers';
 
 export type {

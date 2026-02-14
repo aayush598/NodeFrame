@@ -31,3 +31,45 @@ export const InstallDepsNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
         />
     );
 };
+
+export const config = {
+    id: 'installDeps',
+    type: 'installDeps',
+    label: 'Install Dependencies',
+    category: 'Build',
+    color: '#3b82f6',
+    icon: <Package size={16} />,
+    defaultData: {
+        description: 'Installs project dependencies using the specified package manager',
+        properties: {
+            packageManager: 'npm',
+            cacheEnabled: true,
+            installCommand: '',
+        },
+        onExecute: () => ({ installed: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'packageManager',
+            label: 'Package Manager',
+            type: 'select',
+            options: [
+                { label: 'npm', value: 'npm' },
+                { label: 'yarn', value: 'yarn' },
+                { label: 'pnpm', value: 'pnpm' },
+                { label: 'bun', value: 'bun' },
+            ],
+        },
+        {
+            name: 'cacheEnabled',
+            label: 'Enable Cache',
+            type: 'boolean',
+            defaultValue: true,
+        },
+        {
+            name: 'installCommand',
+            label: 'Custom Install Command',
+            type: 'string',
+        },
+    ]
+};

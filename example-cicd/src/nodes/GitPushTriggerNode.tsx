@@ -39,3 +39,44 @@ export const GitPushTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) =
         </BaseNode>
     );
 };
+
+export const config = {
+    id: 'gitPushTrigger',
+    type: 'gitPushTrigger',
+    label: 'Git Push',
+    category: 'Triggers',
+    color: '#10b981',
+    icon: <GitBranch size={16} />,
+    defaultData: {
+        description: 'Triggers the pipeline on Git push events to specific branches',
+        properties: {
+            eventType: 'push',
+            branches: ['main'],
+            paths: [],
+        },
+        onExecute: () => ({ triggered: true, timestamp: Date.now() }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'eventType',
+            label: 'Event Type',
+            type: 'select',
+            options: [
+                { label: 'Push', value: 'push' },
+                { label: 'Pull Request', value: 'pull_request' },
+                { label: 'Tag', value: 'tag' },
+            ],
+        },
+        {
+            name: 'branches',
+            label: 'Branches (comma-separated)',
+            type: 'string',
+            defaultValue: 'main',
+        },
+        {
+            name: 'paths',
+            label: 'Path Filters (comma-separated)',
+            type: 'string',
+        },
+    ]
+};

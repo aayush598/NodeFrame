@@ -9,13 +9,6 @@ export const DeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const environment = data.properties?.environment || 'staging';
     const region = data.properties?.region || 'us-east-1';
 
-    const platformColors: Record<string, string> = {
-        aws: 'bg-orange-100 text-orange-700',
-        vercel: 'bg-black text-white',
-        kubernetes: 'bg-blue-100 text-blue-700',
-        ssh: 'bg-gray-100 text-gray-700',
-    };
-
     const envColors: Record<string, string> = {
         staging: 'bg-yellow-100 text-yellow-700',
         production: 'bg-red-100 text-red-700',
@@ -24,7 +17,7 @@ export const DeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
 
     const headerRight = (
         <>
-            <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${platformColors[platform] || platformColors.aws}`}>
+            <span className="text-[9px] font-bold text-indigo-700 bg-indigo-100 px-1.5 py-0.5 rounded">
                 {platform}
             </span>
             <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${envColors[environment] || envColors.staging}`}>
@@ -50,4 +43,57 @@ export const DeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
             )}
         </BaseNode>
     );
+};
+
+export const config = {
+    id: 'deploy',
+    type: 'deploy',
+    label: 'Deploy',
+    category: 'Deploy',
+    color: '#ec4899',
+    icon: <Rocket size={16} />,
+    defaultData: {
+        description: 'Deploys the application to a target platform or environment',
+        properties: {
+            platform: 'aws',
+            environment: 'staging',
+            region: 'us-east-1',
+            healthCheck: '',
+        },
+        onExecute: () => ({ deployed: true }),
+    },
+    propertyDefinitions: [
+        {
+            name: 'platform',
+            label: 'Platform',
+            type: 'select',
+            options: [
+                { label: 'AWS', value: 'aws' },
+                { label: 'Vercel', value: 'vercel' },
+                { label: 'Kubernetes', value: 'kubernetes' },
+                { label: 'SSH', value: 'ssh' },
+            ],
+        },
+        {
+            name: 'environment',
+            label: 'Environment',
+            type: 'select',
+            options: [
+                { label: 'Development', value: 'development' },
+                { label: 'Staging', value: 'staging' },
+                { label: 'Production', value: 'production' },
+            ],
+        },
+        {
+            name: 'region',
+            label: 'Region',
+            type: 'string',
+            defaultValue: 'us-east-1',
+        },
+        {
+            name: 'healthCheck',
+            label: 'Health Check URL',
+            type: 'string',
+        },
+    ]
 };
