@@ -27,8 +27,8 @@ export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id,
         >
             {/* Status Badge */}
             <div className={`status-badge ${status !== 'idle' ? 'visible' : ''} ${status === 'success' ? 'bg-green-500' :
-                    status === 'error' ? 'bg-red-500' :
-                        'bg-blue-500'
+                status === 'error' ? 'bg-red-500' :
+                    'bg-blue-500'
                 }`}>
                 {status === 'executing' && <Loader2 className="w-3 h-3 text-white animate-spin" />}
                 {status === 'success' && <CheckCircle className="w-3 h-3 text-white" />}
@@ -70,9 +70,7 @@ export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id,
                 </div>
             )}
 
-            {data.description && (
-                <div className="text-xs text-gray-500 mt-2">{data.description}</div>
-            )}
+
 
             <Handle
                 type="source"

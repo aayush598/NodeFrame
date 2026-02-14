@@ -56,9 +56,7 @@ export const ConditionalNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data,
         </div>
         <div className="flex-1">
           <div className="font-semibold text-sm text-gray-900">{data.label || 'Condition'}</div>
-          {data.description && (
-            <div className="text-xs text-gray-500 mt-0.5">{data.description}</div>
-          )}
+
         </div>
       </div>
 

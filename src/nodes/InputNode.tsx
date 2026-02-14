@@ -33,8 +33,8 @@ export const InputNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selec
     >
       {/* Status Badge */}
       <div className={`status-badge ${status !== 'idle' ? 'visible' : ''} ${status === 'success' ? 'bg-green-500' :
-          status === 'error' ? 'bg-red-500' :
-            'bg-blue-500'
+        status === 'error' ? 'bg-red-500' :
+          'bg-blue-500'
         }`}>
         {status === 'executing' && <Loader2 className="w-3 h-3 text-white animate-spin" />}
         {status === 'success' && <CheckCircle className="w-3 h-3 text-white" />}
@@ -50,9 +50,7 @@ export const InputNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selec
         </div>
         <div className="flex-1">
           <div className="font-semibold text-sm text-gray-900">{data.label || 'Input'}</div>
-          {data.description && (
-            <div className="text-xs text-gray-500 mt-0.5">{data.description}</div>
-          )}
+
         </div>
       </div>
 
