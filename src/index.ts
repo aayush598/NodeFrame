@@ -3,6 +3,7 @@ export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
 export { NodeSidebar } from './components/NodeSidebar';
 export { ExportModal } from './components/ExportModal';
+export { BaseNode } from './components/BaseNode';
 
 export { StartNode } from './nodes/StartNode';
 export { EndNode } from './nodes/EndNode';

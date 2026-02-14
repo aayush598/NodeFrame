@@ -1,10 +1,12 @@
-import { Handle, NodeProps, Position } from '@reactflow/core';
-import { Upload, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { NodeProps } from '@reactflow/core';
+import { Upload } from 'lucide-react';
 import { CustomNodeData } from '../types';
 import { useFlow } from '../context/FlowProvider';
 import { NodeActions } from '../components/NodeActions';
+import { BaseNode } from '../components/BaseNode';
 
-export const OutputNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const OutputNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
+  const { id, data } = props;
   const { executeNode } = useFlow();
 
   const handleRun = () => {
@@ -20,51 +22,21 @@ export const OutputNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, sele
     }
   };
 
-  const status = data.executionStatus || 'idle';
-
   return (
-    <div
-      className={`relative px-4 py-3 rounded-lg bg-white border-2 shadow-md min-w-[180px] transition-all ${selected ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
-        } ${status === 'executing' ? 'node-executing' :
-          status === 'success' ? 'node-success' :
-            status === 'error' ? 'node-error' : ''
-        }`}
-      style={{ borderColor: status === 'idle' ? (data.color || '#ec4899') : undefined }}
-    >
-      {/* Status Badge */}
-      <div className={`status-badge ${status !== 'idle' ? 'visible' : ''} ${status === 'success' ? 'bg-green-500' :
-        status === 'error' ? 'bg-red-500' :
-          'bg-blue-500'
-        }`}>
-        {status === 'executing' && <Loader2 className="w-3 h-3 text-white animate-spin" />}
-        {status === 'success' && <CheckCircle className="w-3 h-3 text-white" />}
-        {status === 'error' && <AlertCircle className="w-3 h-3 text-white" />}
-      </div>
-
-      <Handle
-        type="target"
-        position={Position.Left}
-        isConnectable={isConnectable}
-        className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
-      />
-      <div className="flex items-center gap-2">
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center"
-          style={{ backgroundColor: data.color || '#ec4899' }}
-        >
-          {data.icon || <Upload className="w-4 h-4 text-white" />}
-        </div>
-        <div className="flex-1">
-          <div className="font-semibold text-sm text-gray-900">{data.label || 'Output'}</div>
-
-        </div>
-      </div>
-
-      <NodeActions
-        status={data.executionStatus}
-        onRun={handleRun}
-        onCopyCode={handleCopyCode}
-      />
-    </div>
+    <BaseNode
+      {...props}
+      title={data.label || 'Output'}
+      icon={data.icon || <Upload />}
+      color={data.color || '#ec4899'}
+      isSource={false}
+      footer={
+        <NodeActions
+          status={data.executionStatus}
+          onRun={handleRun}
+          onCopyCode={handleCopyCode}
+          className="!mt-0 !pt-0 !border-0"
+        />
+      }
+    />
   );
 };
