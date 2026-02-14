@@ -1,29 +1,86 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useNodeRegistry } from '../hooks/useNodeRegistry';
 import { Search, ChevronRight, LayoutGrid, Info } from 'lucide-react';
 import { FlowTooltip } from './FlowTooltip';
+import { List, RowComponentProps } from 'react-window';
+
+// Custom AutoSizer to avoid extra dependency
+const AutoSizer = ({ children }: { children: (size: { width: number; height: number }) => React.ReactElement }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [size, setSize] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const observer = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                // Use contentRect for accurate inner dimensions
+                setSize({
+                    width: entry.contentRect.width,
+                    height: entry.contentRect.height
+                });
+            }
+        });
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div ref={ref} className="w-full h-full min-h-0 flex-1 overflow-hidden" style={{ height: '100%', width: '100%' }}>
+            {size.height > 0 && children(size)}
+        </div>
+    );
+};
 
 interface NodeSidebarProps {
     className?: string;
 }
 
+type ListItem =
+    | { type: 'category'; name: string }
+    | { type: 'node'; data: any };
+
 export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
     const { getAll } = useNodeRegistry();
     const [searchTerm, setSearchTerm] = useState('');
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const nodes = getAll();
 
-    const filteredNodes = nodes.filter(node =>
-        node.config.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        node.config.type.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Memoize getAll result to prevent infinite loops if getAll() returns new array
+    const allNodes = useMemo(() => getAll(), [getAll]);
+
+    // Optimize filtering and flattening for virtualization
+    const listItems = useMemo<ListItem[]>(() => {
+        const filtered = allNodes.filter(node =>
+            node.config.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            node.config.type.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        if (filtered.length === 0) return [];
+
+        const grouped = new Map<string, any[]>();
+        filtered.forEach(node => {
+            const cat = node.config.category || 'General';
+            if (!grouped.has(cat)) grouped.set(cat, []);
+            grouped.get(cat)!.push(node);
+        });
+
+        const items: ListItem[] = [];
+        // Sort categories
+        const sortedCats = Array.from(grouped.keys()).sort();
+
+        sortedCats.forEach(cat => {
+            items.push({ type: 'category', name: cat });
+            grouped.get(cat)!.forEach(node => {
+                items.push({ type: 'node', data: node });
+            });
+        });
+
+        return items;
+    }, [allNodes, searchTerm]);
 
     const onDragStart = (event: React.DragEvent, nodeType: string) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
     };
-
-    const categories = Array.from(new Set(nodes.map(n => n.config.category || 'General')));
 
     if (isCollapsed) {
         return (
@@ -50,10 +107,10 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
     }>({ x: 0, y: 0, visible: false });
 
     const handleMouseEnter = (event: React.MouseEvent, node: any) => {
-        if (node.config.label || node.config.defaultData?.description) {
+        if (node.config.label || node.config.description) {
             setTooltip({
                 label: node.config.label,
-                description: node.config.defaultData?.description,
+                description: node.config.defaultData?.description || node.config.description,
                 x: event.clientX,
                 y: event.clientY,
                 visible: true
@@ -69,17 +126,68 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
         setTooltip(prev => ({ ...prev, visible: false }));
     };
 
+    const Row = ({ index, style }: RowComponentProps) => {
+        const item = listItems[index];
+
+        if (item.type === 'category') {
+            return (
+                <div style={style}>
+                    <div className="px-3 py-2 pt-4">
+                        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">
+                            {item.name}
+                        </h3>
+                    </div>
+                </div>
+            );
+        }
+
+        const node = item.data;
+        return (
+            <div style={style}>
+                <div className="px-3 pb-2 pt-1 h-full">
+                    <div
+                        className="flex items-center gap-3 p-2.5 rounded-lg border border-transparent bg-white hover:border-gray-200 hover:shadow-sm transition-all cursor-grab active:cursor-grabbing group h-full"
+                        onDragStart={(event) => onDragStart(event, node.type)}
+                        onMouseEnter={(e) => handleMouseEnter(e, node)}
+                        onMouseMove={handleMouseMove}
+                        onMouseLeave={handleMouseLeave}
+                        draggable
+                    >
+                        <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center shadow-sm shrink-0"
+                            style={{ backgroundColor: node.config.color || '#3b82f6' }}
+                        >
+                            {node.config.icon || <div className="w-2 h-2 rounded-full bg-white opacity-40" />}
+                        </div>
+                        <div className="flex-1 min-w-0 flex flex-col justify-center">
+                            <div className="text-xs font-bold text-gray-700 truncate group-hover:text-blue-600 transition-colors">{node.config.label}</div>
+                            <div className="text-[10px] text-gray-400 capitalize truncate">{node.type}</div>
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Info size={12} className="text-gray-300" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const getItemSize = (index: number) => {
+        const item = listItems[index];
+        return item.type === 'category' ? 40 : 64; // Adjusted heights
+    };
+
     return (
         <>
             <aside className={`w-64 bg-white border-r border-gray-200 flex flex-col h-full flex-shrink-0 transition-all overflow-hidden ${className}`}>
-                <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+                <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50 flex-shrink-0">
                     <div className="flex items-center gap-2">
                         <LayoutGrid size={16} className="text-gray-600" />
                         <span className="font-bold text-gray-700 uppercase text-xs tracking-wider">Components</span>
                     </div>
                 </div>
 
-                <div className="p-3 border-b border-gray-200">
+                <div className="p-3 border-b border-gray-200 flex-shrink-0">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
@@ -92,49 +200,21 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
                     </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto min-h-0 p-3 space-y-6">
-                    {categories.map(category => {
-                        const categoryNodes = filteredNodes.filter(n => (n.config.category || 'General') === category);
-                        if (categoryNodes.length === 0) return null;
-
-                        return (
-                            <div key={category} className="space-y-2">
-                                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">
-                                    {category}
-                                </h3>
-                                <div className="space-y-1">
-                                    {categoryNodes.map(node => (
-                                        <div
-                                            key={node.type}
-                                            className="flex items-center gap-3 p-2.5 rounded-lg border border-transparent bg-white hover:border-gray-200 hover:shadow-sm transition-all cursor-grab active:cursor-grabbing group"
-                                            onDragStart={(event) => onDragStart(event, node.type)}
-                                            onMouseEnter={(e) => handleMouseEnter(e, node)}
-                                            onMouseMove={handleMouseMove}
-                                            onMouseLeave={handleMouseLeave}
-                                            draggable
-                                        >
-                                            <div
-                                                className="w-8 h-8 rounded-lg flex items-center justify-center shadow-sm shrink-0"
-                                                style={{ backgroundColor: node.config.color || '#3b82f6' }}
-                                            >
-                                                {node.config.icon || <div className="w-2 h-2 rounded-full bg-white opacity-40" />}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="text-xs font-bold text-gray-700 truncate group-hover:text-blue-600 transition-colors">{node.config.label}</div>
-                                                <div className="text-[10px] text-gray-400 capitalize truncate">{node.type}</div>
-                                            </div>
-                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <Info size={12} className="text-gray-300" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                <div className="flex-1 overflow-hidden" style={{ display: 'flex' }}>
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List
+                                style={{ width, height }}
+                                rowCount={listItems.length}
+                                rowHeight={getItemSize}
+                                rowComponent={Row}
+                                rowProps={{}} // Adding empty rowProps to satisfy generic?
+                            />
+                        )}
+                    </AutoSizer>
                 </div>
 
-                <div className="p-3 bg-gray-50 border-t border-gray-200 text-center">
+                <div className="p-3 bg-gray-50 border-t border-gray-200 text-center flex-shrink-0">
                     <span className="text-[10px] text-gray-400 uppercase font-medium">Drag to add</span>
                 </div>
             </aside>

@@ -335,6 +335,9 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           deleteKeyCode="Delete"
           panOnDrag={true}
           selectionOnDrag={false}
+          onlyRenderVisibleElements={true}
+          minZoom={0.1}
+          maxZoom={4}
         >
           <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
           {showControls && <Controls />}
