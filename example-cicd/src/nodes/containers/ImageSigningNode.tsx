@@ -4,7 +4,6 @@ import { ShieldCheck } from 'lucide-react';
 import { BaseNode, CustomNodeData } from '@nodeframe';
 
 export const ImageSigningNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
-    const image = props.data.properties?.image || '';
 
     return (
         <BaseNode

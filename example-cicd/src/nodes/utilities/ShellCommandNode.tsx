@@ -4,7 +4,6 @@ import { Terminal } from 'lucide-react';
 import { BaseNode, CustomNodeData } from '@nodeframe';
 
 export const ShellCommandNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
-    const cmd = props.data.properties?.command || 'echo Hello';
 
     return (
         <BaseNode

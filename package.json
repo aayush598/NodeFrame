@@ -37,7 +37,7 @@
     "file-saver": "^2.0.5",
     "js-yaml": "^4.1.1",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.507.0",
+    "lucide-react": "^0.564.0",
     "react-window": "^2.2.7",
     "reactflow": "11.10.1"
   },
