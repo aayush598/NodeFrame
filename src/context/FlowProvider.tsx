@@ -1,6 +1,6 @@
 import React, { createContext, useContext, ReactNode, useCallback, useState } from 'react';
 import { useNodesState, useEdgesState, NodeProps } from 'reactflow';
-import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData } from '../types';
+import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData, CodeExporter } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 
@@ -14,6 +14,15 @@ export const FlowProvider: React.FC<{
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
+  const [exporters, setExporters] = useState<CodeExporter[]>([]);
+
+  const registerExporter = useCallback((exporter: CodeExporter) => {
+    setExporters(prev => {
+      const exists = prev.find(e => e.id === exporter.id);
+      if (exists) return prev;
+      return [...prev, exporter];
+    });
+  }, []);
 
   const addNode = useCallback((node: FlowcraftNode) => {
     setNodes(prev => [...prev, node]);
@@ -338,7 +347,9 @@ export const FlowProvider: React.FC<{
         executeNode: (id) => executeNodeInternal(id, nodes, edges).then(() => { }),
         executeWorkflow,
         executionHistory,
-        clearHistory
+        clearHistory,
+        registerExporter,
+        exporters
       }}
     >
       {children}

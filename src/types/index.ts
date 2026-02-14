@@ -95,6 +95,8 @@ export interface FlowContextValue {
   deleteNodes: (nodeIds: string[]) => void;
   executionHistory: ExecutionRecord[];
   clearHistory: () => void;
+  registerExporter: (exporter: CodeExporter) => void;
+  exporters: CodeExporter[];
 }
 
 export interface ExecutionRecord {
@@ -103,4 +105,13 @@ export interface ExecutionRecord {
   status: 'success' | 'error';
   totalNodes: number;
   details: Record<string, { status: string; output?: any; error?: string }>;
+}
+
+export interface CodeExporter {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+  fileName: string;
+  color?: string;
+  generate: (nodes: FlowcraftNode[], edges: FlowcraftEdge[]) => string;
 }

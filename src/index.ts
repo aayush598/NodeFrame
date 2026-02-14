@@ -2,6 +2,7 @@ export { FlowCanvas, FlowCanvasInternal as FlowCanvasCore } from './components/F
 export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
 export { NodeSidebar } from './components/NodeSidebar';
+export { ExportModal } from './components/ExportModal';
 
 export { StartNode } from './nodes/StartNode';
 export { EndNode } from './nodes/EndNode';

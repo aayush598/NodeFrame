@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -12,12 +12,13 @@ import { NodeSidebar } from './NodeSidebar';
 import { RightSidebar } from './RightSidebar';
 import { ShortcutsHelp } from './ShortcutsHelp';
 import { useNodeRegistry } from '../hooks/useNodeRegistry';
+import { ExportModal } from './ExportModal';
 import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 import { FlowcraftProps } from '../types';
 import { FlowProvider, useFlow } from '../context/FlowProvider';
-import { Play, RotateCcw, Copy, Clipboard, Trash2, Box } from 'lucide-react';
+import { FileCode, Play, RotateCcw, Copy, Clipboard, Trash2, Box } from 'lucide-react';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
 import { StartNode } from '../nodes/StartNode';
@@ -45,8 +46,8 @@ const defaultNodeTypes: NodeTypes = {
 
 const SelectionToolbar = () => {
   const { nodes, groupNodes, deleteNodes, copyNodes, pasteNodes } = useFlow();
-  const selectedNodes = nodes.filter(n => n.selected);
-  const selectedNodeIds = selectedNodes.map(n => n.id);
+  const selectedNodes = nodes.filter((n: any) => n.selected);
+  const selectedNodeIds = selectedNodes.map((n: any) => n.id);
 
   if (selectedNodes.length === 0) return null;
 
@@ -94,7 +95,7 @@ const SelectionToolbar = () => {
   );
 };
 
-const WorkflowPanel = () => {
+const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: number, exporters: any[], onOpenExport: () => void }) => {
   const { executeWorkflow, setNodes } = useFlow();
 
   return (
@@ -112,6 +113,17 @@ const WorkflowPanel = () => {
           <Play size={14} fill="currentColor" />
           RUN WORKFLOW
         </button>
+
+        {exporters.length > 0 && (
+          <button
+            onClick={onOpenExport}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 hover:bg-black text-white rounded-md text-xs font-bold transition-all shadow-sm active:scale-95"
+          >
+            <FileCode size={14} />
+            EXPORT CODE
+          </button>
+        )}
+
         <button
           onClick={() => {
             setNodes((nds: any) => nds.map((n: any) => ({
@@ -163,10 +175,12 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     onEdgesChange,
     deleteNodes,
     copyNodes,
-    pasteNodes
+    pasteNodes,
+    exporters
   } = useFlow();
 
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   useEffect(() => {
     registerDefaultNodes();
@@ -215,14 +229,14 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key === 'Delete' || event.key === 'Backspace') {
-        const selectedNodesIDs = nodes.filter((node) => node.selected).map(n => n.id);
+        const selectedNodesIDs = nodes.filter((node: any) => node.selected).map((n: any) => n.id);
         if (selectedNodesIDs.length > 0) {
           deleteNodes(selectedNodesIDs);
         }
       }
 
       if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
-        const selectedNodesIDs = nodes.filter((node) => node.selected).map(n => n.id);
+        const selectedNodesIDs = nodes.filter((node: any) => node.selected).map((n: any) => n.id);
         if (selectedNodesIDs.length > 0) {
           copyNodes(selectedNodesIDs);
         }
@@ -312,7 +326,12 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           {showMinimap && <Minimap />}
 
           <Panel position="top-left" className="flex flex-col gap-2 pointer-events-auto">
-            <WorkflowPanel />
+            <WorkflowPanel
+              onOpenExport={() => setIsExportModalOpen(true)}
+              exporters={exporters}
+              nNodes={nodes.length}
+              nEdges={edges.length}
+            />
           </Panel>
 
           <Panel position="bottom-center" className="pointer-events-auto">
@@ -327,6 +346,14 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
       <div className="flex-shrink-0 h-full">
         <RightSidebar />
       </div>
+
+      <ExportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        nodes={nodes}
+        edges={edges}
+        exporters={exporters}
+      />
     </div>
   );
 };
