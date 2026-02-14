@@ -1,5 +1,5 @@
 import React from 'react';
-import { Handle, NodeProps, Position } from '@reactflow/core';
+import { Handle, NodeProps, Position } from 'reactflow';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
 
@@ -50,7 +50,7 @@ export interface BaseNodeProps extends NodeProps<CustomNodeData> {
 
 export const BaseNode: React.FC<BaseNodeProps> = ({
     // NodeProps
-    data,
+    data = {} as CustomNodeData,
     selected,
     isConnectable,
 
