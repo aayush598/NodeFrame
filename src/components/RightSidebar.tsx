@@ -12,7 +12,7 @@ export const RightSidebar: React.FC = () => {
 
     if (isCollapsed) {
         return (
-            <div className="w-12 h-full bg-white border-l border-gray-200 flex flex-col items-center py-4 gap-4">
+            <div className="w-12 h-full flex-shrink-0 bg-white border-l border-gray-200 flex flex-col items-center py-4 gap-4">
                 <button
                     onClick={() => setIsCollapsed(false)}
                     className="p-2 hover:bg-gray-100 rounded-md text-gray-500"
@@ -28,7 +28,7 @@ export const RightSidebar: React.FC = () => {
     }
 
     return (
-        <div className="w-80 h-full bg-white border-l border-gray-200 flex flex-col overflow-hidden transition-all">
+        <div className="w-80 h-full flex-shrink-0 bg-white border-l border-gray-200 flex flex-col overflow-hidden transition-all">
             {/* Header */}
             <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50">
                 <span className="font-bold text-gray-700 uppercase text-xs tracking-wider">Inspector</span>
@@ -40,7 +40,7 @@ export const RightSidebar: React.FC = () => {
                 </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto min-h-0">
                 {/* Properties Section */}
                 <div className="border-b border-gray-200">
                     <button

@@ -11,6 +11,7 @@ import 'reactflow/dist/style.css';
 import { NodeSidebar } from './NodeSidebar';
 import { RightSidebar } from './RightSidebar';
 import { ShortcutsHelp } from './ShortcutsHelp';
+import { useNodeRegistry } from '../hooks/useNodeRegistry';
 import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
@@ -171,9 +172,15 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     registerDefaultNodes();
   }, []);
 
+  const { getAll } = useNodeRegistry();
+
   const nodeTypes = useMemo(() => {
-    return { ...defaultNodeTypes, ...customNodeTypes };
-  }, [customNodeTypes]);
+    const registryTypes: Record<string, any> = {};
+    getAll().forEach((item: any) => {
+      registryTypes[item.type] = item.component;
+    });
+    return { ...defaultNodeTypes, ...registryTypes, ...customNodeTypes };
+  }, [customNodeTypes, getAll]);
 
   const handleNodesChange = useCallback(
     (changes: any) => {
@@ -268,10 +275,10 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   );
 
   return (
-    <div className={`flex w-full h-full overflow-hidden bg-gray-50 ${className}`}>
-      {showSidebar && <NodeSidebar />}
+    <div className={`flex w-full h-full overflow-hidden bg-gray-50 relative ${className}`}>
+      {showSidebar && <NodeSidebar className="flex-shrink-0" />}
       <div
-        className="flex-1 h-full relative"
+        className="flex-1 h-full relative min-w-0"
         ref={reactFlowWrapper}
         onKeyDown={handleKeyDown}
         tabIndex={0}
@@ -317,7 +324,9 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
           </Panel>
         </ReactFlow>
       </div>
-      <RightSidebar />
+      <div className="flex-shrink-0 h-full">
+        <RightSidebar />
+      </div>
     </div>
   );
 };

@@ -26,7 +26,7 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
 
     if (isCollapsed) {
         return (
-            <div className={`w-12 h-full bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-4 ${className}`}>
+            <div className={`w-12 h-full flex-shrink-0 bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-4 ${className}`}>
                 <button
                     onClick={() => setIsCollapsed(false)}
                     className="p-2 hover:bg-gray-100 rounded-md text-gray-500"
@@ -41,7 +41,7 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
     }
 
     return (
-        <aside className={`w-64 bg-white border-r border-gray-200 flex flex-col h-full transition-all overflow-hidden ${className}`}>
+        <aside className={`w-64 bg-white border-r border-gray-200 flex flex-col h-full flex-shrink-0 transition-all overflow-hidden ${className}`}>
             <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50">
                 <div className="flex items-center gap-2">
                     <LayoutGrid size={16} className="text-gray-600" />
@@ -68,7 +68,7 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 space-y-6">
+            <div className="flex-1 overflow-y-auto min-h-0 p-3 space-y-6">
                 {categories.map(category => {
                     const categoryNodes = filteredNodes.filter(n => (n.config.category || 'General') === category);
                     if (categoryNodes.length === 0) return null;

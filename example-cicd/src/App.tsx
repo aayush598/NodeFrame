@@ -33,7 +33,7 @@ const CICDApp: React.FC = () => {
                 </header>
 
                 {/* Main Canvas */}
-                <div className="flex-1 relative">
+                <div className="flex-1 relative overflow-hidden">
                     <Flowcraft
                         showMinimap={true}
                         showControls={true}
