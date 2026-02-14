@@ -1,5 +1,4 @@
-import React from 'react';
-import { Handle, NodeProps } from 'reactflow';
+import { Handle, NodeProps, Position } from '@reactflow/core';
 import { Settings, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
 import { useFlow } from '../context/FlowProvider';
@@ -44,7 +43,7 @@ export const TransformNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, s
 
       <Handle
         type="target"
-        position="left"
+        position={Position.Left}
         isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />
@@ -71,7 +70,7 @@ export const TransformNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, s
 
       <Handle
         type="source"
-        position="right"
+        position={Position.Right}
         isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />

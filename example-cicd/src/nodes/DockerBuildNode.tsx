@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { Container, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const DockerBuildNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const DockerBuildNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const imageName = data.properties?.imageName || 'my-app';
     const tags = data.properties?.tags || ['latest'];

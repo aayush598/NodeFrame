@@ -1,5 +1,4 @@
-import React from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, NodeProps, Position } from '@reactflow/core';
 import { Box, Layers, Trash2, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
 import { useFlow } from '../context/FlowProvider';

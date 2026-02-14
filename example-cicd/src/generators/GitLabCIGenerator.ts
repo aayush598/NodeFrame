@@ -8,11 +8,9 @@ interface GitLabCIConfig {
 
 export class GitLabCIGenerator {
     private nodes: FlowcraftNode[];
-    private edges: FlowcraftEdge[];
 
-    constructor(nodes: FlowcraftNode[], edges: FlowcraftEdge[]) {
+    constructor(nodes: FlowcraftNode[], _edges: FlowcraftEdge[]) {
         this.nodes = nodes;
-        this.edges = edges;
     }
 
     generate(): string {
@@ -71,7 +69,8 @@ export class GitLabCIGenerator {
     }
 
     private getJobName(node: FlowcraftNode): string {
-        return (node.data.label || node.type).toLowerCase().replace(/\s+/g, '-');
+        const name = node.data?.label || node.type || 'node';
+        return name.toLowerCase().replace(/\s+/g, '-');
     }
 
     private nodeToJob(node: FlowcraftNode): any {

@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { Code, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const BuildAppNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const BuildAppNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const buildTool = data.properties?.buildTool || 'vite';
     const outputDir = data.properties?.outputDir || 'dist';

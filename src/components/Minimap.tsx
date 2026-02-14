@@ -1,5 +1,5 @@
 import React from 'react';
-import { MiniMap as RFMiniMap } from 'reactflow';
+import { MiniMap as RFMiniMap } from '@reactflow/minimap';
 
 interface MinimapProps {
   nodeColor?: string | ((node: any) => string);

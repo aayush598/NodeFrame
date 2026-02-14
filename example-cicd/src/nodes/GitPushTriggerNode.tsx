@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { GitBranch, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const GitPushTriggerNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const GitPushTriggerNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const branches = data.properties?.branches || ['main'];
     const eventType = data.properties?.eventType || 'push';

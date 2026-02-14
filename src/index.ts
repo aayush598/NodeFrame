@@ -33,4 +33,4 @@ export type {
   FlowContextValue
 } from './types';
 
-export { ReactFlowProvider } from 'reactflow';
+export { ReactFlowProvider } from '@reactflow/core';

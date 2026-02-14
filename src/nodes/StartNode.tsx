@@ -1,5 +1,4 @@
-import React from 'react';
-import { Handle, NodeProps } from 'reactflow';
+import { Handle, NodeProps, Position } from '@reactflow/core';
 import { Play, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
 import { useFlow } from '../context/FlowProvider';
@@ -65,7 +64,7 @@ export const StartNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selec
 
       <Handle
         type="source"
-        position="right"
+        position={Position.Right}
         isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />

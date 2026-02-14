@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { Shield, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const scanner = data.properties?.scanner || 'snyk';
     const severity = data.properties?.severity || 'high';

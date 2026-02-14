@@ -88,7 +88,7 @@ export class GitHubActionsGenerator {
 
         if (startNodes.length === 0) return stages;
 
-        let stageIndex = 0;
+        // let stageIndex = 0; // Removed unused variable
         const queue: Array<{ node: FlowcraftNode; stage: number }> = startNodes.map(n => ({ node: n, stage: 0 }));
 
         while (queue.length > 0) {
@@ -165,7 +165,7 @@ export class GitHubActionsGenerator {
                 break;
 
             case 'buildApp':
-                const buildTool = node.data.properties?.buildTool || 'vite';
+                // const buildTool = node.data.properties?.buildTool || 'vite'; // Removed unused variable
                 steps.push({
                     name: node.data.label || 'Build application',
                     run: node.data.properties?.buildCommand || `npm run build`,

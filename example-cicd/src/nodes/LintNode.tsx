@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { Gauge, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const LintNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const LintNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const linter = data.properties?.linter || 'eslint';
     const autoFix = data.properties?.autoFix === true;

@@ -1,4 +1,4 @@
-import { Node, Edge, NodeProps } from 'reactflow';
+import type { Node, Edge, NodeProps } from '@reactflow/core';
 
 export interface FlowcraftTheme {
   nodeBackground?: string;
@@ -19,6 +19,7 @@ export interface NodeConfig {
   color?: string;
   category?: string;
   defaultData?: Record<string, any>;
+  propertyDefinitions?: any[];
 }
 
 export interface CustomNodeData {

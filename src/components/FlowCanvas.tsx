@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import ReactFlow, {
-  Background,
-  BackgroundVariant,
-  NodeTypes,
-  Panel
-} from 'reactflow';
+import { ReactFlow, Panel, type NodeTypes } from '@reactflow/core';
+import { Background, BackgroundVariant } from '@reactflow/background';
 import 'reactflow/dist/style.css';
 import { NodeSidebar } from './NodeSidebar';
 import { RightSidebar } from './RightSidebar';
@@ -183,7 +179,6 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   const {
     nodes,
     edges,
-    setNodes,
     addNode,
     onNodesChange,
     onEdgesChange,

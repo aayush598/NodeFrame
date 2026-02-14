@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controls as RFControls } from 'reactflow';
+import { Controls as RFControls } from '@reactflow/controls';
 import { ZoomIn, ZoomOut, Maximize, Lock } from 'lucide-react';
 
 interface ControlsProps {

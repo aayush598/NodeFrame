@@ -1,5 +1,5 @@
 import { NodeRegistryItem, NodeConfig } from '../types';
-import { NodeProps } from 'reactflow';
+import { NodeProps } from '@reactflow/core';
 
 class NodeRegistry {
   private registry: Map<string, NodeRegistryItem> = new Map();

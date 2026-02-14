@@ -1,5 +1,4 @@
-import React from 'react';
-import { Handle, NodeProps } from 'reactflow';
+import { Handle, NodeProps, Position } from '@reactflow/core';
 import { Zap, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
 import { useFlow } from '../context/FlowProvider';
@@ -34,8 +33,8 @@ export const ActionNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, sele
     >
       {/* Status Badge */}
       <div className={`status-badge ${status !== 'idle' ? 'visible' : ''} ${status === 'success' ? 'bg-green-500' :
-          status === 'error' ? 'bg-red-500' :
-            'bg-blue-500'
+        status === 'error' ? 'bg-red-500' :
+          'bg-blue-500'
         }`}>
         {status === 'executing' && <Loader2 className="w-3 h-3 text-white animate-spin" />}
         {status === 'success' && <CheckCircle className="w-3 h-3 text-white" />}
@@ -44,7 +43,7 @@ export const ActionNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, sele
 
       <Handle
         type="target"
-        position="left"
+        position={Position.Left}
         isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />
@@ -71,7 +70,7 @@ export const ActionNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, sele
 
       <Handle
         type="source"
-        position="right"
+        position={Position.Right}
         isConnectable={isConnectable}
         className="w-3 h-3 !bg-blue-500 !border-2 !border-white"
       />

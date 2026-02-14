@@ -2,15 +2,12 @@ import { FlowcraftNode, FlowcraftEdge } from '@nodeframe/types';
 
 export class JenkinsfileGenerator {
   private nodes: FlowcraftNode[];
-  private edges: FlowcraftEdge[];
 
-  constructor(nodes: FlowcraftNode[], edges: FlowcraftEdge[]) {
+  constructor(nodes: FlowcraftNode[], _edges: FlowcraftEdge[]) {
     this.nodes = nodes;
-    this.edges = edges;
   }
 
   generate(): string {
-    const stages = this.generateStages();
     const stageBlocks = this.generateStageBlocks();
 
     return `pipeline {
@@ -31,6 +28,7 @@ ${stageBlocks}
 }`;
   }
 
+  /* 
   private generateStages(): string[] {
     const stages = new Set<string>();
     
@@ -42,6 +40,7 @@ ${stageBlocks}
 
     return Array.from(stages);
   }
+  */
 
   private getNodeStage(node: FlowcraftNode): string {
     switch (node.type) {

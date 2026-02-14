@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { MessageSquare, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const SlackNotifyNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const SlackNotifyNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const channel = data.properties?.channel || '#general';
     const onlyOnFailure = data.properties?.onlyOnFailure === true;

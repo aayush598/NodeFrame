@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode, useCallback, useState } from 'react';
-import { NodeProps, Connection, addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow';
+import { addEdge, applyNodeChanges, applyEdgeChanges, type NodeProps, type Connection } from '@reactflow/core';
 import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData, CodeExporter } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
@@ -316,9 +316,9 @@ export const FlowProvider: React.FC<{
 
   const resetExecutionState = useCallback(() => {
     takeSnapshot();
-    setNodes(prev => prev.map(n => ({
-      ...n,
-      data: { ...n.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
+    setNodes(prev => prev.map(node => ({
+      ...node,
+      data: { ...node.data, executionStatus: 'idle', executionOutput: undefined, executionError: undefined }
     })));
   }, [takeSnapshot]);
 
@@ -331,7 +331,7 @@ export const FlowProvider: React.FC<{
 
     const expandGroup = (node: FlowcraftNode) => {
       if (node.data.isGroup && node.data.subNodes) {
-        node.data.subNodes.forEach(sn => expandGroup(sn));
+        node.data.subNodes.forEach((sn: FlowcraftNode) => expandGroup(sn));
         if (node.data.subEdges) flattenedEdges.push(...node.data.subEdges);
         // Also need to find edges connecting to the group and map them to subnodes
         // For simplicity in this implementation, we treat the group as a unit or assume internal connectivity is valid

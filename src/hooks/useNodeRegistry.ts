@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { NodeConfig } from '../types';
-import { NodeProps } from 'reactflow';
+import { NodeProps } from '@reactflow/core';
 
 export const useNodeRegistry = () => {
   const register = useCallback(

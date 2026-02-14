@@ -3,7 +3,7 @@ import { Handle, NodeProps, Position } from 'reactflow';
 import { FlaskConical, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { CustomNodeData } from '@nodeframe/types';
 
-export const TestRunnerNode: React.FC<NodeProps<CustomNodeData>> = ({ id, data, selected, isConnectable }) => {
+export const TestRunnerNode: React.FC<NodeProps<CustomNodeData>> = ({ id: _id, data, selected, isConnectable }) => {
     const status = data.executionStatus || 'idle';
     const testType = data.properties?.testType || 'unit';
     const framework = data.properties?.framework || 'jest';
