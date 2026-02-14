@@ -33,6 +33,7 @@ export const registerCICDNodes = () => {
         color: '#10b981',
         icon: React.createElement(GitBranch, { size: 16 }),
         defaultData: {
+            description: 'Triggers the pipeline on Git push events to specific branches',
             properties: {
                 eventType: 'push',
                 branches: ['main'],
@@ -74,6 +75,7 @@ export const registerCICDNodes = () => {
         color: '#3b82f6',
         icon: React.createElement(Package, { size: 16 }),
         defaultData: {
+            description: 'Installs project dependencies using the specified package manager',
             properties: {
                 packageManager: 'npm',
                 cacheEnabled: true,
@@ -116,6 +118,7 @@ export const registerCICDNodes = () => {
         color: '#0ea5e9',
         icon: React.createElement(Container, { size: 16 }),
         defaultData: {
+            description: 'Builds a Docker image from a Dockerfile and optionally pushes it to a registry',
             properties: {
                 imageName: 'my-app',
                 tags: ['latest'],
@@ -161,6 +164,7 @@ export const registerCICDNodes = () => {
         color: '#a855f7',
         icon: React.createElement(FlaskConical, { size: 16 }),
         defaultData: {
+            description: 'Runs automated tests (unit, integration, e2e) using a specified framework',
             properties: {
                 testType: 'unit',
                 framework: 'jest',
@@ -215,6 +219,7 @@ export const registerCICDNodes = () => {
         color: '#f59e0b',
         icon: React.createElement(Shield, { size: 16 }),
         defaultData: {
+            description: 'Scans the codebase for security vulnerabilities and compliance issues',
             properties: {
                 scanner: 'snyk',
                 severity: 'high',
@@ -262,6 +267,7 @@ export const registerCICDNodes = () => {
         color: '#ec4899',
         icon: React.createElement(Rocket, { size: 16 }),
         defaultData: {
+            description: 'Deploys the application to a target platform or environment',
             properties: {
                 platform: 'aws',
                 environment: 'staging',
@@ -315,6 +321,7 @@ export const registerCICDNodes = () => {
         color: '#6366f1',
         icon: React.createElement(MessageSquare, { size: 16 }),
         defaultData: {
+            description: 'Sends notifications to a Slack channel about pipeline status',
             properties: {
                 webhookUrl: '',
                 channel: '#general',
@@ -354,6 +361,7 @@ export const registerCICDNodes = () => {
         color: '#8b5cf6',
         icon: React.createElement(Code, { size: 16 }),
         defaultData: {
+            description: 'Compiles and builds the application code for production',
             properties: {
                 buildTool: 'vite',
                 outputDir: 'dist',
@@ -397,6 +405,7 @@ export const registerCICDNodes = () => {
         color: '#14b8a6',
         icon: React.createElement(Gauge, { size: 16 }),
         defaultData: {
+            description: 'Analyzes code for styling and syntax errors using a linter',
             properties: {
                 linter: 'eslint',
                 autoFix: false,
