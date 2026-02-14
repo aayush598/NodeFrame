@@ -136,7 +136,7 @@ export const FlowCanvas: React.FC<FlowcraftProps> = (props) => {
   );
 };
 
-const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
+export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
   onNodesChange: onNodesChangeProp,
   onEdgesChange: onEdgesChangeProp,
   onConnect: onConnectProp,

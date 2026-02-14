@@ -1,4 +1,4 @@
-export { FlowCanvas } from './components/FlowCanvas';
+export { FlowCanvas, FlowCanvasInternal as FlowCanvasCore } from './components/FlowCanvas';
 export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
 export { NodeSidebar } from './components/NodeSidebar';
