@@ -95,5 +95,40 @@ export const config = {
             label: 'Health Check URL',
             type: 'string',
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const platform = node.data.properties?.platform || 'aws';
+            const environment = node.data.properties?.environment || 'staging';
+
+            if (platform === 'vercel') {
+                return {
+                    name: node.data.label || 'Deploy to Vercel',
+                    uses: 'amondnet/vercel-action@v25',
+                    with: {
+                        'vercel-token': '${{ secrets.VERCEL_TOKEN }}',
+                        'vercel-org-id': '${{ secrets.VERCEL_ORG_ID }}',
+                        'vercel-project-id': '${{ secrets.VERCEL_PROJECT_ID }}',
+                    }
+                };
+            } else {
+                return {
+                    name: node.data.label || `Deploy to ${platform}`,
+                    run: `echo "Deploying to ${platform} (${environment})"`,
+                };
+            }
+        },
+        gitlab: (node: any) => {
+            const platform = node.data.properties?.platform || 'aws';
+            const environment = node.data.properties?.environment || 'staging';
+            return {
+                script: [`echo "Deploying to ${platform} (${environment})"`]
+            };
+        },
+        jenkins: (node: any) => {
+            const platform = node.data.properties?.platform || 'aws';
+            const environment = node.data.properties?.environment || 'staging';
+            return [`sh 'echo "Deploying to ${platform} (${environment})"'`];
+        }
+    }
 };

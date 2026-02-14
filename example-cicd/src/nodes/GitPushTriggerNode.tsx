@@ -78,5 +78,25 @@ export const config = {
             label: 'Path Filters (comma-separated)',
             type: 'string',
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const eventType = node.data.properties?.eventType || 'push';
+            const branches = node.data.properties?.branches || ['main'];
+            const paths = node.data.properties?.paths;
+            const config: any = { branches };
+            if (paths && paths.length > 0) config.paths = paths;
+            return { [eventType]: config };
+        },
+        gitlab: (node: any) => {
+            // GitLab 'only' refs
+            const branches = node.data.properties?.branches || ['main'];
+            return { only: branches };
+        },
+        jenkins: (_node: any) => {
+            // Jenkins pollSCM or similar? Often just implicit 'scm'
+            // Returning empty or poll trigger string
+            return { triggers: 'pollSCM(\'H/5 * * * *\')' };
+        }
+    }
 };

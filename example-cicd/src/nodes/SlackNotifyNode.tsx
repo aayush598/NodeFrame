@@ -68,5 +68,38 @@ export const config = {
             type: 'boolean',
             defaultValue: false,
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const channel = node.data.properties?.channel || '#general';
+            const onlyOnFailure = node.data.properties?.onlyOnFailure === true;
+
+            const slackStep: any = {
+                name: node.data.label || 'Notify Slack',
+                uses: 'slackapi/slack-github-action@v1',
+                with: {
+                    'channel-id': channel,
+                    'slack-message': 'Pipeline completed!',
+                },
+                env: {
+                    SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}',
+                }
+            };
+
+            if (onlyOnFailure) {
+                slackStep.if = 'failure()';
+            }
+
+            return slackStep;
+        },
+        gitlab: (_node: any) => {
+            return {
+                script: ['echo "Sending Slack notification"']
+            };
+        },
+        jenkins: (node: any) => {
+            const channel = node.data.properties?.channel || '#general';
+            return [`echo 'Sending Slack notification to ${channel}'`];
+        }
+    }
 };

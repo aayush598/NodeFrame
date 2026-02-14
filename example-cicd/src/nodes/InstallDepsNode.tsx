@@ -71,5 +71,42 @@ export const config = {
             label: 'Custom Install Command',
             type: 'string',
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const pkgMgr = node.data.properties?.packageManager || 'npm';
+            const cacheEnabled = node.data.properties?.cacheEnabled !== false;
+            const steps = [];
+
+            if (cacheEnabled) {
+                steps.push({
+                    name: 'Cache dependencies',
+                    uses: 'actions/cache@v3',
+                    with: {
+                        path: pkgMgr === 'npm' ? '~/.npm' : '~/.cache',
+                        key: `\${{ runner.os }}-${pkgMgr}-\${{ hashFiles('**/package-lock.json') }}`,
+                    }
+                });
+            }
+
+            steps.push({
+                name: node.data.label || 'Install dependencies',
+                run: node.data.properties?.installCommand || `${pkgMgr} install`,
+            });
+
+            return steps;
+        },
+        gitlab: (node: any) => {
+            const pkgMgr = node.data.properties?.packageManager || 'npm';
+            const cacheEnabled = node.data.properties?.cacheEnabled !== false;
+            return {
+                script: [node.data.properties?.installCommand || `${pkgMgr} install`],
+                cache: cacheEnabled ? { paths: [pkgMgr === 'npm' ? 'node_modules/' : '.cache/'] } : undefined
+            };
+        },
+        jenkins: (node: any) => {
+            const pkgMgr = node.data.properties?.packageManager || 'npm';
+            return [`sh '${node.data.properties?.installCommand || `${pkgMgr} install`}'`];
+        }
+    }
 };

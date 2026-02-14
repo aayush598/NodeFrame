@@ -22,6 +22,14 @@ export { useNodeRegistry } from './hooks/useNodeRegistry';
 
 export { nodeRegistry } from './utils/nodeRegistry';
 export { registerNodesFromGlob } from './utils/registerNodesFromGlob';
+export {
+  CodeGenerator,
+  FlatStrategy,
+  WorkflowStrategy,
+  FileSystemStrategy,
+  type GeneratorConfig,
+  type GenerationStrategy
+} from './generators/CodeGenerator';
 export * from './utils/helpers';
 
 export type {

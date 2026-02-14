@@ -81,5 +81,47 @@ export const config = {
             type: 'boolean',
             defaultValue: true,
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const imageName = node.data.properties?.imageName || 'my-app';
+            const tags = node.data.properties?.tags || ['latest'];
+            const steps = [];
+
+            steps.push({
+                name: node.data.label || 'Build Docker image',
+                run: `docker build -t ${imageName}:${tags[0]} .`,
+            });
+
+            if (node.data.properties?.push !== false) {
+                steps.push({
+                    name: 'Push Docker image',
+                    run: `docker push ${imageName}:${tags[0]}`,
+                });
+            }
+            return steps;
+        },
+        gitlab: (node: any) => {
+            const imageName = node.data.properties?.imageName || 'my-app';
+            const tags = node.data.properties?.tags || ['latest'];
+            const scripts = [`docker build -t ${imageName}:${tags[0]} .`];
+            if (node.data.properties?.push !== false) {
+                scripts.push(`docker push ${imageName}:${tags[0]}`);
+            }
+            return {
+                image: 'docker:latest',
+                services: ['docker:dind'],
+                script: scripts
+            };
+        },
+        jenkins: (node: any) => {
+            const imageName = node.data.properties?.imageName || 'my-app';
+            const tags = node.data.properties?.tags || ['latest'];
+            const steps = [`sh 'docker build -t ${imageName}:${tags[0]} .'`];
+            if (node.data.properties?.push !== false) {
+                steps.push(`sh 'docker push ${imageName}:${tags[0]}'`);
+            }
+            return steps;
+        }
+    }
 };

@@ -20,6 +20,12 @@ export interface NodeConfig {
   category?: string;
   defaultData?: Record<string, any>;
   propertyDefinitions?: any[];
+  /**
+   * Defines code generation logic for various platforms.
+   * Key is the platform ID (e.g., 'github', 'jenkins').
+   * Value is a function that returns the step configuration.
+   */
+  generators?: Record<string, (node: FlowcraftNode) => any>;
 }
 
 export interface CustomNodeData {

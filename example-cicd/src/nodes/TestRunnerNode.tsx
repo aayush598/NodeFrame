@@ -93,5 +93,28 @@ export const config = {
             type: 'boolean',
             defaultValue: false,
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const testCmd = node.data.properties?.command || 'npm test';
+            const coverage = node.data.properties?.coverageEnabled === true;
+
+            return {
+                name: node.data.label || 'Run tests',
+                run: coverage ? `${testCmd} --coverage` : testCmd,
+            };
+        },
+        gitlab: (node: any) => {
+            const testCmd = node.data.properties?.command || 'npm test';
+            const coverage = node.data.properties?.coverageEnabled === true;
+            return {
+                script: [coverage ? `${testCmd} --coverage` : testCmd]
+            };
+        },
+        jenkins: (node: any) => {
+            const testCmd = node.data.properties?.command || 'npm test';
+            const coverage = node.data.properties?.coverageEnabled === true;
+            return [`sh '${coverage ? `${testCmd} --coverage` : testCmd}'`];
+        }
+    }
 };

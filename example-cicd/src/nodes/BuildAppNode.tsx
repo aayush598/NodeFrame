@@ -70,5 +70,21 @@ export const config = {
             type: 'string',
             defaultValue: 'npm run build',
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            return {
+                name: node.data.label || 'Build application',
+                run: node.data.properties?.buildCommand || `npm run build`,
+            };
+        },
+        gitlab: (node: any) => {
+            return {
+                script: [node.data.properties?.buildCommand || 'npm run build']
+            };
+        },
+        jenkins: (node: any) => {
+            return [`sh '${node.data.properties?.buildCommand || 'npm run build'}'`];
+        }
+    }
 };

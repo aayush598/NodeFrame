@@ -90,5 +90,34 @@ export const config = {
             type: 'boolean',
             defaultValue: true,
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const scanner = node.data.properties?.scanner || 'snyk';
+
+            if (scanner === 'snyk') {
+                return {
+                    name: node.data.label || 'Security scan',
+                    uses: 'snyk/actions/node@master',
+                    env: {
+                        SNYK_TOKEN: '${{ secrets.SNYK_TOKEN }}',
+                    }
+                };
+            }
+            return {
+                name: node.data.label || 'Security scan',
+                run: `echo "Running security scan with ${scanner}"`
+            };
+        },
+        gitlab: (node: any) => {
+            const scanner = node.data.properties?.scanner || 'snyk';
+            return {
+                script: [`${scanner} test`]
+            };
+        },
+        jenkins: (node: any) => {
+            const scanner = node.data.properties?.scanner || 'snyk';
+            return [`sh '${scanner} test'`];
+        }
+    }
 };

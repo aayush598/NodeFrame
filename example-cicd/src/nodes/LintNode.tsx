@@ -64,5 +64,28 @@ export const config = {
             type: 'boolean',
             defaultValue: false,
         },
-    ]
+    ],
+    generators: {
+        github: (node: any) => {
+            const linter = node.data.properties?.linter || 'eslint';
+            const autoFix = node.data.properties?.autoFix === true;
+
+            return {
+                name: node.data.label || 'Lint code',
+                run: autoFix ? `${linter} --fix .` : `${linter} .`,
+            };
+        },
+        gitlab: (node: any) => {
+            const linter = node.data.properties?.linter || 'eslint';
+            const autoFix = node.data.properties?.autoFix === true;
+            return {
+                script: [autoFix ? `${linter} --fix .` : `${linter} .`]
+            };
+        },
+        jenkins: (node: any) => {
+            const linter = node.data.properties?.linter || 'eslint';
+            const autoFix = node.data.properties?.autoFix === true;
+            return [`sh '${autoFix ? `${linter} --fix .` : `${linter} .`}'`];
+        }
+    }
 };
