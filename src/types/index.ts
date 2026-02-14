@@ -11,6 +11,18 @@ export interface FlowcraftTheme {
   secondaryColor?: string;
 }
 
+export interface PropertyDefinition {
+  name: string;
+  label: string;
+  type: 'string' | 'number' | 'boolean' | 'select' | 'textarea' | 'color' | 'password';
+  defaultValue?: any;
+  options?: { label: string; value: any }[];
+  placeholder?: string;
+  description?: string;
+  required?: boolean;
+  validation?: (value: any) => string | undefined;
+}
+
 export interface NodeConfig {
   id: string;
   type: string;
@@ -19,7 +31,7 @@ export interface NodeConfig {
   color?: string;
   category?: string;
   defaultData?: Record<string, any>;
-  propertyDefinitions?: any[];
+  propertyDefinitions?: PropertyDefinition[];
   /**
    * Defines code generation logic for various platforms.
    * Key is the platform ID (e.g., 'github', 'jenkins').

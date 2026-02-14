@@ -22,6 +22,7 @@ export { useNodeRegistry } from './hooks/useNodeRegistry';
 
 export { nodeRegistry } from './utils/nodeRegistry';
 export { registerNodesFromGlob } from './utils/registerNodesFromGlob';
+export { defineNodeConfig, defineProperties } from './utils/defineNode';
 export {
   CodeGenerator,
   FlatStrategy,
