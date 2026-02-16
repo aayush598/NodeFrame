@@ -1,14 +1,25 @@
 {
   "name": "workflow-canvas",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "A professional React workflow canvas library with drag-drop, zoom, pan, minimap and customizable nodes - built on reactflow",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -26,8 +37,19 @@
     "flow-builder",
     "visual-programming"
   ],
-  "author": "WorkflowCanvas Team",
+  "author": "Aayush Gid <aayushgid598@gmail.com> (https://github.com/aayush598)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aayush598/WorkflowCanvas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aayush598/WorkflowCanvas/issues"
+  },
+  "homepage": "https://github.com/aayush598/WorkflowCanvas#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

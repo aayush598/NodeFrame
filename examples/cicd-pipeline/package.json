@@ -1,6 +1,6 @@
 {
   "name": "workflow-canvas-cicd-example",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "CI/CD Pipeline Automation Builder using WorkflowCanvas",
   "type": "module",
   "scripts": {

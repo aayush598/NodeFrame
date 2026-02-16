@@ -6,7 +6,7 @@ import { CustomNodeData, BaseNode } from 'workflow-canvas';
 export const DockerTagNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
   const { data } = props;
   const source = data.properties?.sourceTag || 'latest';
-  const target = data.properties?.targetTag || 'v1.0.0';
+  const target = data.properties?.targetTag || 'v0.1.0';
 
   const headerRight = (
     <span className="text-[9px] font-mono bg-gray-100 px-1.5 py-0.5 rounded">

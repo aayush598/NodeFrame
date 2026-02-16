@@ -1,4 +1,4 @@
-export { WorkflowCanvas as WorkflowCanvas, WorkflowCanvasInternal as WorkflowCanvasCore } from './components/WorkflowCanvas';
+export { WorkflowCanvas, WorkflowCanvas as FlowCanvas, WorkflowCanvasInternal as WorkflowCanvasCore } from './components/WorkflowCanvas';
 export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
 export { NodeSidebar } from './components/NodeSidebar';

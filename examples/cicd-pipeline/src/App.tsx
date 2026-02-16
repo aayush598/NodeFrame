@@ -33,7 +33,7 @@ const CICDAppContent: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-lg border border-white/10 text-[10px] font-bold uppercase tracking-wider">
-                            v1.0.0
+                            v0.1.0
                         </div>
                     </div>
                 </div>
