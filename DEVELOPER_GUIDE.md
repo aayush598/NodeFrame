@@ -480,7 +480,7 @@ onNodesChange={(nodes) => {
 4. [TailwindCSS Docs](https://tailwindcss.com/docs)
 
 ### Code Examples
-- See `/example` directory for complete app
+- See `/examples` directory for complete apps (`basic-usage` and `cicd-pipeline`)
 - Check `ADVANCED.md` for patterns
 - Review `API.md` for all options
 

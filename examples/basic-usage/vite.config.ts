@@ -6,13 +6,13 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            'workflow-canvas': path.resolve(__dirname, '../src/index.ts'),
+            'workflow-canvas': path.resolve(__dirname, '../../src/index.ts'),
         },
     },
     server: {
         fs: {
             // Allow serving files from one level up to the project root
-            allow: ['..'],
+            allow: ['../..'],
         },
     },
 });

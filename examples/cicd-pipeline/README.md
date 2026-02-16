@@ -265,9 +265,8 @@ MIT - See [LICENSE](../LICENSE) for details
 
 ## Related
 
-- [WorkflowCanvas Core](../README.md)
-- [Basic Example](../example/README.md)
-- [Documentation](../docs/README.md)
+- [WorkflowCanvas Core](../../README.md)
+- [Basic Usage](../basic-usage/README.md)
 
 ---
 

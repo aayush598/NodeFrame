@@ -326,7 +326,7 @@ export default App;
 
 - 📖 Read [Advanced Guide](./ADVANCED.md) for custom nodes
 - 📚 Check [API Reference](./API.md) for all options
-- 💡 See [Example App](./example/) for complete implementation
+- 💡 See [Example Apps](./examples/basic-usage/) for complete implementations
 - 🎨 Explore theming options
 - 🔧 Create custom nodes for your use case
 

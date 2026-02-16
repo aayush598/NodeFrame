@@ -10,7 +10,7 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            'workflow-canvas': resolve(__dirname, '../src'),
+            'workflow-canvas': resolve(__dirname, '../../src'),
         },
     },
     server: {
