@@ -7,7 +7,7 @@ export const GCPSecretManagerNode: React.FC<NodeProps<CustomNodeData>> = (props)
     return (
         <BaseNode
             {...props}
-            title="GCP Secret Manager"
+            title={data.label || "GCP Secret Manager"}
             icon={<CloudCog />}
             color="#34a853"
         />

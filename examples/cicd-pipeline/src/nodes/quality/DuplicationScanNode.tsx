@@ -4,7 +4,7 @@ import { Copy } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const DuplicationScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Duplication Scan" icon={<Copy />} color="#8b5cf6" />
+    <BaseNode {...props} title={data.label || "Duplication Scan"} icon={<Copy />} color="#8b5cf6" />
 );
 
 export const config = {

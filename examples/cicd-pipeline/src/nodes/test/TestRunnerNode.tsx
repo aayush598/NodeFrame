@@ -8,7 +8,7 @@ export const TestRunnerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const framework = data.properties?.framework || 'jest';
 
     return (
-        <BaseNode {...props} title="Run Tests" icon={<FlaskConical />} color="#10b981">
+        <BaseNode {...props} title={data.label || "Run Tests"} icon={<FlaskConical />} color="#10b981">
             <div className="text-[10px] uppercase">{framework}</div>
         </BaseNode>
     );

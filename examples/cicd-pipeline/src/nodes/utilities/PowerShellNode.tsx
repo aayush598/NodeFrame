@@ -7,7 +7,7 @@ export const PowerShellNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="PowerShell"
+            title={data.label || "PowerShell"}
             icon={<TerminalSquare />}
             color="#2563eb"
         />

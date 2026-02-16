@@ -7,7 +7,7 @@ export const CreateReleaseAssetNode: React.FC<NodeProps<CustomNodeData>> = (prop
     return (
         <BaseNode
             {...props}
-            title="Release Asset"
+            title={data.label || "Release Asset"}
             icon={<PackagePlus />}
             color="#8b5cf6"
         />

@@ -101,9 +101,11 @@ export interface WorkflowContextValue {
   addNode: (node: WorkflowNode) => void;
   removeNode: (id: string) => void;
   updateNode: (id: string, data: Partial<CustomNodeData>) => void;
+  updateNodeProperty: (id: string, key: string, value: any) => void;
   duplicateNode: (id: string) => void;
   theme: WorkflowTheme;
   nodeRegistry: Map<string, NodeRegistryItem>;
+  getRegistryItem: (type: string) => NodeRegistryItem | undefined;
   registerNode: (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => void;
   executeNode: (id: string) => Promise<void>;
   executeWorkflow: () => Promise<void>;

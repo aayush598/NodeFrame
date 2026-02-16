@@ -8,7 +8,7 @@ export const VersionBumpNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const type = data.properties?.type || 'patch';
 
     return (
-        <BaseNode {...props} title="Version Bump" icon={<ArrowUp />} color="#14b8a6">
+        <BaseNode {...props} title={data.label || "Version Bump"} icon={<ArrowUp />} color="#14b8a6">
             <div className="text-[10px] uppercase">{type}</div>
         </BaseNode>
     );

@@ -8,7 +8,7 @@ export const LintCodeNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const tool = data.properties?.tool || 'eslint';
 
     return (
-        <BaseNode {...props} title="Lint Code" icon={<Brush />} color="#8b5cf6">
+        <BaseNode {...props} title={data.label || "Lint Code"} icon={<Brush />} color="#8b5cf6">
             <div className="text-[10px] uppercase">{tool}</div>
         </BaseNode>
     );

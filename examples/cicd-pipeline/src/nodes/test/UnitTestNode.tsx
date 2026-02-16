@@ -4,7 +4,7 @@ import { TestTube } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const UnitTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Unit Tests" icon={<TestTube />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "Unit Tests"} icon={<TestTube />} color="#10b981" />
 );
 
 export const config = {

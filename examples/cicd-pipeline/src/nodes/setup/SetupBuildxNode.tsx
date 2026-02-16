@@ -4,7 +4,7 @@ import { Boxes } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SetupBuildxNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Docker Buildx" icon={<Boxes />} color="#6366f1" />
+    <BaseNode {...props} title={data.label || "Docker Buildx"} icon={<Boxes />} color="#6366f1" />
 );
 
 export const config = {

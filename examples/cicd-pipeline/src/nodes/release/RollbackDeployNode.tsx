@@ -7,7 +7,7 @@ export const RollbackDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     return (
         <BaseNode
             {...props}
-            title="Rollback Deploy"
+            title={data.label || "Rollback Deploy"}
             icon={<RotateCcw />}
             color="#ef4444"
         />

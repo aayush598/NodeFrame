@@ -7,7 +7,7 @@ export const TerraformApplyNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     return (
         <BaseNode
             {...props}
-            title="Terraform Apply"
+            title={data.label || "Terraform Apply"}
             icon={<Play />}
             color="#22c55e"
         />

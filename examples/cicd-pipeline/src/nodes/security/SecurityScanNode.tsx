@@ -8,7 +8,7 @@ export const SecurityScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     const tool = data.properties?.tool || 'snyk';
 
     return (
-        <BaseNode {...props} title="Security Scan" icon={<ShieldAlert />} color="#ef4444">
+        <BaseNode {...props} title={data.label || "Security Scan"} icon={<ShieldAlert />} color="#ef4444">
             <div className="text-[10px] uppercase">{tool}</div>
         </BaseNode>
     );

@@ -4,7 +4,7 @@ import { Box } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GoModulesInstallNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Go Modules" icon={<Box />} color="#0ea5e9" />
+    <BaseNode {...props} title={data.label || "Go Modules"} icon={<Box />} color="#0ea5e9" />
 );
 
 export const config = {

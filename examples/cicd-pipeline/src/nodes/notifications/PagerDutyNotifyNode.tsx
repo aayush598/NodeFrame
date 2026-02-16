@@ -7,7 +7,7 @@ export const PagerDutyNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     return (
         <BaseNode
             {...props}
-            title="PagerDuty Alert"
+            title={data.label || "PagerDuty Alert"}
             icon={<AlertTriangle />}
             color="#06b6d4"
         />

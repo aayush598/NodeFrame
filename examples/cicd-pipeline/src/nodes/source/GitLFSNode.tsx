@@ -4,7 +4,7 @@ import { HardDrive } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GitLFSNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Git LFS Pull" icon={<HardDrive />} color="#3b82f6" />
+    <BaseNode {...props} title={data.label || "Git LFS Pull"} icon={<HardDrive />} color="#3b82f6" />
 );
 
 export const config = {

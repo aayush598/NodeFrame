@@ -5,7 +5,7 @@ import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GitSubmoduleNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
-        <BaseNode {...props} title="Git Submodules" icon={<Boxes />} color="#3b82f6" />
+        <BaseNode {...props} title={data.label || "Git Submodules"} icon={<Boxes />} color="#3b82f6" />
     );
 };
 

@@ -9,7 +9,7 @@ export const MultiArchBuildNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     return (
         <BaseNode
             {...props}
-            title="Multi-Arch Build"
+            title={data.label || "Multi-Arch Build"}
             icon={<Layers />}
             color="#8b5cf6"
             headerRight={

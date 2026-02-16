@@ -8,7 +8,7 @@ export const GitCommitPushNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     const message = data.properties?.message || 'CI commit';
 
     return (
-        <BaseNode {...props} title="Commit & Push" icon={<Upload />} color="#3b82f6">
+        <BaseNode {...props} title={data.label || "Commit & Push"} icon={<Upload />} color="#3b82f6">
             <div className="text-[10px]">{message}</div>
         </BaseNode>
     );

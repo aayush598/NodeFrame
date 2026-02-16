@@ -4,7 +4,7 @@ import { Apple } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildIOSNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build iOS" icon={<Apple />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build iOS"} icon={<Apple />} color="#f59e0b" />
 );
 
 export const config = {

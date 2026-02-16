@@ -9,7 +9,7 @@ export const CanaryDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="Canary Deploy"
+            title={data.label || "Canary Deploy"}
             icon={<TrendingUp />}
             color="#f59e0b"
             headerRight={

@@ -8,7 +8,7 @@ export const SetupDotnetNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const version = data.properties?.version || '8.0';
 
     return (
-        <BaseNode {...props} title=".NET SDK" icon={<Layers />} color="#6366f1">
+        <BaseNode {...props} title={data.label || ".NET SDK"} icon={<Layers />} color="#6366f1">
             <div className="text-[10px]">{version}</div>
         </BaseNode>
     );

@@ -9,7 +9,7 @@ export const SetupNodeRuntimeNode: React.FC<NodeProps<CustomNodeData>> = (props)
     const version = data.properties?.version || '18';
 
     return (
-        <BaseNode {...props} title="Setup Runtime" icon={<Cpu />} color="#6366f1">
+        <BaseNode {...props} title={data.label || "Setup Runtime"} icon={<Cpu />} color="#6366f1">
             <div className="text-[10px]">{runtime}@{version}</div>
         </BaseNode>
     );

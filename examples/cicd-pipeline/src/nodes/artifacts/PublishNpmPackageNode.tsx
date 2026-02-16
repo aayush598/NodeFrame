@@ -4,7 +4,7 @@ import { Package } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const PublishNpmPackageNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Publish NPM" icon={<Package />} color="#14b8a6" />
+    <BaseNode {...props} title={data.label || "Publish NPM"} icon={<Package />} color="#14b8a6" />
 );
 
 export const config = {

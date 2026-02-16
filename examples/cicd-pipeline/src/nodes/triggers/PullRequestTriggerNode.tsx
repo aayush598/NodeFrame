@@ -8,7 +8,7 @@ export const PullRequestTriggerNode: React.FC<NodeProps<CustomNodeData>> = (prop
     const target = data.properties?.targetBranch || 'main';
 
     return (
-        <BaseNode {...props} title="Pull Request" icon={<GitPullRequest />} color="#16a34a">
+        <BaseNode {...props} title={data.label || "Pull Request"} icon={<GitPullRequest />} color="#16a34a">
             <div className="text-[10px]">Target: {target}</div>
         </BaseNode>
     );

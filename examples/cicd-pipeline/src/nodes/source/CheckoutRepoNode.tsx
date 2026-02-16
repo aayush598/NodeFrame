@@ -9,7 +9,7 @@ export const CheckoutRepoNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
   const ref = data.properties?.ref || 'main';
 
   return (
-    <BaseNode {...props} title="Checkout Repo" icon={<Download />} color="#3b82f6">
+    <BaseNode {...props} title={data.label || "Checkout Repo"} icon={<Download />} color="#3b82f6">
       <div className="text-[10px]">Repo: {repo}</div>
       <div className="text-[10px]">Ref: {ref}</div>
     </BaseNode>

@@ -9,7 +9,7 @@ export const EmailNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Email Notify"
+            title={data.label || "Email Notify"}
             icon={<Mail />}
             color="#ea4335"
             headerRight={

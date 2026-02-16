@@ -10,7 +10,7 @@ export const PromoteBuildNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="Promote Build"
+            title={data.label || "Promote Build"}
             icon={<ArrowUpCircle />}
             color="#6366f1"
             headerRight={

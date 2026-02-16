@@ -8,7 +8,7 @@ export const ShellCommandNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="Shell Command"
+            title={data.label || "Shell Command"}
             icon={<Terminal />}
             color="#111827"
             headerRight={

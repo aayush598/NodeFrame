@@ -9,7 +9,7 @@ export const TeamsNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Teams Notify"
+            title={data.label || "Teams Notify"}
             icon={<Users />}
             color="#6264a7"
             headerRight={

@@ -4,7 +4,7 @@ import { Bot } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SeleniumTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Selenium Tests" icon={<Bot />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "Selenium Tests"} icon={<Bot />} color="#10b981" />
 );
 
 export const config = {

@@ -9,7 +9,7 @@ export const SemanticVersionNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     return (
         <BaseNode
             {...props}
-            title="Semantic Version"
+            title={data.label || "Semantic Version"}
             icon={<GitCommit />}
             color="#22c55e"
             headerRight={

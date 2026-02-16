@@ -7,7 +7,7 @@ export const TerraformPlanNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Terraform Plan"
+            title={data.label || "Terraform Plan"}
             icon={<ClipboardList />}
             color="#6366f1"
         />

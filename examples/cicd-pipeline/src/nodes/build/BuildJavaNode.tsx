@@ -4,7 +4,7 @@ import { Coffee } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildJavaNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build Java" icon={<Coffee />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build Java"} icon={<Coffee />} color="#f59e0b" />
 );
 
 export const config = {

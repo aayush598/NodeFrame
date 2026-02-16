@@ -9,7 +9,7 @@ export const AWSSecretsManagerNode: React.FC<NodeProps<CustomNodeData>> = (props
     return (
         <BaseNode
             {...props}
-            title="AWS Secrets"
+            title={data.label || "AWS Secrets"}
             icon={<Cloud />}
             color="#ff9900"
             headerRight={

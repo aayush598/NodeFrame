@@ -4,7 +4,7 @@ import { Server } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildNodeAppNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build Node App" icon={<Server />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build Node App"} icon={<Server />} color="#f59e0b" />
 );
 
 export const config = {

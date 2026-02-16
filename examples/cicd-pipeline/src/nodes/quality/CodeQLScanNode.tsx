@@ -4,7 +4,7 @@ import { Shield } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const CodeQLScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="CodeQL Scan" icon={<Shield />} color="#8b5cf6" />
+    <BaseNode {...props} title={data.label || "CodeQL Scan"} icon={<Shield />} color="#8b5cf6" />
 );
 
 export const config = {

@@ -7,7 +7,7 @@ export const CloudFormationDeployNode: React.FC<NodeProps<CustomNodeData>> = (pr
     return (
         <BaseNode
             {...props}
-            title="CloudFormation Deploy"
+            title={data.label || "CloudFormation Deploy"}
             icon={<Cloud />}
             color="#f97316"
         />

@@ -4,7 +4,7 @@ import { Skull } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const DeadCodeScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Dead Code Scan" icon={<Skull />} color="#8b5cf6" />
+    <BaseNode {...props} title={data.label || "Dead Code Scan"} icon={<Skull />} color="#8b5cf6" />
 );
 
 export const config = {

@@ -4,7 +4,7 @@ import { Globe } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildNextJSNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build Next.js" icon={<Globe />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build Next.js"} icon={<Globe />} color="#f59e0b" />
 );
 
 export const config = {

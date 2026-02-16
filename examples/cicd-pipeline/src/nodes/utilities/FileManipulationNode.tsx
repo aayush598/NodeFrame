@@ -9,7 +9,7 @@ export const FileManipulationNode: React.FC<NodeProps<CustomNodeData>> = (props)
     return (
         <BaseNode
             {...props}
-            title="File Operation"
+            title={data.label || "File Operation"}
             icon={<FolderCog />}
             color="#f59e0b"
             headerRight={

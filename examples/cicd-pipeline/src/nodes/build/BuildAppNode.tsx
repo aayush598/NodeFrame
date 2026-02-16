@@ -8,7 +8,7 @@ export const BuildAppNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const tool = data.properties?.tool || 'vite';
 
     return (
-        <BaseNode {...props} title="Build App" icon={<Hammer />} color="#f59e0b">
+        <BaseNode {...props} title={data.label || "Build App"} icon={<Hammer />} color="#f59e0b">
             <div className="text-[10px] uppercase">{tool}</div>
         </BaseNode>
     );

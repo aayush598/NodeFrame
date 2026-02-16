@@ -4,7 +4,7 @@ import { Triangle } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const VercelDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
-    return <BaseNode {...props} title="Vercel Deploy" icon={<Triangle />} color="#000000" />;
+    return <BaseNode {...props} title={data.label || "Vercel Deploy"} icon={<Triangle />} color="#000000" />;
 };
 
 export const config = {

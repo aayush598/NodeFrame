@@ -4,7 +4,7 @@ import { Leaf } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildVueNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build Vue" icon={<Leaf />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build Vue"} icon={<Leaf />} color="#f59e0b" />
 );
 
 export const config = {

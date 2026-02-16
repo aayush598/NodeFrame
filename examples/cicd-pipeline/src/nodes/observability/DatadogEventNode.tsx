@@ -7,7 +7,7 @@ export const DatadogEventNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="Datadog Event"
+            title={data.label || "Datadog Event"}
             icon={<Activity />}
             color="#632ca6"
         />

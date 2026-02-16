@@ -9,7 +9,7 @@ export const ComplianceReportNode: React.FC<NodeProps<CustomNodeData>> = (props)
     return (
         <BaseNode
             {...props}
-            title="Compliance Report"
+            title={data.label || "Compliance Report"}
             icon={<ShieldCheck />}
             color="#16a34a"
             headerRight={

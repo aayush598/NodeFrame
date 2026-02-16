@@ -8,7 +8,7 @@ export const ImageSigningNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="Image Signing"
+            title={data.label || "Image Signing"}
             icon={<ShieldCheck />}
             color="#ef4444"
             headerRight={

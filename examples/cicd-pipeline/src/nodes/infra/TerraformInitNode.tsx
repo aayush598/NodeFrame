@@ -7,7 +7,7 @@ export const TerraformInitNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Terraform Init"
+            title={data.label || "Terraform Init"}
             icon={<Wrench />}
             color="#8b5cf6"
         />

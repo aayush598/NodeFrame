@@ -4,7 +4,7 @@ import { Radar } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SonarQubeScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="SonarQube Scan" icon={<Radar />} color="#8b5cf6" />
+    <BaseNode {...props} title={data.label || "SonarQube Scan"} icon={<Radar />} color="#8b5cf6" />
 );
 
 export const config = {

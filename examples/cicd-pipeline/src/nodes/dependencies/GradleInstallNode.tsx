@@ -4,7 +4,7 @@ import { Layers } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GradleInstallNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-  <BaseNode {...props} title="Gradle Build" icon={<Layers />} color="#0ea5e9" />
+  <BaseNode {...props} title={data.label || "Gradle Build"} icon={<Layers />} color="#0ea5e9" />
 );
 
 export const config = {

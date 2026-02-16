@@ -7,7 +7,7 @@ export const ArgoCDDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     return (
         <BaseNode
             {...props}
-            title="ArgoCD Sync"
+            title={data.label || "ArgoCD Sync"}
             icon={<GitBranch />}
             color="#ef7b4d"
         />

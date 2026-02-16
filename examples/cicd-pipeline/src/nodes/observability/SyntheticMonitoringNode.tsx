@@ -7,7 +7,7 @@ export const SyntheticMonitoringNode: React.FC<NodeProps<CustomNodeData>> = (pro
     return (
         <BaseNode
             {...props}
-            title="Synthetic Monitoring"
+            title={data.label || "Synthetic Monitoring"}
             icon={<Radar />}
             color="#0ea5e9"
         />

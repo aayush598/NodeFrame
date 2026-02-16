@@ -8,7 +8,7 @@ export const SetupPythonNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const version = data.properties?.version || '3.11';
 
     return (
-        <BaseNode {...props} title="Setup Python" icon={<Terminal />} color="#6366f1">
+        <BaseNode {...props} title={data.label || "Setup Python"} icon={<Terminal />} color="#6366f1">
             <div className="text-[10px]">{version}</div>
         </BaseNode>
     );

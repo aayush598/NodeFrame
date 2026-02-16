@@ -7,7 +7,7 @@ export const SmokeTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Smoke Test"
+            title={data.label || "Smoke Test"}
             icon={<FlaskConical />}
             color="#a855f7"
         />

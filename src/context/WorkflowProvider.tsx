@@ -111,14 +111,36 @@ export const WorkflowProvider: React.FC<{
     setEdges(prev => prev.filter(e => !nodeIds.includes(e.source) && !nodeIds.includes(e.target)));
   }, [setNodes, setEdges, takeSnapshot]);
 
-  const updateNode = useCallback((id: string, data: Partial<CustomNodeData>) => {
-    takeSnapshot();
+  const updateNode = useCallback((id: string, updates: Partial<CustomNodeData>) => {
     setNodes(prev =>
-      prev.map(node =>
-        node.id === id ? { ...node, data: { ...node.data, ...data } } : node
-      )
+      prev.map(node => {
+        if (node.id !== id) return node;
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            ...updates
+          }
+        };
+      })
     );
-  }, [setNodes, takeSnapshot]);
+  }, [setNodes]);
+
+  const updateNodeProperty = useCallback((id: string, key: string, value: any) => {
+    setNodes(prev =>
+      prev.map(node => {
+        if (node.id !== id) return node;
+        const properties = { ...(node.data.properties || {}), [key]: value };
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            properties
+          }
+        };
+      })
+    );
+  }, [setNodes]);
 
   const duplicateNode = useCallback((id: string) => {
     const nodeToDuplicate = nodes.find(n => n.id === id);
@@ -420,6 +442,7 @@ export const WorkflowProvider: React.FC<{
         addNode,
         removeNode,
         updateNode,
+        updateNodeProperty,
         duplicateNode,
         groupNodes,
         ungroupNode,
@@ -428,6 +451,7 @@ export const WorkflowProvider: React.FC<{
         deleteNodes,
         theme: {},
         nodeRegistry: (nodeRegistry as any).registry,
+        getRegistryItem: (type: string) => nodeRegistry.get(type),
         registerNode,
         executeNode: (id) => executeNodeInternal(id, nodes, edges).then(() => { }),
         executeWorkflow,

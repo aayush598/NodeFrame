@@ -8,7 +8,7 @@ export const TagTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const pattern = data.properties?.pattern || 'v*';
 
     return (
-        <BaseNode {...props} title="Tag Trigger" icon={<Tag />} color="#22c55e">
+        <BaseNode {...props} title={data.label || "Tag Trigger"} icon={<Tag />} color="#22c55e">
             <div className="text-[10px]">Pattern: {pattern}</div>
         </BaseNode>
     );

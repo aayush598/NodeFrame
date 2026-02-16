@@ -9,7 +9,7 @@ export const DockerComposeNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Docker Compose"
+            title={data.label || "Docker Compose"}
             icon={<Boxes />}
             color="#f59e0b"
             headerRight={

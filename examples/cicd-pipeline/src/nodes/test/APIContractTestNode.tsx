@@ -4,7 +4,7 @@ import { FileCode } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const APIContractTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="API Contract Tests" icon={<FileCode />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "API Contract Tests"} icon={<FileCode />} color="#10b981" />
 );
 
 export const config = {

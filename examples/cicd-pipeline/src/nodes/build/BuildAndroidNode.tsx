@@ -4,7 +4,7 @@ import { Smartphone } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildAndroidNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Build Android" icon={<Smartphone />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || "Build Android"} icon={<Smartphone />} color="#f59e0b" />
 );
 
 export const config = {

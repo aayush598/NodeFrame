@@ -8,7 +8,7 @@ export const UploadArtifactNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     const name = data.properties?.name || 'artifact';
 
     return (
-        <BaseNode {...props} title="Upload Artifact" icon={<Upload />} color="#14b8a6">
+        <BaseNode {...props} title={data.label || "Upload Artifact"} icon={<Upload />} color="#14b8a6">
             <div className="text-[10px]">{name}</div>
         </BaseNode>
     );

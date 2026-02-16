@@ -9,7 +9,7 @@ export const TestReportNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Test Report"
+            title={data.label || "Test Report"}
             icon={<FileBarChart />}
             color="#22c55e"
             headerRight={

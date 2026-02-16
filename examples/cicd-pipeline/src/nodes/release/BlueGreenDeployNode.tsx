@@ -7,7 +7,7 @@ export const BlueGreenDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     return (
         <BaseNode
             {...props}
-            title="Blue/Green Deploy"
+            title={data.label || "Blue/Green Deploy"}
             icon={<Split />}
             color="#06b6d4"
         />

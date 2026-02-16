@@ -9,7 +9,7 @@ export const HelmDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Helm Deploy"
+            title={data.label || "Helm Deploy"}
             icon={<Package />}
             color="#0f766e"
             headerRight={

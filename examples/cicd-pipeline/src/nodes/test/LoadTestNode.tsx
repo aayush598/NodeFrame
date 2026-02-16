@@ -4,7 +4,7 @@ import { Activity } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const LoadTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Load Test" icon={<Activity />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "Load Test"} icon={<Activity />} color="#10b981" />
 );
 
 export const config = {

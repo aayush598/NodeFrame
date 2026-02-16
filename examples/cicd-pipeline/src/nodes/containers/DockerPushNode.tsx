@@ -9,7 +9,7 @@ export const DockerPushNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Docker Push"
+            title={data.label || "Docker Push"}
             icon={<UploadCloud />}
             color="#22c55e"
             headerRight={

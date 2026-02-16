@@ -7,7 +7,7 @@ export const PipelineSummaryNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     return (
         <BaseNode
             {...props}
-            title="Pipeline Summary"
+            title={data.label || "Pipeline Summary"}
             icon={<LayoutDashboard />}
             color="#6366f1"
         />

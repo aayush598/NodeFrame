@@ -7,7 +7,7 @@ export const TerraformDestroyNode: React.FC<NodeProps<CustomNodeData>> = (props)
     return (
         <BaseNode
             {...props}
-            title="Terraform Destroy"
+            title={data.label || "Terraform Destroy"}
             icon={<Trash2 />}
             color="#ef4444"
         />

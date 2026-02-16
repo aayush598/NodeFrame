@@ -7,7 +7,7 @@ export const FTPDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="FTP Deploy"
+            title={data.label || "FTP Deploy"}
             icon={<Upload />}
             color="#f97316"
         />

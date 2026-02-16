@@ -4,7 +4,7 @@ import { Webhook } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const WebhookTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Webhook Trigger" icon={<Webhook />} color="#22c55e" />
+    <BaseNode {...props} title={data.label || "Webhook Trigger"} icon={<Webhook />} color="#22c55e" />
 );
 
 export const config = {

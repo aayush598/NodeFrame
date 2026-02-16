@@ -7,7 +7,7 @@ export const ARMDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="ARM Deploy"
+            title={data.label || "ARM Deploy"}
             icon={<CloudCog />}
             color="#0ea5e9"
         />

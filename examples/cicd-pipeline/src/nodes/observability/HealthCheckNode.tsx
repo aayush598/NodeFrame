@@ -9,7 +9,7 @@ export const HealthCheckNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Health Check"
+            title={data.label || "Health Check"}
             icon={<HeartPulse />}
             color="#22c55e"
             headerRight={

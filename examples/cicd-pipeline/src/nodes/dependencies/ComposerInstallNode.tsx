@@ -4,7 +4,7 @@ import { Code } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ComposerInstallNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Composer Install" icon={<Code />} color="#0ea5e9" />
+    <BaseNode {...props} title={data.label || "Composer Install"} icon={<Code />} color="#0ea5e9" />
 );
 
 export const config = {

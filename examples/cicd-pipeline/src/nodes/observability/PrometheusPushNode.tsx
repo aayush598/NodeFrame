@@ -7,7 +7,7 @@ export const PrometheusPushNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     return (
         <BaseNode
             {...props}
-            title="Prometheus Push"
+            title={data.label || "Prometheus Push"}
             icon={<BarChart3 />}
             color="#e11d48"
         />

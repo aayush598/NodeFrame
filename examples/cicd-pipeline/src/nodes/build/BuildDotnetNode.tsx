@@ -4,7 +4,7 @@ import { Layers } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildDotnetNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title=".NET Build" icon={<Layers />} color="#f59e0b" />
+    <BaseNode {...props} title={data.label || ".NET Build"} icon={<Layers />} color="#f59e0b" />
 );
 
 export const config = {

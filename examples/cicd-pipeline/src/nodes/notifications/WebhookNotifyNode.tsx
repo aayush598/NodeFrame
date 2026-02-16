@@ -7,7 +7,7 @@ export const WebhookNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Webhook Notify"
+            title={data.label || "Webhook Notify"}
             icon={<Webhook />}
             color="#64748b"
         />

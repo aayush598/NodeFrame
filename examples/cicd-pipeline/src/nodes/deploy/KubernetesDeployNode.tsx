@@ -9,7 +9,7 @@ export const KubernetesDeployNode: React.FC<NodeProps<CustomNodeData>> = (props)
     return (
         <BaseNode
             {...props}
-            title="Kubernetes Deploy"
+            title={data.label || "Kubernetes Deploy"}
             icon={<Boxes />}
             color="#326ce5"
             headerRight={

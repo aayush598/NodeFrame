@@ -182,3 +182,5 @@ export const BaseNode: React.FC<BaseNodeProps> = ({
         </div>
     );
 };
+
+BaseNode.displayName = 'BaseNode';

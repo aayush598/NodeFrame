@@ -7,7 +7,7 @@ export const YAMLTransformNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="YAML Transform"
+            title={data.label || "YAML Transform"}
             icon={<FileCode />}
             color="#6366f1"
         />

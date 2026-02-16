@@ -9,7 +9,7 @@ export const CoverageReportPublishNode: React.FC<NodeProps<CustomNodeData>> = (p
     return (
         <BaseNode
             {...props}
-            title="Coverage Report"
+            title={data.label || "Coverage Report"}
             icon={<PieChart />}
             color="#0ea5e9"
             headerRight={

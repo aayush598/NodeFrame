@@ -8,7 +8,7 @@ export const ScheduleTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     const cron = data.properties?.cron || '0 0 * * *';
 
     return (
-        <BaseNode {...props} title="Schedule" icon={<Clock />} color="#22c55e">
+        <BaseNode {...props} title={data.label || "Schedule"} icon={<Clock />} color="#22c55e">
             <div className="text-[10px] font-mono">{cron}</div>
         </BaseNode>
     );

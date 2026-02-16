@@ -8,7 +8,7 @@ export const InstallPythonDepsNode: React.FC<NodeProps<CustomNodeData>> = (props
     const tool = data.properties?.tool || 'pip';
 
     return (
-        <BaseNode {...props} title="Python Dependencies" icon={<Terminal />} color="#0ea5e9">
+        <BaseNode {...props} title={data.label || "Python Dependencies"} icon={<Terminal />} color="#0ea5e9">
             <div className="text-[10px]">{tool}</div>
         </BaseNode>
     );

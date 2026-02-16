@@ -8,7 +8,7 @@ export const PublishDockerImageNode: React.FC<NodeProps<CustomNodeData>> = (prop
     const image = data.properties?.image || 'my-app:latest';
 
     return (
-        <BaseNode {...props} title="Push Docker Image" icon={<Container />} color="#14b8a6">
+        <BaseNode {...props} title={data.label || "Push Docker Image"} icon={<Container />} color="#14b8a6">
             <div className="text-[10px]">{image}</div>
         </BaseNode>
     );

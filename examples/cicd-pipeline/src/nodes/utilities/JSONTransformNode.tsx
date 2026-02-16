@@ -7,7 +7,7 @@ export const JSONTransformNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="JSON Transform"
+            title={data.label || "JSON Transform"}
             icon={<Braces />}
             color="#10b981"
         />

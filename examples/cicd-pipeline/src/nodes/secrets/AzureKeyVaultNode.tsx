@@ -7,7 +7,7 @@ export const AzureKeyVaultNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Azure Key Vault"
+            title={data.label || "Azure Key Vault"}
             icon={<KeyRound />}
             color="#0078d4"
         />

@@ -8,7 +8,7 @@ export const SparseCheckoutNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     const paths = data.properties?.paths || '';
 
     return (
-        <BaseNode {...props} title="Sparse Checkout" icon={<Filter />} color="#3b82f6">
+        <BaseNode {...props} title={data.label || "Sparse Checkout"} icon={<Filter />} color="#3b82f6">
             <div className="text-[10px]">{paths}</div>
         </BaseNode>
     );

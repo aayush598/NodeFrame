@@ -7,7 +7,7 @@ export const OpsgenieNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) =
     return (
         <BaseNode
             {...props}
-            title="Opsgenie Alert"
+            title={data.label || "Opsgenie Alert"}
             icon={<Bell />}
             color="#f97316"
         />

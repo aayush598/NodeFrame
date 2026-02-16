@@ -4,7 +4,7 @@ import { Network } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const IntegrationTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Integration Tests" icon={<Network />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "Integration Tests"} icon={<Network />} color="#10b981" />
 );
 
 export const config = {

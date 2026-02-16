@@ -4,7 +4,7 @@ import { ScanSearch } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SASTScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="SAST Scan" icon={<ScanSearch />} color="#ef4444" />
+    <BaseNode {...props} title={data.label || "SAST Scan"} icon={<ScanSearch />} color="#ef4444" />
 );
 
 export const config = {

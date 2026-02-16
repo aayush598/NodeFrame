@@ -7,7 +7,7 @@ export const DiscordNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) =>
     return (
         <BaseNode
             {...props}
-            title="Discord Notify"
+            title={data.label || "Discord Notify"}
             icon={<MessageCircle />}
             color="#5865f2"
         />

@@ -8,7 +8,7 @@ export const PackageArtifactNode: React.FC<NodeProps<CustomNodeData>> = (props) 
     const format = data.properties?.format || 'zip';
 
     return (
-        <BaseNode {...props} title="Package Artifact" icon={<Archive />} color="#f59e0b">
+        <BaseNode {...props} title={data.label || "Package Artifact"} icon={<Archive />} color="#f59e0b">
             <div className="text-[10px] uppercase">{format}</div>
         </BaseNode>
     );

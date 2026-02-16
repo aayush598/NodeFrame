@@ -8,7 +8,7 @@ export const PrivateRegistryLoginNode: React.FC<NodeProps<CustomNodeData>> = (pr
     const registry = data.properties?.registry || 'npm';
 
     return (
-        <BaseNode {...props} title="Registry Login" icon={<Lock />} color="#0ea5e9">
+        <BaseNode {...props} title={data.label || "Registry Login"} icon={<Lock />} color="#0ea5e9">
             <div className="text-[10px]">{registry}</div>
         </BaseNode>
     );

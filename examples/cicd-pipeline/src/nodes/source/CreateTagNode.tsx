@@ -8,7 +8,7 @@ export const CreateTagNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const tag = data.properties?.tag || 'v1.0.0';
 
     return (
-        <BaseNode {...props} title="Create Tag" icon={<Tag />} color="#3b82f6">
+        <BaseNode {...props} title={data.label || "Create Tag"} icon={<Tag />} color="#3b82f6">
             <div className="text-[10px]">{tag}</div>
         </BaseNode>
     );

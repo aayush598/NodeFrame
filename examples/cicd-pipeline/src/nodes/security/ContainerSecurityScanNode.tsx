@@ -4,7 +4,7 @@ import { Container } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ContainerSecurityScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Container Scan" icon={<Container />} color="#ef4444" />
+    <BaseNode {...props} title={data.label || "Container Scan"} icon={<Container />} color="#ef4444" />
 );
 
 export const config = {

@@ -9,7 +9,7 @@ export const EnvInjectNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="Env Inject"
+            title={data.label || "Env Inject"}
             icon={<Key />}
             color="#22c55e"
             headerRight={

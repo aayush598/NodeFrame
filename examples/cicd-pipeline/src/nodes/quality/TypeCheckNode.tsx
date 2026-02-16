@@ -4,7 +4,7 @@ import { CheckSquare } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const TypeCheckNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Type Check" icon={<CheckSquare />} color="#8b5cf6" />
+    <BaseNode {...props} title={data.label || "Type Check"} icon={<CheckSquare />} color="#8b5cf6" />
 );
 
 export const config = {

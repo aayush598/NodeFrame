@@ -4,7 +4,7 @@ import { Rocket } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ReleaseTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Release Trigger" icon={<Rocket />} color="#22c55e" />
+    <BaseNode {...props} title={data.label || "Release Trigger"} icon={<Rocket />} color="#22c55e" />
 );
 
 export const config = {

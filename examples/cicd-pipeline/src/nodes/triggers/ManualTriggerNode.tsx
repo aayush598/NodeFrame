@@ -4,7 +4,7 @@ import { Play } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ManualTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Manual Trigger" icon={<Play />} color="#22c55e" />
+    <BaseNode {...props} title={data.label || "Manual Trigger"} icon={<Play />} color="#22c55e" />
 );
 
 export const config = {

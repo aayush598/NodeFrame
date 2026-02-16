@@ -8,7 +8,7 @@ export const InstallDepsNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const manager = data.properties?.manager || 'npm';
 
     return (
-        <BaseNode {...props} title="Install Deps" icon={<Package />} color="#0ea5e9">
+        <BaseNode {...props} title={data.label || "Install Deps"} icon={<Package />} color="#0ea5e9">
             <div className="text-[10px] uppercase">{manager}</div>
         </BaseNode>
     );

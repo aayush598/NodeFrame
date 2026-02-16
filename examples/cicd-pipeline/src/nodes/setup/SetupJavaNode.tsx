@@ -8,7 +8,7 @@ export const SetupJavaNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const version = data.properties?.version || '17';
 
     return (
-        <BaseNode {...props} title="Setup Java" icon={<Coffee />} color="#6366f1">
+        <BaseNode {...props} title={data.label || "Setup Java"} icon={<Coffee />} color="#6366f1">
             <div className="text-[10px]">JDK {version}</div>
         </BaseNode>
     );

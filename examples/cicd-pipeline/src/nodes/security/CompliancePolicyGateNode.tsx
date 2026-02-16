@@ -8,7 +8,7 @@ export const CompliancePolicyGateNode: React.FC<NodeProps<CustomNodeData>> = (pr
     const policy = data.properties?.policy || 'default';
 
     return (
-        <BaseNode {...props} title="Policy Gate" icon={<ShieldCheck />} color="#ef4444">
+        <BaseNode {...props} title={data.label || "Policy Gate"} icon={<ShieldCheck />} color="#ef4444">
             <div className="text-[10px]">{policy}</div>
         </BaseNode>
     );

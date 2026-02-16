@@ -8,7 +8,7 @@ export const SetupGoNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const version = data.properties?.version || '1.22';
 
     return (
-        <BaseNode {...props} title="Setup Go" icon={<Box />} color="#6366f1">
+        <BaseNode {...props} title={data.label || "Setup Go"} icon={<Box />} color="#6366f1">
             <div className="text-[10px]">{version}</div>
         </BaseNode>
     );

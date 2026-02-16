@@ -7,7 +7,7 @@ export const SSHDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (
         <BaseNode
             {...props}
-            title="SSH Deploy"
+            title={data.label || "SSH Deploy"}
             icon={<Terminal />}
             color="#64748b"
         />

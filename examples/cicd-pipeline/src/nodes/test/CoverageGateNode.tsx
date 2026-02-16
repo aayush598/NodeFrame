@@ -8,7 +8,7 @@ export const CoverageGateNode: React.FC<NodeProps<CustomNodeData>> = (props) => 
     const threshold = data.properties?.threshold || 80;
 
     return (
-        <BaseNode {...props} title="Coverage Gate" icon={<ShieldCheck />} color="#10b981">
+        <BaseNode {...props} title={data.label || "Coverage Gate"} icon={<ShieldCheck />} color="#10b981">
             <div className="text-[10px]">{threshold}%</div>
         </BaseNode>
     );

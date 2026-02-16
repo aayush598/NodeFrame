@@ -8,7 +8,7 @@ export const SetupRubyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const version = data.properties?.version || '3.3';
 
     return (
-        <BaseNode {...props} title="Setup Ruby" icon={<Gem />} color="#6366f1">
+        <BaseNode {...props} title={data.label || "Setup Ruby"} icon={<Gem />} color="#6366f1">
             <div className="text-[10px]">{version}</div>
         </BaseNode>
     );

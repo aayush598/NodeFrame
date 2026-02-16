@@ -4,7 +4,7 @@ import { Save } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const DependencyCacheSaveNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Save Cache" icon={<Save />} color="#0ea5e9" />
+    <BaseNode {...props} title={data.label || "Save Cache"} icon={<Save />} color="#0ea5e9" />
 );
 
 export const config = {

@@ -8,7 +8,7 @@ export const PathFilterTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props
     const paths = data.properties?.paths || '';
 
     return (
-        <BaseNode {...props} title="Path Filter" icon={<Filter />} color="#22c55e">
+        <BaseNode {...props} title={data.label || "Path Filter"} icon={<Filter />} color="#22c55e">
             <div className="text-[10px]">{paths}</div>
         </BaseNode>
     );

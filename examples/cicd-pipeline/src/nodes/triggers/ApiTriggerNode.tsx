@@ -4,7 +4,7 @@ import { Cloud } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ApiTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="API Trigger" icon={<Cloud />} color="#22c55e" />
+    <BaseNode {...props} title={data.label || "API Trigger"} icon={<Cloud />} color="#22c55e" />
 );
 
 export const config = {

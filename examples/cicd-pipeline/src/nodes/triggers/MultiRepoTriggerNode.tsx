@@ -8,7 +8,7 @@ export const MultiRepoTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props)
     const repos = data.properties?.repos || '';
 
     return (
-        <BaseNode {...props} title="Multi-Repo Trigger" icon={<GitMerge />} color="#22c55e">
+        <BaseNode {...props} title={data.label || "Multi-Repo Trigger"} icon={<GitMerge />} color="#22c55e">
             <div className="text-[10px]">{repos}</div>
         </BaseNode>
     );

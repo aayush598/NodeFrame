@@ -8,7 +8,7 @@ export const CheckoutMultipleReposNode: React.FC<NodeProps<CustomNodeData>> = (p
     const repos = data.properties?.repos || '';
 
     return (
-        <BaseNode {...props} title="Multi Checkout" icon={<GitMerge />} color="#3b82f6">
+        <BaseNode {...props} title={data.label || "Multi Checkout"} icon={<GitMerge />} color="#3b82f6">
             <div className="text-[10px]">{repos}</div>
         </BaseNode>
     );

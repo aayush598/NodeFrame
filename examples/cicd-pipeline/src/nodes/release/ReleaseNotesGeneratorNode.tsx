@@ -7,7 +7,7 @@ export const ReleaseNotesGeneratorNode: React.FC<NodeProps<CustomNodeData>> = (p
     return (
         <BaseNode
             {...props}
-            title="Release Notes"
+            title={data.label || "Release Notes"}
             icon={<FileText />}
             color="#0ea5e9"
         />

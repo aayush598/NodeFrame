@@ -4,7 +4,7 @@ import { Theater } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const PlaywrightTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
-    <BaseNode {...props} title="Playwright Tests" icon={<Theater />} color="#10b981" />
+    <BaseNode {...props} title={data.label || "Playwright Tests"} icon={<Theater />} color="#10b981" />
 );
 
 export const config = {

@@ -4,7 +4,7 @@ import { Flame } from 'lucide-react';
 import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const FirebaseDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
-    return <BaseNode {...props} title="Firebase Deploy" icon={<Flame />} color="#f59e0b" />;
+    return <BaseNode {...props} title={data.label || "Firebase Deploy"} icon={<Flame />} color="#f59e0b" />;
 };
 
 export const config = {
