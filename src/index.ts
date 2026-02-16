@@ -1,4 +1,4 @@
-export { FlowCanvas, FlowCanvasInternal as FlowCanvasCore } from './components/FlowCanvas';
+export { WorkflowCanvas as WorkflowCanvas, WorkflowCanvasInternal as WorkflowCanvasCore } from './components/WorkflowCanvas';
 export { Controls } from './components/Controls';
 export { Minimap } from './components/Minimap';
 export { NodeSidebar } from './components/NodeSidebar';
@@ -15,9 +15,9 @@ export { ApiCallNode } from './nodes/ApiCallNode';
 export { TransformNode } from './nodes/TransformNode';
 
 export { ThemeProvider, useTheme } from './context/ThemeProvider';
-export { FlowProvider, useFlow } from './context/FlowProvider';
+export { WorkflowProvider, useWorkflowContext } from './context/WorkflowProvider';
 
-export { useFlowcraft } from './hooks/useFlowcraft';
+export { useWorkflow } from './hooks/useWorkflow';
 export { useNodeRegistry } from './hooks/useNodeRegistry';
 
 export { nodeRegistry } from './utils/nodeRegistry';
@@ -34,14 +34,14 @@ export {
 export * from './utils/helpers';
 
 export type {
-  FlowcraftTheme,
+  WorkflowTheme,
   NodeConfig,
   CustomNodeData,
-  FlowcraftNode,
-  FlowcraftEdge,
-  FlowcraftProps,
+  WorkflowNode,
+  WorkflowEdge,
+  WorkflowCanvasProps,
   NodeRegistryItem,
-  FlowContextValue
+  WorkflowContextValue
 } from './types';
 
 export { ReactFlowProvider } from '@reactflow/core';

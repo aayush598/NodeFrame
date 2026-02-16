@@ -1,11 +1,11 @@
 {
-    "NodeFrame Custom Node": {
+    "WorkflowCanvas Custom Node": {
         "prefix": "nf-node",
         "body": [
             "import React from 'react';",
             "import { NodeProps } from 'reactflow';",
             "import { ${1:IconName} } from 'lucide-react';",
-            "import { CustomNodeData, BaseNode, defineNodeConfig } from '@nodeframe';",
+            "import { CustomNodeData, BaseNode, defineNodeConfig } from 'workflow-canvas';",
             "",
             "export const ${TM_FILENAME_BASE}: React.FC<NodeProps<CustomNodeData>> = (props) => {",
             "    const { data } = props;",
@@ -50,6 +50,6 @@
             "    },",
             "});"
         ],
-        "description": "Create a boilerplate for a NodeFrame custom node"
+        "description": "Create a boilerplate for a WorkflowCanvas custom node"
     }
 }

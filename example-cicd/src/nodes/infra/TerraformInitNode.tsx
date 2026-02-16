@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Wrench } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const TerraformInitNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (

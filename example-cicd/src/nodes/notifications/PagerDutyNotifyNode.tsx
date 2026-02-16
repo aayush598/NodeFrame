@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { AlertTriangle } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const PagerDutyNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return (

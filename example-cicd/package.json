@@ -1,7 +1,7 @@
 {
-  "name": "nodeframe-cicd-example",
+  "name": "workflow-canvas-cicd-example",
   "version": "1.0.0",
-  "description": "CI/CD Pipeline Automation Builder using NodeFrame",
+  "description": "CI/CD Pipeline Automation Builder using WorkflowCanvas",
   "type": "module",
   "scripts": {
     "dev": "vite",

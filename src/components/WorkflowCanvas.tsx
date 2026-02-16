@@ -10,8 +10,8 @@ import { ExportModal } from './ExportModal';
 import { registerDefaultNodes } from '../utils/registerDefaultNodes';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
-import { FlowcraftProps } from '../types';
-import { FlowProvider, useFlow } from '../context/FlowProvider';
+import { WorkflowCanvasProps } from '../types';
+import { WorkflowProvider, useWorkflowContext } from '../context/WorkflowProvider';
 import { FileCode, Play, RotateCcw, Copy, Clipboard, Trash2, Box, Undo2, Redo2 } from 'lucide-react';
 import { Controls } from './Controls';
 import { Minimap } from './Minimap';
@@ -39,7 +39,7 @@ const defaultNodeTypes: NodeTypes = {
 };
 
 const SelectionToolbar = () => {
-  const { nodes, groupNodes, deleteNodes, copyNodes, pasteNodes } = useFlow();
+  const { nodes, groupNodes, deleteNodes, copyNodes, pasteNodes } = useWorkflowContext();
   const selectedNodes = nodes.filter((n: any) => n.selected);
   const selectedNodeIds = selectedNodes.map((n: any) => n.id);
 
@@ -90,13 +90,13 @@ const SelectionToolbar = () => {
 };
 
 const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: number, exporters: any[], onOpenExport: () => void }) => {
-  const { executeWorkflow, resetExecutionState, undo, redo, canUndo, canRedo } = useFlow();
+  const { executeWorkflow, resetExecutionState, undo, redo, canUndo, canRedo } = useWorkflowContext();
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2 flex items-center gap-3">
       <div className="flex items-center gap-2 pr-3 border-r border-gray-100">
         <div className="w-2 h-2 rounded-full bg-green-500"></div>
-        <span className="text-sm font-bold text-gray-800 tracking-tight">NodeFrame</span>
+        <span className="text-sm font-bold text-gray-800 tracking-tight">WorkflowCanvas</span>
       </div>
 
       <div className="flex items-center gap-1">
@@ -151,15 +151,15 @@ const WorkflowPanel = ({ exporters, onOpenExport }: { nNodes: number, nEdges: nu
   );
 };
 
-export const FlowCanvas: React.FC<FlowcraftProps> = (props) => {
+export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = (props) => {
   return (
-    <FlowProvider initialNodes={props.nodes} initialEdges={props.edges}>
-      <FlowCanvasInternal {...props} />
-    </FlowProvider>
+    <WorkflowProvider initialNodes={props.nodes} initialEdges={props.edges}>
+      <WorkflowCanvasInternal {...props} />
+    </WorkflowProvider>
   );
 };
 
-export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
+export const WorkflowCanvasInternal: React.FC<WorkflowCanvasProps> = ({
   onNodesChange: onNodesChangeProp,
   onEdgesChange: onEdgesChangeProp,
   onConnect: _onConnectProp,
@@ -190,7 +190,7 @@ export const FlowCanvasInternal: React.FC<FlowcraftProps> = ({
     redo,
     onConnect,
     onNodeDragStart
-  } = useFlow();
+  } = useWorkflowContext();
 
   const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);

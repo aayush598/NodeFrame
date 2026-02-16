@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { BarChart } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ComplexityAnalysisNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Complexity Analysis" icon={<BarChart />} color="#8b5cf6" />

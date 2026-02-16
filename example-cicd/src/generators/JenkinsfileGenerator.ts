@@ -1,12 +1,12 @@
-import { FlowcraftNode, FlowcraftEdge, CodeGenerator, WorkflowStrategy } from '@nodeframe';
-import { nodeRegistry } from '@nodeframe/utils/nodeRegistry';
+import { WorkflowNode, WorkflowEdge, CodeGenerator, WorkflowStrategy } from 'workflow-canvas';
+import { nodeRegistry } from 'workflow-canvas/utils/nodeRegistry';
 
 export class JenkinsfileGenerator {
     private generator: CodeGenerator;
-    private nodes: FlowcraftNode[];
-    private edges: FlowcraftEdge[];
+    private nodes: WorkflowNode[];
+    private edges: WorkflowEdge[];
 
-    constructor(nodes: FlowcraftNode[], edges: FlowcraftEdge[]) {
+    constructor(nodes: WorkflowNode[], edges: WorkflowEdge[]) {
         this.nodes = nodes;
         this.edges = edges;
         this.generator = new CodeGenerator(nodeRegistry);

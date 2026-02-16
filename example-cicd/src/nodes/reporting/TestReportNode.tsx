@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { FileBarChart } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const TestReportNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const format = props.data.properties?.format || 'junit';

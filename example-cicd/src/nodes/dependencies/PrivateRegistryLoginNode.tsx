@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Lock } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const PrivateRegistryLoginNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { data } = props;

@@ -1,13 +1,13 @@
 import { NodeProps } from '@reactflow/core';
 import { Zap } from 'lucide-react';
 import { CustomNodeData } from '../types';
-import { useFlow } from '../context/FlowProvider';
+import { useWorkflowContext } from '../context/WorkflowProvider';
 import { NodeActions } from '../components/NodeActions';
 import { BaseNode } from '../components/BaseNode';
 
 export const ActionNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
   const { id, data } = props;
-  const { executeNode } = useFlow();
+  const { executeNode } = useWorkflowContext();
 
   const handleRun = () => {
     executeNode(id);

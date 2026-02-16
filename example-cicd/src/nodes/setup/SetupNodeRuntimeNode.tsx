@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Cpu } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SetupNodeRuntimeNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { data } = props;

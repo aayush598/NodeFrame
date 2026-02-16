@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Theater } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const PlaywrightTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Playwright Tests" icon={<Theater />} color="#10b981" />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { PieChart } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const CoverageReportNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Coverage Report" icon={<PieChart />} color="#10b981" />

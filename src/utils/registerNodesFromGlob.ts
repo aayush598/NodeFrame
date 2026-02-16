@@ -9,7 +9,7 @@ export const registerNodesFromGlob = (modules: Record<string, any>) => {
         // 1. Get the Config
         const config = module.config as NodeConfig;
         if (!config) {
-            console.warn(`[NodeFrame] Skipped registration for ${path}: Missing 'export const config'`);
+            console.warn(`[WorkflowCanvas] Skipped registration for ${path}: Missing 'export const config'`);
             return;
         }
 
@@ -31,14 +31,14 @@ export const registerNodesFromGlob = (modules: Record<string, any>) => {
         }
 
         if (!component) {
-            console.warn(`[NodeFrame] Skipped registration for ${path}: No component found.`);
+            console.warn(`[WorkflowCanvas] Skipped registration for ${path}: No component found.`);
             return;
         }
 
         // 3. Register
         const type = config.type || config.id;
         if (!type) {
-            console.warn(`[NodeFrame] Skipped registration for ${path}: Config missing 'type' or 'id'`);
+            console.warn(`[WorkflowCanvas] Skipped registration for ${path}: Config missing 'type' or 'id'`);
             return;
         }
 
@@ -46,6 +46,6 @@ export const registerNodesFromGlob = (modules: Record<string, any>) => {
         if (!config.id) config.id = type;
 
         nodeRegistry.register(type, component as React.ComponentType<NodeProps>, config);
-        // console.log(`[NodeFrame] Auto-registered node: ${type}`);
+        // console.log(`[WorkflowCanvas] Auto-registered node: ${type}`);
     });
 };

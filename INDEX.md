@@ -1,6 +1,6 @@
-# @flowcraft/canvas - Complete Documentation Index
+# workflow-canvas - Complete Documentation Index
 
-Welcome to the complete documentation for **@flowcraft/canvas** - a professional React workflow canvas library.
+Welcome to the complete documentation for **workflow-canvas** - a professional React workflow canvas library.
 
 ---
 
@@ -9,7 +9,7 @@ Welcome to the complete documentation for **@flowcraft/canvas** - a professional
 ### 🚀 Getting Started
 
 1. **[README.md](./README.md)** - Start here!
-   - What is NodeFrame?
+   - What is workflow-canvas?
    - Installation instructions
    - Basic usage example
    - Quick feature overview
@@ -27,7 +27,7 @@ Welcome to the complete documentation for **@flowcraft/canvas** - a professional
 3. **[API.md](./API.md)** - Complete API Reference
    - All components (FlowCanvas, Controls, Minimap)
    - All prebuilt nodes (8 types)
-   - All hooks (useFlowcraft, useNodeRegistry, etc.)
+   - All hooks (useWorkflow, useNodeRegistry, etc.)
    - Type definitions
    - Props reference
    - Return value documentation
@@ -134,7 +134,7 @@ Welcome to the complete documentation for **@flowcraft/canvas** - a professional
 ## 📁 Package Contents
 
 ```
-@flowcraft/canvas/
+workflow-canvas/
 ├── 📄 Documentation (9 files, ~60 KB)
 │   ├── README.md              (5 KB)
 │   ├── QUICKSTART.md          (7 KB)
@@ -221,7 +221,7 @@ Welcome to the complete documentation for **@flowcraft/canvas** - a professional
 
 ### Minimal Example (3 lines)
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 <FlowCanvas nodes={[{ id: '1', type: 'start', position: { x: 0, y: 0 }, data: { label: 'Start' } }]} />
 ```
 *See: QUICKSTART.md*
@@ -339,7 +339,7 @@ After reading the docs, you should be able to:
 
 ---
 
-**Welcome to NodeFrame!** 🎨
+**Welcome to workflow-canvas!** 🎨
 
 Built with ❤️ to make workflow builders accessible to all developers.
 

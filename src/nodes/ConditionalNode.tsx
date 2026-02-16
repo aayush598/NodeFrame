@@ -1,13 +1,13 @@
 import { Handle, NodeProps, Position } from '@reactflow/core';
 import { GitBranch } from 'lucide-react';
 import { CustomNodeData } from '../types';
-import { useFlow } from '../context/FlowProvider';
+import { useWorkflowContext } from '../context/WorkflowProvider';
 import { NodeActions } from '../components/NodeActions';
 import { BaseNode } from '../components/BaseNode';
 
 export const ConditionalNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
   const { id, data, isConnectable } = props;
-  const { executeNode } = useFlow();
+  const { executeNode } = useWorkflowContext();
 
   const handleRun = () => {
     executeNode(id);

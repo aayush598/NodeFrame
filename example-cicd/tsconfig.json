@@ -22,10 +22,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@nodeframe": [
-        "../src"
+      "workflow-canvas": [
+        "../src/index.ts"
       ],
-      "@nodeframe/*": [
+      "workflow-canvas/*": [
         "../src/*"
       ]
     }

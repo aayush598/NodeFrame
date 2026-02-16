@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Container } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SetupDockerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Setup Docker" icon={<Container />} color="#6366f1" />

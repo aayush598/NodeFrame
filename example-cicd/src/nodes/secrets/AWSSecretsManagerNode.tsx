@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Cloud } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const AWSSecretsManagerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const name = props.data.properties?.secretName || '';

@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { registerNodesFromGlob } from '@nodeframe';
+import { registerNodesFromGlob } from 'workflow-canvas';
 
 export const registerCICDNodes = () => {
     // Automatically import all .tsx files from the ../nodes directory

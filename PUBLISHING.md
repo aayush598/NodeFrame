@@ -32,7 +32,7 @@ npm version major
 ### 3. Build the Package
 
 ```bash
-cd /app/flowcraft-canvas
+cd /your/project/workflow-canvas
 yarn build
 ```
 
@@ -43,7 +43,7 @@ yarn build
 npm link
 
 # In another project
-npm link @flowcraft/canvas
+npm link workflow-canvas
 ```
 
 ### 5. Publish to NPM
@@ -58,7 +58,7 @@ npm publish
 
 ### 6. Verify Publication
 
-Check your package at: https://www.npmjs.com/package/@flowcraft/canvas
+Check your package at: https://www.npmjs.com/package/workflow-canvas
 
 ---
 
@@ -84,17 +84,13 @@ Ensure these fields are correct:
 
 ```json
 {
-  "name": "@flowcraft/canvas",
+  "name": "workflow-canvas",
   "version": "1.0.0",
   "description": "Professional workflow canvas library",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": ["dist", "README.md"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/flowcraft/canvas.git"
-  },
   "keywords": [
     "workflow",
     "canvas",
@@ -102,7 +98,7 @@ Ensure these fields are correct:
     "typescript",
     "drag-and-drop"
   ],
-  "author": "FlowCraft",
+  "author": "WorkflowCanvas Team",
   "license": "MIT"
 }
 ```
@@ -115,7 +111,7 @@ Ensure these fields are correct:
 
 1. Add badge to README:
 ```markdown
-[![npm version](https://badge.fury.io/js/%40flowcraft%2Fcanvas.svg)](https://www.npmjs.com/package/@flowcraft/canvas)
+[![npm version](https://badge.fury.io/js/workflow-canvas.svg)](https://www.npmjs.com/package/workflow-canvas)
 ```
 
 2. Update installation instructions with actual package name
@@ -128,7 +124,7 @@ git push origin v1.0.0
 
 ### Monitor
 
-- Check download stats: https://npm-stat.com/charts.html?package=@flowcraft/canvas
+- Check download stats: https://npm-stat.com/charts.html?package=workflow-canvas
 - Monitor issues on npm or GitHub
 - Respond to user feedback
 
@@ -157,7 +153,7 @@ npm publish --tag beta
 
 Users install with:
 ```bash
-npm install @flowcraft/canvas@beta
+npm install workflow-canvas@beta
 ```
 
 ---
@@ -219,10 +215,10 @@ Check `.npmignore` and `package.json` `files` field.
 
 ```bash
 # Unpublish specific version (within 72 hours)
-npm unpublish @flowcraft/canvas@1.0.0
+npm unpublish workflow-canvas@1.0.0
 
 # Deprecate instead (recommended)
-npm deprecate @flowcraft/canvas@1.0.0 "Please use version 1.0.1"
+npm deprecate workflow-canvas@1.0.0 "Please use version 1.0.1"
 ```
 
 ⚠️ **Warning**: Unpublishing is discouraged and may be disallowed after 72 hours.
@@ -234,7 +230,7 @@ npm deprecate @flowcraft/canvas@1.0.0 "Please use version 1.0.1"
 ### Test Build Output
 
 ```bash
-cd /app/flowcraft-canvas
+cd /your/project/workflow-canvas
 yarn build
 ls -la dist/
 ```
@@ -269,7 +265,7 @@ npm publish --tag beta
 npm publish --tag latest
 
 # Move latest tag to specific version
-npm dist-tag add @flowcraft/canvas@1.0.1 latest
+npm dist-tag add workflow-canvas@1.0.1 latest
 ```
 
 ---

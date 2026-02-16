@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { GitPullRequest } from 'lucide-react';
-import { CustomNodeData, BaseNode } from '@nodeframe';
+import { CustomNodeData, BaseNode } from 'workflow-canvas';
 
 export const PullRequestTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { data } = props;

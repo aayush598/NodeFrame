@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Coffee } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const MavenInstallNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Maven Install" icon={<Coffee />} color="#0ea5e9" />

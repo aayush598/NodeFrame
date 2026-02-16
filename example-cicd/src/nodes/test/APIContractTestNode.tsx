@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { FileCode } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const APIContractTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="API Contract Tests" icon={<FileCode />} color="#10b981" />

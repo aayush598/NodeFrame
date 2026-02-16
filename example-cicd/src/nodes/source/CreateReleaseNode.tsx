@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Rocket } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const CreateReleaseNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Create Release" icon={<Rocket />} color="#3b82f6" />

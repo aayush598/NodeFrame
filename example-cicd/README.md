@@ -1,8 +1,8 @@
 # CI/CD Pipeline Builder
 
-A visual CI/CD pipeline automation tool built with [NodeFrame](../README.md). Design deployment pipelines using drag-and-drop nodes and export production-ready configurations for GitHub Actions, GitLab CI, and Jenkins.
+A visual CI/CD pipeline automation tool built with [WorkflowCanvas](../README.md). Design deployment pipelines using drag-and-drop nodes and export production-ready configurations for GitHub Actions, GitLab CI, and Jenkins.
 
-![CI/CD Pipeline Builder](https://img.shields.io/badge/NodeFrame-CI%2FCD%20Builder-blue)
+![CI/CD Pipeline Builder](https://img.shields.io/badge/WorkflowCanvas-CI%2FCD%20Builder-blue)
 
 ## Features
 
@@ -225,7 +225,7 @@ Group common patterns (build + test) and reuse across pipelines.
 
 ## Technology Stack
 
-- **NodeFrame** - Visual workflow engine
+- **WorkflowCanvas** - Visual workflow engine
 - **React Flow** - Canvas rendering
 - **js-yaml** - YAML generation
 - **JSZip** - Package export
@@ -237,7 +237,7 @@ Group common patterns (build + test) and reuse across pipelines.
 Add your own DevOps nodes:
 
 ```typescript
-import { nodeRegistry } from '@nodeframe/utils/nodeRegistry';
+import { nodeRegistry } from 'workflow-canvas/utils/nodeRegistry';
 
 nodeRegistry.register('customNode', CustomNodeComponent, {
   id: 'customNode',
@@ -257,7 +257,7 @@ nodeRegistry.register('customNode', CustomNodeComponent, {
 
 ## Contributing
 
-Contributions are welcome! This example demonstrates NodeFrame's capabilities for enterprise workflow automation.
+Contributions are welcome! This example demonstrates WorkflowCanvas's capabilities for enterprise workflow automation.
 
 ## License
 
@@ -265,10 +265,10 @@ MIT - See [LICENSE](../LICENSE) for details
 
 ## Related
 
-- [NodeFrame Core](../README.md)
+- [WorkflowCanvas Core](../README.md)
 - [Basic Example](../example/README.md)
 - [Documentation](../docs/README.md)
 
 ---
 
-**Built with ❤️ using NodeFrame** - The visual workflow engine for modern applications
+**Built with ❤️ using WorkflowCanvas** - The visual workflow engine for modern applications

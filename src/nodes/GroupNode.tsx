@@ -1,12 +1,12 @@
 import { NodeProps } from '@reactflow/core';
 import { Box, Layers, Trash2 } from 'lucide-react';
 import { CustomNodeData } from '../types';
-import { useFlow } from '../context/FlowProvider';
+import { useWorkflowContext } from '../context/WorkflowProvider';
 import { BaseNode } from '../components/BaseNode';
 
 export const GroupNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { id, data } = props;
-    const { ungroupNode, deleteNodes, updateNode } = useFlow();
+    const { ungroupNode, deleteNodes, updateNode } = useWorkflowContext();
 
     const titleInput = (
         <input

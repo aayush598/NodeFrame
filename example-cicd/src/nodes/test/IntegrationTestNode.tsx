@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Network } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const IntegrationTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Integration Tests" icon={<Network />} color="#10b981" />

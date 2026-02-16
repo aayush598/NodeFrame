@@ -1,6 +1,8 @@
 node_modules
 src
 example
+example-cicd
+scripts
 *.ts
 *.tsx
 tsconfig.json
@@ -9,3 +11,7 @@ tailwind.config.js
 postcss.config.js
 .git
 .gitignore
+.vscode
+verify-package.sh
+bun.lock
+package-lock.json

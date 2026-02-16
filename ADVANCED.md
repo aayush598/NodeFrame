@@ -7,7 +7,7 @@
 ```tsx
 import React from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { CustomNodeData } from '@flowcraft/canvas';
+import { CustomNodeData } from 'workflow-canvas';
 
 export const DatabaseNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected }) => {
   return (
@@ -27,7 +27,7 @@ export const DatabaseNode: React.FC<NodeProps<CustomNodeData>> = ({ data, select
 ### Register Custom Node
 
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 import { DatabaseNode } from './nodes/DatabaseNode';
 
 function App() {
@@ -57,12 +57,12 @@ function App() {
 The node registry allows you to manage and discover available nodes dynamically.
 
 ```tsx
-import { useNodeRegistry, useFlowcraft } from '@flowcraft/canvas';
+import { useNodeRegistry, useWorkflow } from 'workflow-canvas';
 import { DatabaseNode } from './nodes/DatabaseNode';
 
 function NodePalette() {
   const { register, getAll } = useNodeRegistry();
-  const { createNode } = useFlowcraft();
+  const { createNode } = useWorkflow();
 
   // Register a custom node
   React.useEffect(() => {
@@ -97,10 +97,10 @@ function NodePalette() {
 ## Dynamic Node Creation
 
 ```tsx
-import { useFlowcraft } from '@flowcraft/canvas';
+import { useWorkflow } from 'workflow-canvas';
 
 function Toolbar() {
-  const { createNode, nodes } = useFlowcraft();
+  const { createNode, nodes } = useWorkflow();
 
   const handleAddNode = (type: string) => {
     // Automatically positions based on existing nodes
@@ -124,7 +124,7 @@ function Toolbar() {
 ## Custom Styling with Themes
 
 ```tsx
-import { ThemeProvider, FlowCanvas } from '@flowcraft/canvas';
+import { ThemeProvider, FlowCanvas } from 'workflow-canvas';
 
 const darkTheme = {
   nodeBackground: '#1f2937',
@@ -198,7 +198,7 @@ async function executeWorkflow(nodes, edges) {
 ## Validation and Connection Rules
 
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function App() {
   const validateConnection = (connection) => {
@@ -233,10 +233,10 @@ function App() {
 ## Grouping Nodes
 
 ```tsx
-import { useFlowcraft } from '@flowcraft/canvas';
+import { useWorkflow } from 'workflow-canvas';
 
 function GroupControls() {
-  const { nodes, groupNodes } = useFlowcraft();
+  const { nodes, groupNodes } = useWorkflow();
 
   const handleGroup = () => {
     const selectedIds = nodes
@@ -260,7 +260,7 @@ function GroupControls() {
 
 ```tsx
 import { useState, useEffect } from 'react';
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function App() {
   const [nodes, setNodes] = useState([]);
@@ -308,18 +308,18 @@ function App() {
 import React, { useState, useCallback } from 'react';
 import {
   FlowCanvas,
-  FlowcraftNode,
-  FlowcraftEdge,
+  WorkflowNode,
+  WorkflowEdge,
   ThemeProvider,
   ReactFlowProvider,
-  useFlowcraft,
+  useWorkflow,
   useNodeRegistry
-} from '@flowcraft/canvas';
+} from 'workflow-canvas';
 
 function WorkflowBuilder() {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>([]);
-  const [edges, setEdges] = useState<FlowcraftEdge[]>([]);
-  const { createNode, deleteSelectedNodes } = useFlowcraft();
+  const [nodes, setNodes] = useState<WorkflowNode[]>([]);
+  const [edges, setEdges] = useState<WorkflowEdge[]>([]);
+  const { createNode, deleteSelectedNodes } = useWorkflow();
   const { getAll } = useNodeRegistry();
 
   const addNodeToCanvas = (type: string) => {

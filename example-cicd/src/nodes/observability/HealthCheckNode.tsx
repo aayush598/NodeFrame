@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { HeartPulse } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const HealthCheckNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const url = props.data.properties?.url || '/health';

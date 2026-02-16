@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Wand2 } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const FormatCodeNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Format Code" icon={<Wand2 />} color="#8b5cf6" />

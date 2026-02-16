@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Box } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GoModulesInstallNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Go Modules" icon={<Box />} color="#0ea5e9" />

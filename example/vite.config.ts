@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            '@flowcraft/canvas': path.resolve(__dirname, '../src/index.ts'),
+            'workflow-canvas': path.resolve(__dirname, '../src/index.ts'),
         },
     },
     server: {

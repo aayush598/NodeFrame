@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { HardDrive } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const GitLFSNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Git LFS Pull" icon={<HardDrive />} color="#3b82f6" />

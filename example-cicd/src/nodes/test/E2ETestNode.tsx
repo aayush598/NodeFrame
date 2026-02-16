@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Monitor } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const E2ETestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="E2E Tests" icon={<Monitor />} color="#10b981" />

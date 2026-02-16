@@ -1,4 +1,4 @@
-# Developer Guide - @flowcraft/canvas
+# Developer Guide - workflow-canvas
 
 ## 🎯 Project Overview
 
@@ -126,22 +126,22 @@ const theme = {
 
 ## 🎣 Custom Hooks
 
-### useFlowcraft
+### useWorkflow
 
 **Purpose**: Main workflow operations hook
 
 **Returns**:
 ```typescript
 {
-  nodes: FlowcraftNode[],
-  edges: FlowcraftEdge[],
+  nodes: WorkflowNode[],
+  edges: WorkflowEdge[],
   setNodes: (nodes) => void,
   setEdges: (edges) => void,
   addNode: (node) => void,
   removeNode: (id) => void,
   updateNode: (id, data) => void,
   duplicateNode: (id) => void,
-  createNode: (type, data, position?) => FlowcraftNode,
+  createNode: (type, data, position?) => WorkflowNode,
   deleteSelectedNodes: () => void,
   copySelectedNodes: () => string[],
   pasteNodes: (ids) => void
@@ -151,7 +151,7 @@ const theme = {
 **Usage**:
 ```tsx
 function Toolbar() {
-  const { createNode, deleteSelectedNodes } = useFlowcraft();
+  const { createNode, deleteSelectedNodes } = useWorkflow();
   
   return (
     <button onClick={() => createNode('action', { label: 'New' })}>
@@ -212,7 +212,7 @@ class NodeRegistry {
 
 ```typescript
 // Node with custom data
-interface FlowcraftNode extends Node<CustomNodeData> {
+interface WorkflowNode extends Node<CustomNodeData> {
   id: string
   type: string
   position: { x: number; y: number }
@@ -231,7 +231,7 @@ interface CustomNodeData {
 }
 
 // Connection between nodes
-interface FlowcraftEdge extends Edge {
+interface WorkflowEdge extends Edge {
   id: string
   source: string
   target: string
@@ -381,7 +381,7 @@ const dispatch = useDispatch()
 
 ```tsx
 import { render } from '@testing-library/react'
-import { FlowCanvas } from '@flowcraft/canvas'
+import { FlowCanvas } from 'workflow-canvas'
 
 test('renders nodes', () => {
   const nodes = [{ id: '1', type: 'start', position: { x: 0, y: 0 }, data: {} }]

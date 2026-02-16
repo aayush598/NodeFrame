@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import { FlowCanvasCore as Flowcraft, FlowProvider, useFlow } from '@nodeframe';
+import { WorkflowCanvasCore as WorkflowCanvas, WorkflowProvider, useWorkflowContext } from 'workflow-canvas';
 import { registerCICDNodes } from './utils/registerCICDNodes';
 import { registerCICDExporters } from './utils/registerCICDExporters';
 import { Layers } from 'lucide-react';
-import '@nodeframe/styles/index.css';
+import 'workflow-canvas/styles/index.css';
 import './styles.css';
 
 // Register CI/CD nodes initially
 registerCICDNodes();
 
 const CICDAppContent: React.FC = () => {
-    const { registerExporter } = useFlow();
+    const { registerExporter } = useWorkflowContext();
 
     useEffect(() => {
-        // Register the exporters into the NodeFrame system
+        // Register the exporters into the WorkflowCanvas system
         registerCICDExporters(registerExporter);
     }, [registerExporter]);
 
@@ -41,7 +41,7 @@ const CICDAppContent: React.FC = () => {
 
             {/* Main Canvas */}
             <div className="flex-1 relative overflow-hidden">
-                <Flowcraft
+                <WorkflowCanvas
                     showMinimap={true}
                     showControls={true}
                     showSidebar={true}
@@ -53,9 +53,9 @@ const CICDAppContent: React.FC = () => {
 
 const CICDApp: React.FC = () => {
     return (
-        <FlowProvider>
+        <WorkflowProvider>
             <CICDAppContent />
-        </FlowProvider>
+        </WorkflowProvider>
     );
 };
 

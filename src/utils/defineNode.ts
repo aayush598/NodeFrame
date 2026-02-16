@@ -2,7 +2,7 @@ import { NodeConfig, PropertyDefinition } from '../types';
 
 /**
  * Type-safe helper to define a node configuration.
- * Using this ensures your node follows the NodeFrame standard and provides autocomplete.
+ * Using this ensures your node follows the WorkflowCanvas standard and provides autocomplete.
  * 
  * @example
  * export const config = defineNodeConfig({

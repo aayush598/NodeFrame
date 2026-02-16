@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# NodeFrame - Package Verification Script
+# WorkflowCanvas - Package Verification Script
 # Run this to verify the package is ready for publishing
 
-echo "🔍 NodeFrame - Package Verification"
+echo "🔍 WorkflowCanvas - Package Verification"
 echo "=========================================="
 echo ""
 
@@ -17,8 +17,8 @@ echo "✅ Directory check passed"
 
 # Check package.json fields
 echo "📦 Checking package.json..."
-if grep -q '"name": "@flowcraft/canvas"' package.json; then
-    echo "  ✅ Package name: @flowcraft/canvas"
+if grep -q '"name": "workflow-canvas"' package.json; then
+    echo "  ✅ Package name: workflow-canvas"
 else
     echo "  ❌ Package name not set correctly"
 fi
@@ -106,7 +106,7 @@ echo ""
 echo "=========================================="
 echo "📊 Verification Summary"
 echo "=========================================="
-echo "Package: @flowcraft/canvas v$VERSION"
+echo "Package: workflow-canvas v$VERSION"
 echo "Source files: $SRC_COUNT TypeScript files"
 echo "Build output: dist/ directory"
 echo "Documentation: Complete"
@@ -117,5 +117,5 @@ echo ""
 echo "Next steps:"
 echo "1. Test locally: npm link"
 echo "2. Publish: npm publish --access public"
-echo "3. Verify: npm info @flowcraft/canvas"
+echo "3. Verify: npm info workflow-canvas"
 echo ""

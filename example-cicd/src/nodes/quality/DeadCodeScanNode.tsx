@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Skull } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const DeadCodeScanNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Dead Code Scan" icon={<Skull />} color="#8b5cf6" />

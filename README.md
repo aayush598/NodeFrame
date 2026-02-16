@@ -1,4 +1,4 @@
-# @flowcraft/canvas
+# workflow-canvas
 
 A professional React workflow canvas library with drag-drop, zoom, pan, minimap and customizable nodes - built on reactflow. Create visual workflow builders like n8n, Langflow, and VectorShift with minimal code.
 
@@ -17,19 +17,18 @@ A professional React workflow canvas library with drag-drop, zoom, pan, minimap 
 ## Installation
 
 ```bash
-npm install @flowcraft/canvas
+npm install workflow-canvas
 # or
-yarn add @flowcraft/canvas
+yarn add workflow-canvas
 ```
 
 ## Quick Start
-
 ```tsx
 import React, { useState } from 'react';
-import { FlowCanvas, FlowcraftNode, FlowcraftEdge } from '@flowcraft/canvas';
+import { FlowCanvas, WorkflowNode, WorkflowEdge } from 'workflow-canvas';
 
 function App() {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>([
+  const [nodes, setNodes] = useState<WorkflowNode[]>([
     {
       id: '1',
       type: 'start',
@@ -50,7 +49,7 @@ function App() {
     }
   ]);
 
-  const [edges, setEdges] = useState<FlowcraftEdge[]>([
+  const [edges, setEdges] = useState<WorkflowEdge[]>([
     { id: 'e1-2', source: '1', target: '2' },
     { id: 'e2-3', source: '2', target: '3' }
   ]);
@@ -88,7 +87,7 @@ Create your own custom nodes:
 ```tsx
 import React from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { CustomNodeData } from '@flowcraft/canvas';
+import { CustomNodeData } from 'workflow-canvas';
 
 const MyCustomNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected }) => {
   return (
@@ -112,7 +111,7 @@ const MyCustomNode: React.FC<NodeProps<CustomNodeData>> = ({ data, selected }) =
 Customize the appearance:
 
 ```tsx
-import { ThemeProvider } from '@flowcraft/canvas';
+import { ThemeProvider } from 'workflow-canvas';
 
 const customTheme = {
   nodeBackground: '#ffffff',
@@ -133,8 +132,8 @@ const customTheme = {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| nodes | FlowcraftNode[] | [] | Array of nodes |
-| edges | FlowcraftEdge[] | [] | Array of edges |
+| nodes | WorkflowNode[] | [] | Array of nodes |
+| edges | WorkflowEdge[] | [] | Array of edges |
 | onNodesChange | (nodes) => void | - | Node change callback |
 | onEdgesChange | (edges) => void | - | Edge change callback |
 | onConnect | (connection) => void | - | Connection callback |
@@ -143,7 +142,7 @@ const customTheme = {
 | snapToGrid | boolean | false | Enable grid snapping |
 | snapGrid | [number, number] | [15, 15] | Grid size |
 | nodeTypes | Record<string, Component> | - | Custom node types |
-| theme | FlowcraftTheme | - | Custom theme |
+| theme | WorkflowTheme | - | Custom theme |
 
 ## Keyboard Shortcuts
 
@@ -157,10 +156,10 @@ const customTheme = {
 ### Using Hooks
 
 ```tsx
-import { useFlowcraft } from '@flowcraft/canvas';
+import { useWorkflow } from 'workflow-canvas';
 
 function MyComponent() {
-  const { createNode, deleteSelectedNodes, nodes, edges } = useFlowcraft();
+  const { createNode, deleteSelectedNodes, nodes, edges } = useWorkflow();
 
   const handleAddNode = () => {
     createNode('action', {
@@ -176,7 +175,7 @@ function MyComponent() {
 ### Node Registry
 
 ```tsx
-import { useNodeRegistry } from '@flowcraft/canvas';
+import { useNodeRegistry } from 'workflow-canvas';
 
 function NodePalette() {
   const { getAll, getAllByCategory } = useNodeRegistry();
@@ -199,10 +198,11 @@ MIT
 
 ## Author
 
-FlowCraft Team
+WorkflowCanvas Team
 
-## Links
+## Support
 
-- [GitHub](https://github.com/flowcraft/canvas)
-- [Documentation](https://flowcraft.dev/docs)
-- [Examples](https://flowcraft.dev/examples)
+For issues or questions, please refer to the included documentation files:
+- [Quick Start Guide](./QUICKSTART.md)
+- [API Reference](./API.md)
+- [Advanced Usage](./ADVANCED.md)

@@ -1,4 +1,4 @@
-import { FlowcraftNode, FlowcraftEdge, NodeRegistryItem } from '../types';
+import { WorkflowNode, WorkflowEdge, NodeRegistryItem } from '../types';
 
 export interface GenerationStrategy<TStage = any, TFinal = any> {
     /**
@@ -9,7 +9,7 @@ export interface GenerationStrategy<TStage = any, TFinal = any> {
     /**
      * Process a single node's generator output and add it to the stage accumulator
      */
-    processNode: (node: FlowcraftNode, generatorOutput: any, stageAccumulator: TStage) => void;
+    processNode: (node: WorkflowNode, generatorOutput: any, stageAccumulator: TStage) => void;
 
     /**
      * Transform the stage accumulator into the final stage output (e.g., add dependencies, job configuration)
@@ -28,9 +28,9 @@ export interface GeneratorConfig<TResult = any> {
     /**
      * Optional wrapper to add global configuration around the generated result
      */
-    wrapper?: (result: TResult, triggers: any, nodes: FlowcraftNode[]) => any;
+    wrapper?: (result: TResult, triggers: any, nodes: WorkflowNode[]) => any;
     formatter?: (data: any) => string;
-    triggerAggregator?: (nodes: FlowcraftNode[]) => any;
+    triggerAggregator?: (nodes: WorkflowNode[]) => any;
 }
 
 export interface RegistryInterface {
@@ -99,8 +99,8 @@ export class CodeGenerator {
     }
 
     generate<TResult = any>(
-        nodes: FlowcraftNode[],
-        edges: FlowcraftEdge[],
+        nodes: WorkflowNode[],
+        edges: WorkflowEdge[],
         config: GeneratorConfig<TResult>
     ): string {
         const { strategy } = config;
@@ -172,8 +172,8 @@ export class CodeGenerator {
             : JSON.stringify(finalData, null, 2);
     }
 
-    private groupNodesByStage(nodes: FlowcraftNode[], edges: FlowcraftEdge[]): Map<string, FlowcraftNode[]> {
-        const stages = new Map<string, FlowcraftNode[]>();
+    private groupNodesByStage(nodes: WorkflowNode[], edges: WorkflowEdge[]): Map<string, WorkflowNode[]> {
+        const stages = new Map<string, WorkflowNode[]>();
         const visited = new Set<string>();
 
         const triggerNodes = nodes.filter(n =>
@@ -185,7 +185,7 @@ export class CodeGenerator {
         const startNodes = triggerNodes.length > 0 ? triggerNodes : (nodes.length > 0 ? [nodes[0]] : []);
         if (startNodes.length === 0) return stages;
 
-        const queue: Array<{ node: FlowcraftNode; stage: number }> = startNodes.map(n => ({ node: n, stage: 0 }));
+        const queue: Array<{ node: WorkflowNode; stage: number }> = startNodes.map(n => ({ node: n, stage: 0 }));
 
         while (queue.length > 0) {
             const { node, stage } = queue.shift()!;

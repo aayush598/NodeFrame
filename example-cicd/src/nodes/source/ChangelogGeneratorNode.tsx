@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { FileText } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ChangelogGeneratorNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Generate Changelog" icon={<FileText />} color="#3b82f6" />

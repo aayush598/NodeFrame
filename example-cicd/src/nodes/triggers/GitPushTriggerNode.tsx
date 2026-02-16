@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { GitBranch } from 'lucide-react';
-import { CustomNodeData, BaseNode } from '@nodeframe';
+import { CustomNodeData, BaseNode } from 'workflow-canvas';
 
 export const GitPushTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { data } = props;

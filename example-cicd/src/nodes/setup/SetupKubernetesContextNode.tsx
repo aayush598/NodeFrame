@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Ship } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const SetupKubernetesContextNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="K8s Context" icon={<Ship />} color="#6366f1" />

@@ -5,9 +5,9 @@ Get your workflow canvas running in 5 minutes!
 ## Installation
 
 ```bash
-npm install @flowcraft/canvas
+npm install workflow-canvas
 # or
-yarn add @flowcraft/canvas
+yarn add workflow-canvas
 ```
 
 ## Basic Setup
@@ -16,7 +16,7 @@ yarn add @flowcraft/canvas
 
 ```tsx
 import React from 'react';
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function App() {
   return (
@@ -53,10 +53,10 @@ export default App;
 
 ```tsx
 import React, { useState } from 'react';
-import { FlowCanvas, FlowcraftNode, FlowcraftEdge } from '@flowcraft/canvas';
+import { FlowCanvas, WorkflowNode, WorkflowEdge } from 'workflow-canvas';
 
 function App() {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>([
+  const [nodes, setNodes] = useState<WorkflowNode[]>([
     {
       id: '1',
       type: 'start',
@@ -77,7 +77,7 @@ function App() {
     }
   ]);
 
-  const [edges, setEdges] = useState<FlowcraftEdge[]>([
+  const [edges, setEdges] = useState<WorkflowEdge[]>([
     { id: 'e1-2', source: '1', target: '2', animated: true },
     { id: 'e2-3', source: '2', target: '3', animated: true }
   ]);
@@ -188,10 +188,10 @@ Once running, use:
 ### Adding Nodes Programmatically
 
 ```tsx
-import { useFlowcraft } from '@flowcraft/canvas';
+import { useWorkflow } from 'workflow-canvas';
 
 function Toolbar() {
-  const { createNode } = useFlowcraft();
+  const { createNode } = useWorkflow();
 
   return (
     <button onClick={() => createNode('action', { label: 'New Action' })}>
@@ -245,10 +245,10 @@ Complete workflow builder with sidebar:
 import React, { useState } from 'react';
 import {
   FlowCanvas,
-  FlowcraftNode,
-  FlowcraftEdge,
+  WorkflowNode,
+  WorkflowEdge,
   ReactFlowProvider
-} from '@flowcraft/canvas';
+} from 'workflow-canvas';
 
 const nodeTypes = [
   { type: 'start', label: 'Start' },
@@ -259,11 +259,11 @@ const nodeTypes = [
 ];
 
 function App() {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>([]);
-  const [edges, setEdges] = useState<FlowcraftEdge[]>([]);
+  const [nodes, setNodes] = useState<WorkflowNode[]>([]);
+  const [edges, setEdges] = useState<WorkflowEdge[]>([]);
 
   const addNode = (type: string) => {
-    const newNode: FlowcraftNode = {
+    const newNode: WorkflowNode = {
       id: `node-${Date.now()}`,
       type,
       position: { x: Math.random() * 400, y: Math.random() * 400 },
@@ -332,9 +332,10 @@ export default App;
 
 ## Need Help?
 
-- Issues: https://github.com/flowcraft/canvas/issues
-- Docs: https://flowcraft.dev/docs
-- Examples: https://flowcraft.dev/examples
+Check out the included documentation:
+- [API Reference](./API.md) - Complete API documentation
+- [Advanced Guide](./ADVANCED.md) - Custom nodes and advanced features
+- [Developer Guide](./DEVELOPER_GUIDE.md) - Architecture and best practices
 
 ---
 

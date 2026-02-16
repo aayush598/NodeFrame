@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Users } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const TeamsNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const channel = props.data.properties?.channel || 'team-channel';

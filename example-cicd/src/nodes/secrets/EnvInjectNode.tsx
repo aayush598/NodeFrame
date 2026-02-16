@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Key } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const EnvInjectNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const keyName = props.data.properties?.key || 'ENV_VAR';

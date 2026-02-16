@@ -11,7 +11,7 @@ if (!nodeName) {
 const template = `import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Box } from 'lucide-react';
-import { CustomNodeData, BaseNode, defineNodeConfig } from '@nodeframe';
+import { CustomNodeData, BaseNode, defineNodeConfig } from 'workflow-canvas';
 
 export const ${nodeName}Node: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const { data } = props;

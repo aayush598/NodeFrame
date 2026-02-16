@@ -3,7 +3,7 @@ import { useNodeRegistry } from '../hooks/useNodeRegistry';
 import { Search, ChevronRight, LayoutGrid, Info } from 'lucide-react';
 import { FlowTooltip } from './FlowTooltip';
 import { List, RowComponentProps } from 'react-window';
-import { useFlow } from '../context/FlowProvider';
+import { useWorkflowContext } from '../context/WorkflowProvider';
 
 // Custom AutoSizer to avoid extra dependency
 const AutoSizer = ({ children }: { children: (size: { width: number; height: number }) => React.ReactElement }) => {
@@ -42,7 +42,7 @@ type ListItem =
 
 export const NodeSidebar: React.FC<NodeSidebarProps> = ({ className = '' }) => {
     const { getAll } = useNodeRegistry();
-    const { exporters, selectedPlatform, setSelectedPlatform } = useFlow();
+    const { exporters, selectedPlatform, setSelectedPlatform } = useWorkflowContext();
     const [searchTerm, setSearchTerm] = useState('');
     const [isCollapsed, setIsCollapsed] = useState(false);
 

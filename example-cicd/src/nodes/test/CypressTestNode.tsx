@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Eye } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const CypressTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Cypress Tests" icon={<Eye />} color="#10b981" />

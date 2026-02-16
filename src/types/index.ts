@@ -1,6 +1,6 @@
 import type { Node, Edge, NodeProps } from '@reactflow/core';
 
-export interface FlowcraftTheme {
+export interface WorkflowTheme {
   nodeBackground?: string;
   nodeBorder?: string;
   nodeColor?: string;
@@ -37,7 +37,7 @@ export interface NodeConfig {
    * Key is the platform ID (e.g., 'github', 'jenkins').
    * Value is a function that returns the step configuration.
    */
-  generators?: Record<string, (node: FlowcraftNode) => any>;
+  generators?: Record<string, (node: WorkflowNode) => any>;
 }
 
 export interface CustomNodeData {
@@ -58,21 +58,21 @@ export interface CustomNodeData {
   properties?: Record<string, any>;
   // Grouping support
   isGroup?: boolean;
-  subNodes?: FlowcraftNode[];
-  subEdges?: FlowcraftEdge[];
+  subNodes?: WorkflowNode[];
+  subEdges?: WorkflowEdge[];
   groupName?: string;
 }
 
-export type FlowcraftNode = Node<CustomNodeData>;
-export type FlowcraftEdge = Edge;
+export type WorkflowNode = Node<CustomNodeData>;
+export type WorkflowEdge = Edge;
 
-export interface FlowcraftProps {
-  nodes?: FlowcraftNode[];
-  edges?: FlowcraftEdge[];
-  onNodesChange?: (nodes: FlowcraftNode[]) => void;
-  onEdgesChange?: (edges: FlowcraftEdge[]) => void;
+export interface WorkflowCanvasProps {
+  nodes?: WorkflowNode[];
+  edges?: WorkflowEdge[];
+  onNodesChange?: (nodes: WorkflowNode[]) => void;
+  onEdgesChange?: (edges: WorkflowEdge[]) => void;
   onConnect?: (connection: any) => void;
-  theme?: FlowcraftTheme;
+  theme?: WorkflowTheme;
   showMinimap?: boolean;
   showControls?: boolean;
   showSidebar?: boolean;
@@ -91,18 +91,18 @@ export interface NodeRegistryItem {
   config: NodeConfig;
 }
 
-export interface FlowContextValue {
-  nodes: FlowcraftNode[];
-  edges: FlowcraftEdge[];
+export interface WorkflowContextValue {
+  nodes: WorkflowNode[];
+  edges: WorkflowEdge[];
   setNodes: (nodes: any) => void;
   setEdges: (edges: any) => void;
   onNodesChange: (changes: any) => void;
   onEdgesChange: (changes: any) => void;
-  addNode: (node: FlowcraftNode) => void;
+  addNode: (node: WorkflowNode) => void;
   removeNode: (id: string) => void;
   updateNode: (id: string, data: Partial<CustomNodeData>) => void;
   duplicateNode: (id: string) => void;
-  theme: FlowcraftTheme;
+  theme: WorkflowTheme;
   nodeRegistry: Map<string, NodeRegistryItem>;
   registerNode: (type: string, component: React.ComponentType<NodeProps>, config: NodeConfig) => void;
   executeNode: (id: string) => Promise<void>;
@@ -141,5 +141,5 @@ export interface CodeExporter {
   icon?: React.ReactNode;
   fileName: string;
   color?: string;
-  generate: (nodes: FlowcraftNode[], edges: FlowcraftEdge[]) => string;
+  generate: (nodes: WorkflowNode[], edges: WorkflowEdge[]) => string;
 }

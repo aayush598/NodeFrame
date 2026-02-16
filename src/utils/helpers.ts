@@ -1,20 +1,20 @@
-import { FlowcraftNode, FlowcraftEdge } from '../types';
+import { WorkflowNode, WorkflowEdge } from '../types';
 
 export const generateId = (): string => {
   return `node_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-export const getNodeCenter = (node: FlowcraftNode): { x: number; y: number } => {
+export const getNodeCenter = (node: WorkflowNode): { x: number; y: number } => {
   return {
     x: (node.position?.x || 0) + ((node.width || 180) / 2),
     y: (node.position?.y || 0) + ((node.height || 80) / 2)
   };
 };
 
-export const copyNodes = (nodes: FlowcraftNode[], nodeIds: string[]): FlowcraftNode[] => {
+export const copyNodes = (nodes: WorkflowNode[], nodeIds: string[]): WorkflowNode[] => {
   const nodesToCopy = nodes.filter(n => nodeIds.includes(n.id));
   const offset = 50;
-  
+
   return nodesToCopy.map(node => ({
     ...node,
     id: generateId(),
@@ -26,30 +26,30 @@ export const copyNodes = (nodes: FlowcraftNode[], nodeIds: string[]): FlowcraftN
   }));
 };
 
-export const getConnectedEdges = (nodeId: string, edges: FlowcraftEdge[]): FlowcraftEdge[] => {
+export const getConnectedEdges = (nodeId: string, edges: WorkflowEdge[]): WorkflowEdge[] => {
   return edges.filter(edge => edge.source === nodeId || edge.target === nodeId);
 };
 
 export const validateConnection = (
   source: string,
   target: string,
-  edges: FlowcraftEdge[]
+  edges: WorkflowEdge[]
 ): boolean => {
   if (source === target) return false;
-  
+
   const existingConnection = edges.find(
     edge => edge.source === source && edge.target === target
   );
-  
+
   return !existingConnection;
 };
 
 export const calculateNodePosition = (
-  existingNodes: FlowcraftNode[],
+  existingNodes: WorkflowNode[],
   defaultPosition = { x: 100, y: 100 }
 ): { x: number; y: number } => {
   if (existingNodes.length === 0) return defaultPosition;
-  
+
   const lastNode = existingNodes[existingNodes.length - 1];
   return {
     x: lastNode.position.x + 250,
@@ -57,9 +57,9 @@ export const calculateNodePosition = (
   };
 };
 
-export const groupNodesBySelection = (nodes: FlowcraftNode[]): {
-  selected: FlowcraftNode[];
-  unselected: FlowcraftNode[];
+export const groupNodesBySelection = (nodes: WorkflowNode[]): {
+  selected: WorkflowNode[];
+  unselected: WorkflowNode[];
 } => {
   return nodes.reduce(
     (acc, node) => {
@@ -70,11 +70,11 @@ export const groupNodesBySelection = (nodes: FlowcraftNode[]): {
       }
       return acc;
     },
-    { selected: [] as FlowcraftNode[], unselected: [] as FlowcraftNode[] }
+    { selected: [] as WorkflowNode[], unselected: [] as WorkflowNode[] }
   );
 };
 
-export const calculateBoundingBox = (nodes: FlowcraftNode[]): {
+export const calculateBoundingBox = (nodes: WorkflowNode[]): {
   x: number;
   y: number;
   width: number;

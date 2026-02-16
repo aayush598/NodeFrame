@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useFlow } from '../context/FlowProvider';
+import { useWorkflowContext } from '../context/WorkflowProvider';
 import { Settings, History, ChevronDown, ChevronRight, X, Trash2, Info, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 
 export const RightSidebar: React.FC = () => {
     const [historyExpanded, setHistoryExpanded] = useState(true);
     const [propertiesExpanded, setPropertiesExpanded] = useState(true);
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const { nodes, updateNode, executionHistory, clearHistory } = useFlow();
+    const { nodes, updateNode, executionHistory, clearHistory } = useWorkflowContext();
 
     const selectedNode = nodes.find(n => n.selected);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { TestTube } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const UnitTestNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Unit Tests" icon={<TestTube />} color="#10b981" />

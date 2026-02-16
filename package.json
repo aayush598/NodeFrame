@@ -1,5 +1,5 @@
 {
-  "name": "@flowcraft/canvas",
+  "name": "workflow-canvas",
   "version": "1.0.0",
   "type": "module",
   "description": "A professional React workflow canvas library with drag-drop, zoom, pan, minimap and customizable nodes - built on reactflow",
@@ -26,7 +26,7 @@
     "flow-builder",
     "visual-programming"
   ],
-  "author": "FlowCraft",
+  "author": "WorkflowCanvas Team",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.0.0",

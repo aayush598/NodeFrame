@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { ReactFlowProvider } from 'reactflow';
 import {
-  FlowCanvas,
-  FlowcraftNode,
-  FlowcraftEdge,
+  WorkflowCanvas,
+  WorkflowNode,
+  WorkflowEdge,
   ThemeProvider
-} from '@flowcraft/canvas';
+} from 'workflow-canvas';
 
-const initialNodes: FlowcraftNode[] = [
+const initialNodes: WorkflowNode[] = [
   {
     id: '1',
     type: 'start',
@@ -90,7 +90,7 @@ const initialNodes: FlowcraftNode[] = [
   }
 ];
 
-const initialEdges: FlowcraftEdge[] = [
+const initialEdges: WorkflowEdge[] = [
   { id: 'e1-2', source: '1', target: '2', animated: true },
   { id: 'e1-3', source: '1', target: '3', animated: true },
   { id: 'e2-3', source: '2', target: '3', animated: true },
@@ -103,14 +103,14 @@ const initialEdges: FlowcraftEdge[] = [
 ];
 
 function App() {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>(initialNodes);
-  const [edges, setEdges] = useState<FlowcraftEdge[]>(initialEdges);
+  const [nodes, setNodes] = useState<WorkflowNode[]>(initialNodes);
+  const [edges, setEdges] = useState<WorkflowEdge[]>(initialEdges);
 
-  const handleNodesChange = useCallback((updatedNodes: FlowcraftNode[]) => {
+  const handleNodesChange = useCallback((updatedNodes: WorkflowNode[]) => {
     console.log('Nodes changed:', updatedNodes);
   }, []);
 
-  const handleEdgesChange = useCallback((updatedEdges: FlowcraftEdge[]) => {
+  const handleEdgesChange = useCallback((updatedEdges: WorkflowEdge[]) => {
     console.log('Edges changed:', updatedEdges);
   }, []);
 
@@ -135,14 +135,14 @@ function App() {
             textAlign: 'center'
           }}>
             <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#1f2937' }}>
-              NodeFrame Example
+              WorkflowCanvas Example
             </h1>
             <p style={{ margin: '8px 0 0', fontSize: '14px', color: '#6b7280' }}>
               Try: Delete nodes (Del), Copy (Ctrl+C), Paste (Ctrl+V), Duplicate (Ctrl+D)
             </p>
           </div>
 
-          <FlowCanvas
+          <WorkflowCanvas
             nodes={nodes}
             edges={edges}
             onNodesChange={handleNodesChange}

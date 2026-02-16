@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Mail } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const EmailNotifyNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const to = props.data.properties?.to || 'team@example.com';

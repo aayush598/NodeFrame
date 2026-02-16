@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { FolderCog } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const FileManipulationNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const action = props.data.properties?.action || 'copy';

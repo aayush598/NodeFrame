@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Cloud } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const HerokuDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     return <BaseNode {...props} title="Heroku Deploy" icon={<Cloud />} color="#430098" />;

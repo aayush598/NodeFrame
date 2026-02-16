@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Boxes } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const DockerComposeNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const file = props.data.properties?.composeFile || 'docker-compose.yml';

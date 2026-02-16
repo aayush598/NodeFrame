@@ -1,8 +1,8 @@
-# @flowcraft/canvas - Package Summary
+# workflow-canvas - Package Summary
 
 ## 📦 Package Overview
 
-**@flowcraft/canvas** is a professional, production-ready React library for building visual workflow editors with minimal code. Built on top of reactflow, it provides everything developers need to add n8n-style, Langflow-style, or VectorShift-style workflow functionality to their applications.
+**workflow-canvas** is a professional, production-ready React library for building visual workflow editors with minimal code. Built on top of reactflow, it provides everything developers need to add n8n-style, Langflow-style, or VectorShift-style workflow functionality to their applications.
 
 ---
 
@@ -47,7 +47,7 @@
 ## 📁 Package Structure
 
 ```
-@flowcraft/canvas/
+workflow-canvas/
 ├── dist/                      # Built package
 │   ├── index.js              # CommonJS entry
 │   ├── index.esm.js          # ES Module entry
@@ -71,7 +71,7 @@
 │   │   ├── ThemeProvider.tsx
 │   │   └── FlowProvider.tsx
 │   ├── hooks/                # Custom hooks
-│   │   ├── useFlowcraft.ts   # Main workflow hook
+│   │   ├── useWorkflow.ts   # Main workflow hook
 │   │   └── useNodeRegistry.ts
 │   ├── types/                # TypeScript types
 │   │   └── index.ts
@@ -161,7 +161,7 @@ iPaaS (Integration Platform as a Service):
 **3 lines of code to get started:**
 
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 <FlowCanvas
   nodes={[{ id: '1', type: 'start', position: { x: 0, y: 0 }, data: { label: 'Start' } }]}
@@ -176,7 +176,7 @@ import { FlowCanvas } from '@flowcraft/canvas';
 
 ```tsx
 import { useSelector, useDispatch } from 'react-redux';
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function WorkflowEditor() {
   const nodes = useSelector(state => state.workflow.nodes);
@@ -198,7 +198,7 @@ function WorkflowEditor() {
 
 ```tsx
 import { useState, useEffect } from 'react';
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function App() {
   const [workflow, setWorkflow] = useState({ nodes: [], edges: [] });
@@ -230,7 +230,7 @@ function App() {
 ### With Form Builder
 
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 function FormWorkflow() {
   const nodes = [
@@ -346,7 +346,7 @@ cd example && yarn start
 
 ## 🌟 Comparison with Alternatives
 
-| Feature | @flowcraft/canvas | react-flow | xyflow | flume |
+| Feature | workflow-canvas | react-flow | xyflow | flume |
 |---------|------------------|------------|---------|-------|
 | Pre-built nodes | ✅ 8 types | ❌ None | ❌ None | ✅ Basic |
 | TypeScript | ✅ Full | ✅ Full | ✅ Full | ⚠️ Partial |
@@ -389,9 +389,8 @@ This is a standalone npm package. To extend:
 ## 📞 Support
 
 For issues, questions, or feature requests:
-- NPM: https://www.npmjs.com/package/@flowcraft/canvas
-- GitHub: (add your repo)
-- Email: (add your email)
+- NPM: https://www.npmjs.com/package/workflow-canvas
+- Documentation: See included markdown files (README.md, API.md, ADVANCED.md, etc.)
 
 ---
 
@@ -427,6 +426,6 @@ MIT - Free for commercial and personal use
 
 ---
 
-**Built with ❤️ by FlowCraft Team**
+**Built with ❤️ by WorkflowCanvas Team**
 
 *Empowering developers to build visual workflows with minimal effort*

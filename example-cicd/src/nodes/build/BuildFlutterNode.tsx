@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Feather } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const BuildFlutterNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Build Flutter" icon={<Feather />} color="#f59e0b" />

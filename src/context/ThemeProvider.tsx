@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { FlowcraftTheme } from '../types';
+import { WorkflowTheme } from '../types';
 
 interface ThemeContextValue {
-  theme: FlowcraftTheme;
-  setTheme: (theme: FlowcraftTheme) => void;
-  updateTheme: (updates: Partial<FlowcraftTheme>) => void;
+  theme: WorkflowTheme;
+  setTheme: (theme: WorkflowTheme) => void;
+  updateTheme: (updates: Partial<WorkflowTheme>) => void;
 }
 
-const defaultTheme: FlowcraftTheme = {
+const defaultTheme: WorkflowTheme = {
   nodeBackground: '#ffffff',
   nodeBorder: '#e5e7eb',
   nodeColor: '#1f2937',
@@ -20,16 +20,16 @@ const defaultTheme: FlowcraftTheme = {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: ReactNode; initialTheme?: FlowcraftTheme }> = ({
+export const ThemeProvider: React.FC<{ children: ReactNode; initialTheme?: WorkflowTheme }> = ({
   children,
   initialTheme
 }) => {
-  const [theme, setTheme] = useState<FlowcraftTheme>({
+  const [theme, setTheme] = useState<WorkflowTheme>({
     ...defaultTheme,
     ...initialTheme
   });
 
-  const updateTheme = (updates: Partial<FlowcraftTheme>) => {
+  const updateTheme = (updates: Partial<WorkflowTheme>) => {
     setTheme(prev => ({ ...prev, ...updates }));
   };
 

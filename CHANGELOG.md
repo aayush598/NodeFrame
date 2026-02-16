@@ -2,10 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2025-01-XX
+## [1.0.0] - 2026-02-16
 
 ### Added
-- Initial release of @flowcraft/canvas
+- Initial release of workflow-canvas
 - Core FlowCanvas component with reactflow integration
 - 8 prebuilt professional node types:
   - StartNode - Workflow entry point
@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
   - ThemeProvider for customization
   - FlowProvider for state management
 - Custom hooks:
-  - useFlowcraft for workflow operations
+  - useWorkflow for workflow operations
   - useNodeRegistry for node management
   - useTheme for styling
   - useFlow for context access

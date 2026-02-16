@@ -7,7 +7,7 @@
 Main canvas component for rendering workflows.
 
 ```tsx
-import { FlowCanvas } from '@flowcraft/canvas';
+import { FlowCanvas } from 'workflow-canvas';
 
 <FlowCanvas
   nodes={nodes}
@@ -30,12 +30,12 @@ import { FlowCanvas } from '@flowcraft/canvas';
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| nodes | FlowcraftNode[] | [] | Array of workflow nodes |
-| edges | FlowcraftEdge[] | [] | Array of connections between nodes |
-| onNodesChange | (nodes: FlowcraftNode[]) => void | undefined | Callback when nodes change |
-| onEdgesChange | (edges: FlowcraftEdge[]) => void | undefined | Callback when edges change |
+| nodes | WorkflowNode[] | [] | Array of workflow nodes |
+| edges | WorkflowEdge[] | [] | Array of connections between nodes |
+| onNodesChange | (nodes: WorkflowNode[]) => void | undefined | Callback when nodes change |
+| onEdgesChange | (edges: WorkflowEdge[]) => void | undefined | Callback when edges change |
 | onConnect | (connection: Connection) => void | undefined | Callback when nodes are connected |
-| theme | FlowcraftTheme | default | Custom theme object |
+| theme | WorkflowTheme | default | Custom theme object |
 | showMinimap | boolean | true | Display minimap in corner |
 | showControls | boolean | true | Display zoom/pan controls |
 | className | string | '' | Additional CSS classes |
@@ -53,7 +53,7 @@ import { FlowCanvas } from '@flowcraft/canvas';
 Zoom and pan control buttons.
 
 ```tsx
-import { Controls } from '@flowcraft/canvas';
+import { Controls } from 'workflow-canvas';
 
 <Controls
   showZoom={true}
@@ -79,7 +79,7 @@ import { Controls } from '@flowcraft/canvas';
 Bird's eye view of the canvas.
 
 ```tsx
-import { Minimap } from '@flowcraft/canvas';
+import { Minimap } from 'workflow-canvas';
 
 <Minimap
   nodeColor="#e5e7eb"
@@ -256,12 +256,12 @@ Transforms or manipulates data.
 
 ## Hooks
 
-### useFlowcraft
+### useWorkflow
 
 Main hook for workflow operations.
 
 ```tsx
-import { useFlowcraft } from '@flowcraft/canvas';
+import { useWorkflow } from 'workflow-canvas';
 
 function MyComponent() {
   const {
@@ -277,7 +277,7 @@ function MyComponent() {
     deleteSelectedNodes,
     copySelectedNodes,
     pasteNodes
-  } = useFlowcraft();
+  } = useWorkflow();
 
   // Use these methods...
 }
@@ -287,15 +287,15 @@ function MyComponent() {
 
 | Method | Type | Description |
 |--------|------|-------------|
-| nodes | FlowcraftNode[] | Current nodes |
-| edges | FlowcraftEdge[] | Current edges |
+| nodes | WorkflowNode[] | Current nodes |
+| edges | WorkflowEdge[] | Current edges |
 | setNodes | (nodes) => void | Set all nodes |
 | setEdges | (edges) => void | Set all edges |
 | addNode | (node) => void | Add single node |
 | removeNode | (id) => void | Remove node by ID |
 | updateNode | (id, data) => void | Update node data |
 | duplicateNode | (id) => void | Duplicate node by ID |
-| createNode | (type, data, position?) => FlowcraftNode | Create new node |
+| createNode | (type, data, position?) => WorkflowNode | Create new node |
 | deleteSelectedNodes | () => void | Delete all selected nodes |
 | copySelectedNodes | () => string[] | Copy selected node IDs |
 | pasteNodes | (ids) => void | Paste nodes from IDs |
@@ -307,7 +307,7 @@ function MyComponent() {
 Manage available node types.
 
 ```tsx
-import { useNodeRegistry } from '@flowcraft/canvas';
+import { useNodeRegistry } from 'workflow-canvas';
 
 function NodePalette() {
   const {
@@ -339,7 +339,7 @@ function NodePalette() {
 Access and modify theme.
 
 ```tsx
-import { useTheme } from '@flowcraft/canvas';
+import { useTheme } from 'workflow-canvas';
 
 function ThemeToggle() {
   const { theme, setTheme, updateTheme } = useTheme();
@@ -357,7 +357,7 @@ function ThemeToggle() {
 
 | Property | Type | Description |
 |----------|------|-------------|
-| theme | FlowcraftTheme | Current theme |
+| theme | WorkflowTheme | Current theme |
 | setTheme | (theme) => void | Replace entire theme |
 | updateTheme | (updates) => void | Partially update theme |
 
@@ -368,7 +368,7 @@ function ThemeToggle() {
 Access flow context.
 
 ```tsx
-import { useFlow } from '@flowcraft/canvas';
+import { useFlow } from 'workflow-canvas';
 
 function FlowInfo() {
   const {
@@ -386,10 +386,10 @@ function FlowInfo() {
 
 ## Types
 
-### FlowcraftNode
+### WorkflowNode
 
 ```typescript
-interface FlowcraftNode extends Node<CustomNodeData> {
+interface WorkflowNode extends Node<CustomNodeData> {
   id: string;
   type: string;
   position: { x: number; y: number };
@@ -416,10 +416,10 @@ interface CustomNodeData {
 }
 ```
 
-### FlowcraftEdge
+### WorkflowEdge
 
 ```typescript
-interface FlowcraftEdge extends Edge {
+interface WorkflowEdge extends Edge {
   id: string;
   source: string;
   target: string;
@@ -430,10 +430,10 @@ interface FlowcraftEdge extends Edge {
 }
 ```
 
-### FlowcraftTheme
+### WorkflowTheme
 
 ```typescript
-interface FlowcraftTheme {
+interface WorkflowTheme {
   nodeBackground?: string;
   nodeBorder?: string;
   nodeColor?: string;
@@ -468,7 +468,7 @@ interface NodeConfig {
 Wrap your app to enable theming.
 
 ```tsx
-import { ThemeProvider } from '@flowcraft/canvas';
+import { ThemeProvider } from 'workflow-canvas';
 
 <ThemeProvider initialTheme={customTheme}>
   <App />
@@ -480,7 +480,7 @@ import { ThemeProvider } from '@flowcraft/canvas';
 Wrap your app to enable flow context (optional, usually not needed as FlowCanvas manages its own state).
 
 ```tsx
-import { FlowProvider } from '@flowcraft/canvas';
+import { FlowProvider } from 'workflow-canvas';
 
 <FlowProvider initialNodes={nodes} initialEdges={edges}>
   <App />
@@ -492,7 +492,7 @@ import { FlowProvider } from '@flowcraft/canvas';
 Required wrapper from reactflow for advanced features.
 
 ```tsx
-import { ReactFlowProvider } from '@flowcraft/canvas';
+import { ReactFlowProvider } from 'workflow-canvas';
 
 <ReactFlowProvider>
   <FlowCanvas />
@@ -508,7 +508,7 @@ import { ReactFlowProvider } from '@flowcraft/canvas';
 Global node registry instance.
 
 ```tsx
-import { nodeRegistry } from '@flowcraft/canvas';
+import { nodeRegistry } from 'workflow-canvas';
 
 nodeRegistry.register('custom', CustomNode, config);
 nodeRegistry.get('custom');
@@ -528,5 +528,5 @@ import {
   calculateNodePosition,
   groupNodesBySelection,
   calculateBoundingBox
-} from '@flowcraft/canvas';
+} from 'workflow-canvas';
 ```

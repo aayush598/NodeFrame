@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { TrendingUp } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const CanaryDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const pct = props.data.properties?.trafficPercent || 10;

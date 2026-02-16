@@ -1,25 +1,25 @@
 import React, { createContext, useContext, ReactNode, useCallback, useState } from 'react';
 import { addEdge, applyNodeChanges, applyEdgeChanges, type NodeProps, type Connection } from '@reactflow/core';
-import { FlowcraftNode, FlowcraftEdge, FlowContextValue, NodeConfig, ExecutionRecord, CustomNodeData, CodeExporter } from '../types';
+import { WorkflowNode, WorkflowEdge, WorkflowContextValue, NodeConfig, ExecutionRecord, CustomNodeData, CodeExporter } from '../types';
 import { nodeRegistry } from '../utils/nodeRegistry';
 import { generateId } from '../utils/helpers';
 
-const FlowContext = createContext<FlowContextValue | undefined>(undefined);
+const WorkflowContext = createContext<WorkflowContextValue | undefined>(undefined);
 
-export const FlowProvider: React.FC<{
+export const WorkflowProvider: React.FC<{
   children: ReactNode;
-  initialNodes?: FlowcraftNode[];
-  initialEdges?: FlowcraftEdge[];
+  initialNodes?: WorkflowNode[];
+  initialEdges?: WorkflowEdge[];
 }> = ({ children, initialNodes = [], initialEdges = [] }) => {
-  const [nodes, setNodes] = useState<FlowcraftNode[]>(initialNodes);
-  const [edges, setEdges] = useState<FlowcraftEdge[]>(initialEdges);
+  const [nodes, setNodes] = useState<WorkflowNode[]>(initialNodes);
+  const [edges, setEdges] = useState<WorkflowEdge[]>(initialEdges);
   const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
   const [exporters, setExporters] = useState<CodeExporter[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState<string>('all');
 
   // Undo/Redo State
-  const [past, setPast] = useState<Array<{ nodes: FlowcraftNode[], edges: FlowcraftEdge[] }>>([]);
-  const [future, setFuture] = useState<Array<{ nodes: FlowcraftNode[], edges: FlowcraftEdge[] }>>([]);
+  const [past, setPast] = useState<Array<{ nodes: WorkflowNode[], edges: WorkflowEdge[] }>>([]);
+  const [future, setFuture] = useState<Array<{ nodes: WorkflowNode[], edges: WorkflowEdge[] }>>([]);
 
   const takeSnapshot = useCallback(() => {
     const currentState = {
@@ -94,7 +94,7 @@ export const FlowProvider: React.FC<{
     });
   }, []);
 
-  const addNode = useCallback((node: FlowcraftNode) => {
+  const addNode = useCallback((node: WorkflowNode) => {
     takeSnapshot();
     setNodes(prev => [...prev, node]);
   }, [setNodes, takeSnapshot]);
@@ -124,7 +124,7 @@ export const FlowProvider: React.FC<{
     const nodeToDuplicate = nodes.find(n => n.id === id);
     if (!nodeToDuplicate) return;
 
-    const newNode: FlowcraftNode = {
+    const newNode: WorkflowNode = {
       ...nodeToDuplicate,
       id: generateId(),
       position: {
@@ -140,11 +140,11 @@ export const FlowProvider: React.FC<{
   const copyNodes = useCallback((nodeIds: string[]) => {
     const selectedNodes = nodes.filter(n => nodeIds.includes(n.id));
     const selectedEdges = edges.filter(e => nodeIds.includes(e.source) && nodeIds.includes(e.target));
-    localStorage.setItem('nodeframe-clipboard', JSON.stringify({ nodes: selectedNodes, edges: selectedEdges }));
+    localStorage.setItem('workflow-canvas-clipboard', JSON.stringify({ nodes: selectedNodes, edges: selectedEdges }));
   }, [nodes, edges]);
 
   const pasteNodes = useCallback((position?: { x: number; y: number }) => {
-    const clipboard = localStorage.getItem('nodeframe-clipboard');
+    const clipboard = localStorage.getItem('workflow-canvas-clipboard');
     if (!clipboard) return;
 
     const { nodes: copiedNodes, edges: copiedEdges } = JSON.parse(clipboard);
@@ -191,7 +191,7 @@ export const FlowProvider: React.FC<{
     const subEdges = edges.filter(e => nodeIds.includes(e.source) && nodeIds.includes(e.target));
 
     const groupNodeId = generateId();
-    const groupNode: FlowcraftNode = {
+    const groupNode: WorkflowNode = {
       id: groupNodeId,
       type: 'group',
       position: { x: minX, y: minY },
@@ -234,11 +234,11 @@ export const FlowProvider: React.FC<{
       const preservedEdges = prev.filter(e => e.source !== groupId && e.target !== groupId);
       const redirectedEdges = prev.filter(e => e.source === groupId || e.target === groupId).map(edge => {
         if (edge.source === groupId) {
-          const originalSource = subNodes.find((sn: FlowcraftNode) => !subEdges.some((se: FlowcraftEdge) => se.source === sn.id));
+          const originalSource = subNodes.find((sn: WorkflowNode) => !subEdges.some((se: WorkflowEdge) => se.source === sn.id));
           return { ...edge, source: originalSource?.id || subNodes[0].id };
         }
         if (edge.target === groupId) {
-          const originalTarget = subNodes.find((sn: FlowcraftNode) => !subEdges.some((se: FlowcraftEdge) => se.target === sn.id));
+          const originalTarget = subNodes.find((sn: WorkflowNode) => !subEdges.some((se: WorkflowEdge) => se.target === sn.id));
           return { ...edge, target: originalTarget?.id || subNodes[0].id };
         }
         return edge;
@@ -248,7 +248,7 @@ export const FlowProvider: React.FC<{
 
     setNodes(prev => [
       ...prev.filter(n => n.id !== groupId),
-      ...subNodes.map((n: FlowcraftNode) => ({ ...n, selected: true }))
+      ...subNodes.map((n: WorkflowNode) => ({ ...n, selected: true }))
     ]);
   }, [nodes, setNodes, setEdges, takeSnapshot]);
 
@@ -267,7 +267,7 @@ export const FlowProvider: React.FC<{
     );
   }, [setNodes]);
 
-  const getSourceNodeResults = useCallback((nodeId: string, currentNodes: FlowcraftNode[], currentEdges: FlowcraftEdge[]) => {
+  const getSourceNodeResults = useCallback((nodeId: string, currentNodes: WorkflowNode[], currentEdges: WorkflowEdge[]) => {
     const incomingEdges = currentEdges.filter(e => e.target === nodeId);
     const results: Record<string, any> = {};
 
@@ -282,7 +282,7 @@ export const FlowProvider: React.FC<{
     return results;
   }, []);
 
-  const executeNodeInternal = useCallback(async (nodeId: string, currentNodes: FlowcraftNode[], currentEdges: FlowcraftEdge[]) => {
+  const executeNodeInternal = useCallback(async (nodeId: string, currentNodes: WorkflowNode[], currentEdges: WorkflowEdge[]) => {
     const node = currentNodes.find(n => n.id === nodeId);
     if (!node) return;
 
@@ -327,12 +327,12 @@ export const FlowProvider: React.FC<{
 
   const executeWorkflow = useCallback(async () => {
     // Flatten nodes for execution logic
-    const flattenedNodes: FlowcraftNode[] = [];
-    const flattenedEdges: FlowcraftEdge[] = [...edges];
+    const flattenedNodes: WorkflowNode[] = [];
+    const flattenedEdges: WorkflowEdge[] = [...edges];
 
-    const expandGroup = (node: FlowcraftNode) => {
+    const expandGroup = (node: WorkflowNode) => {
       if (node.data.isGroup && node.data.subNodes) {
-        node.data.subNodes.forEach((sn: FlowcraftNode) => expandGroup(sn));
+        node.data.subNodes.forEach((sn: WorkflowNode) => expandGroup(sn));
         if (node.data.subEdges) flattenedEdges.push(...node.data.subEdges);
         // Also need to find edges connecting to the group and map them to subnodes
         // For simplicity in this implementation, we treat the group as a unit or assume internal connectivity is valid
@@ -409,7 +409,7 @@ export const FlowProvider: React.FC<{
   }, [nodes, edges, executeNodeInternal, setNodes, updateNodeData]);
 
   return (
-    <FlowContext.Provider
+    <WorkflowContext.Provider
       value={{
         nodes,
         edges,
@@ -447,14 +447,14 @@ export const FlowProvider: React.FC<{
       }}
     >
       {children}
-    </FlowContext.Provider>
+    </WorkflowContext.Provider>
   );
 };
 
-export const useFlow = (): FlowContextValue => {
-  const context = useContext(FlowContext);
+export const useWorkflowContext = (): WorkflowContextValue => {
+  const context = useContext(WorkflowContext);
   if (!context) {
-    throw new Error('useFlow must be used within FlowProvider');
+    throw new Error('useWorkflowContext must be used within WorkflowProvider');
   }
   return context;
 };

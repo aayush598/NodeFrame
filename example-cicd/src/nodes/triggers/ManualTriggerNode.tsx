@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Play } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const ManualTriggerNode: React.FC<NodeProps<CustomNodeData>> = (props) => (
     <BaseNode {...props} title="Manual Trigger" icon={<Play />} color="#22c55e" />

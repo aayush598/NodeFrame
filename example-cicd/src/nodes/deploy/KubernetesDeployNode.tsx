@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { Boxes } from 'lucide-react';
-import { BaseNode, CustomNodeData } from '@nodeframe';
+import { BaseNode, CustomNodeData } from 'workflow-canvas';
 
 export const KubernetesDeployNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
     const ns = props.data.properties?.namespace || 'default';
