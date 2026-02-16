@@ -21,6 +21,14 @@ export const config = {
     category: 'Artifacts',
     color: '#14b8a6',
     icon: <Upload size={16} />,
+    defaultData: {
+        label: 'Upload Artifact',
+        description: 'Uploads an artifact from the workflow run',
+        properties: {
+            name: 'artifact',
+            path: 'dist',
+        },
+    },
 
     propertyDefinitions: [
         { name: 'name', label: 'Artifact Name', type: 'string' },

@@ -21,6 +21,13 @@ export const config = {
     category: 'Artifacts',
     color: '#14b8a6',
     icon: <Download size={16} />,
+    defaultData: {
+        label: 'Download Artifact',
+        description: 'Downloads an artifact from the workflow run',
+        properties: {
+            name: 'artifact',
+        },
+    },
 
     propertyDefinitions: [
         { name: 'name', label: 'Artifact Name', type: 'string' },

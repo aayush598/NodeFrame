@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { X, Download, Copy, Check, FileCode, Package } from 'lucide-react';
+import { useFlow } from '../context/FlowProvider';
 import { FlowcraftNode, FlowcraftEdge, CodeExporter } from '../types';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { nodeRegistry } from '../utils/nodeRegistry';
+import { AlertTriangle } from 'lucide-react';
 
 interface ExportModalProps {
     isOpen: boolean;
@@ -16,11 +19,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, nodes
     const [selectedExporterId, setSelectedExporterId] = useState<string>(exporters[0]?.id || '');
     const [copied, setCopied] = useState(false);
 
+    const { selectedPlatform } = useFlow();
+
     React.useEffect(() => {
         if (!selectedExporterId && exporters.length > 0) {
-            setSelectedExporterId(exporters[0].id);
+            const initial = exporters.find(e => e.id === selectedPlatform) || exporters[0];
+            setSelectedExporterId(initial.id);
         }
-    }, [exporters, selectedExporterId]);
+    }, [exporters, selectedExporterId, selectedPlatform]);
 
     React.useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
@@ -43,9 +49,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, nodes
         setTimeout(() => setCopied(false), 2000);
     };
 
+    const ignoredNodes = nodes.filter(node => {
+        const nodeType = node.type;
+        if (!nodeType) return false;
+        const item = nodeRegistry.get(nodeType);
+        // We only care about nodes that have SOME generators but not the SELECTED one
+        // Base nodes with NO generators are usually engine-level and might be handled by strategy/aggregator differently
+        if (!item || !item.config.generators) return false;
+        return !item.config.generators[selectedExporterId];
+    });
+
     const handleDownload = () => {
+        const fileName = (selectedExporter.fileName || 'export.txt').split('/').pop() || 'export.txt';
         const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
-        saveAs(blob, selectedExporter.fileName.split('/').pop() || 'export.txt');
+        saveAs(blob, fileName);
     };
 
     const handleExportAll = async () => {
@@ -149,6 +166,24 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, nodes
                         </div>
                     </div>
                     <div className="flex-1 overflow-auto p-0 bg-[#1e1e1e] relative">
+                        {ignoredNodes.length > 0 && (
+                            <div className="sticky top-0 z-10 bg-amber-50 border-b border-amber-100 px-6 py-3 flex items-start gap-3 animate-in slide-in-from-top duration-300">
+                                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                                <div className="flex-1">
+                                    <h4 className="text-sm font-bold text-amber-900">Platform Compatibility Warning</h4>
+                                    <p className="text-xs text-amber-700 mt-0.5">
+                                        The following {ignoredNodes.length} nodes do not support <strong>{selectedExporter.label}</strong> and will be skipped in this export:
+                                    </p>
+                                    <div className="flex flex-wrap gap-1.5 mt-2">
+                                        {ignoredNodes.map(n => (
+                                            <span key={n.id} className="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-mono text-[10px] border border-amber-200">
+                                                {n.data.label || n.type}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         {/* Code content */}
                         <pre className="p-6 text-sm text-gray-300 font-mono leading-relaxed">
                             <code>{code}</code>

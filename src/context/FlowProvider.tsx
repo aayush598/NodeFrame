@@ -15,6 +15,7 @@ export const FlowProvider: React.FC<{
   const [edges, setEdges] = useState<FlowcraftEdge[]>(initialEdges);
   const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
   const [exporters, setExporters] = useState<CodeExporter[]>([]);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>('all');
 
   // Undo/Redo State
   const [past, setPast] = useState<Array<{ nodes: FlowcraftNode[], edges: FlowcraftEdge[] }>>([]);
@@ -440,7 +441,9 @@ export const FlowProvider: React.FC<{
         canUndo: past.length > 0,
         canRedo: future.length > 0,
         onConnect,
-        onNodeDragStart
+        onNodeDragStart,
+        selectedPlatform,
+        setSelectedPlatform
       }}
     >
       {children}

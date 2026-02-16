@@ -123,6 +123,8 @@ export interface FlowContextValue {
   canRedo: boolean;
   onConnect: (connection: any) => void;
   onNodeDragStart: () => void;
+  selectedPlatform: string;
+  setSelectedPlatform: (platform: string) => void;
 }
 
 export interface ExecutionRecord {

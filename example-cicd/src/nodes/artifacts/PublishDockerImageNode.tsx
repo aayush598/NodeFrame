@@ -21,6 +21,13 @@ export const config = {
     category: 'Artifacts',
     color: '#14b8a6',
     icon: <Container size={16} />,
+    defaultData: {
+        label: 'Publish Docker',
+        description: 'Publishes a docker image to a registry',
+        properties: {
+            image: 'my-app:latest',
+        },
+    },
 
     propertyDefinitions: [
         { name: 'image', label: 'Image Name', type: 'string' },

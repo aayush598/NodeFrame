@@ -21,6 +21,13 @@ export const config = {
     category: 'Artifacts',
     color: '#14b8a6',
     icon: <ArrowUp size={16} />,
+    defaultData: {
+        label: 'Version Bump',
+        description: 'Bumps the version of the package',
+        properties: {
+            type: 'patch',
+        },
+    },
 
     propertyDefinitions: [
         {
