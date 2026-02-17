@@ -14,6 +14,15 @@ A professional React workflow canvas library with drag-drop, zoom, pan, minimap 
 - 📦 **TypeScript** - Full type safety
 - ⚡ **React 18+** - Built for modern React
 
+## Compatibility
+
+WorkflowCanvas is designed to be highly compatible with modern web environments:
+
+- **Node.js**: `v18.0.0` or higher
+- **React**: `v18.0.0` or higher (including React 19)
+- **Next.js**: Compatible with Next.js 13, 14, 15, and 16
+- **Package Managers**: npm `v9+`, pnpm, or yarn
+
 ## Installation
 
 ```bash

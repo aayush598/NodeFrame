@@ -1,8 +1,12 @@
 {
   "name": "workflow-canvas-example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "workflow-canvas": "file:../..",
     "clsx": "^2.1.0",
