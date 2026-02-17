@@ -1,6 +1,6 @@
 {
   "name": "workflow-canvas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "A professional React workflow canvas library with drag-drop, zoom, pan, minimap and customizable nodes - built on reactflow",
   "main": "./dist/index.js",
